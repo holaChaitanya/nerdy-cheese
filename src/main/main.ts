@@ -192,7 +192,7 @@ trayMenu = [
     click: () => startSession({}),
     visible: sessionTimer === null,
   },
-  { label: 'Resume session', type: 'normal' },
+  { label: 'Resume session', type: 'normal', visible: false },
   {
     label: `Your break begins in ...`,
     visible: sessionTimer !== null,
