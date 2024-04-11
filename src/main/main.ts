@@ -61,6 +61,36 @@ if (isDebug) {
   require('electron-debug')();
 }
 
+let sessionTimer: ReturnType<typeof setTimeout> | null = null;
+
+interface Session {
+  endTime: string;
+  paused: boolean;
+}
+
+function startSession() {
+  const sessionDuration = 2 * 60 * 1000; // 2 mins
+  const endTime = new Date(Date.now() + sessionDuration).toISOString();
+
+  store.set('session', { endTime, paused: false });
+
+  if (sessionTimer) {
+    clearInterval(sessionTimer);
+  }
+
+  sessionTimer = setInterval(() => {
+    const { endTime: currEndTime } = store.get('session') as Session;
+    const remaining = new Date(currEndTime).getTime() - Date.now();
+
+    console.log({ remaining });
+
+    if (remaining <= 0) {
+      clearInterval(sessionTimer!);
+      sessionTimer = null;
+    }
+  }, 1000);
+}
+
 let tray: Tray | null = null;
 
 const timeLeftForBreak = '12:35';
@@ -72,7 +102,7 @@ const createTray = () => {
   tray = new Tray(icon);
   const contextMenu = Menu.buildFromTemplate([
     // A session will be of 2 minutes, break will be of 25 seconds
-    { label: 'Start session', type: 'normal' },
+    { label: 'Start session', type: 'normal', click: () => startSession() },
     { label: 'Resume session', type: 'normal' },
     {
       label: `Your break begins in ${timeLeftForBreak}`,
