@@ -208,6 +208,7 @@ function startSession({
     }
 
     if (remaining <= 0) {
+      trayMenu[0].visible = true;
       trayMenu[2].visible = false;
       clearInterval(sessionTimer!);
       sessionTimer = null;
