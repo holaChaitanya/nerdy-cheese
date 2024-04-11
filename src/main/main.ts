@@ -77,7 +77,7 @@ let tray: Tray | null = null;
 let trayMenu: any;
 
 function startSession() {
-  const sessionDuration = 10 * 1000; //  10 secs
+  const sessionDuration = 10 * 60 * 1000; //  10 min
   const endTime = new Date(Date.now() + sessionDuration).toISOString();
 
   store.set('session', { endTime, paused: false });
@@ -94,8 +94,8 @@ function startSession() {
     const remaining = new Date(currEndTime).getTime() - Date.now();
 
     trayMenu[2].label = `Your break begins in ${Math.floor(
-      remaining / 1000,
-    )} secs`;
+      remaining / (1000 * 60),
+    )} min`;
 
     if (Math.floor(remaining / 1000) === 5) {
       new Notification({
