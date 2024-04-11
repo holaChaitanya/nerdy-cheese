@@ -8,8 +8,10 @@ function Hello() {
       <div className="Hello">
         <img width="200" alt="icon" src={icon} />
       </div>
-      <h1>Time for a quick break</h1>
-      <div className="Hello">Rome was not built in a day</div>
+      <h1>Your eyes need rest :)</h1>
+      <div className="Hello">
+        World looks more beautiful when your eyes are healthy
+      </div>
     </div>
   );
 }

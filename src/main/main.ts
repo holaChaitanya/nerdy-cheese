@@ -149,7 +149,7 @@ let tray: Tray | null = null;
 
 let trayMenu: any;
 
-const DEFAULT_DURATION = 10 * 60; // in secs
+const DEFAULT_DURATION = 10; // in secs
 
 function startSession({
   additionalTimeInSeconds,
@@ -207,13 +207,11 @@ function startSession({
     }
 
     if (remaining <= 0) {
-      new Notification({
-        title: 'Your eyes need rest :)',
-        body: 'World looks more beautiful when your eyes are healthy',
-      }).show();
       trayMenu[2].visible = false;
       clearInterval(sessionTimer!);
       sessionTimer = null;
+
+      createWindow();
     }
 
     const contextMenu = Menu.buildFromTemplate(trayMenu);
