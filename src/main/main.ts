@@ -126,6 +126,26 @@ function startSession() {
   }
 }
 
+function pauseSession() {
+  if (sessionTimer) {
+    clearInterval(sessionTimer);
+    sessionTimer = null;
+  }
+
+  const { endTime: currEndTime } = store.get('session') as Session;
+  const remaining = new Date(currEndTime).getTime() - Date.now();
+  store.set('remainingTime', remaining);
+
+  trayMenu[2].visible = false;
+  trayMenu[0].visible = true;
+  trayMenu[0].label = 'Resume the session';
+
+  const contextMenu = Menu.buildFromTemplate(trayMenu);
+  if (tray) {
+    tray.setContextMenu(contextMenu);
+  }
+}
+
 trayMenu = [
   {
     label: 'Start session',
@@ -144,7 +164,7 @@ trayMenu = [
       { label: 'Add 1 minute', type: 'normal' },
       { label: 'Add 5 minutes', type: 'normal' },
       { type: 'separator' },
-      { label: 'Pause session', type: 'normal' },
+      { label: 'Pause session', type: 'normal', click: () => pauseSession() },
       { label: 'Skip this break', type: 'normal' },
     ]),
   },
