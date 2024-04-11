@@ -77,9 +77,22 @@ let tray: Tray | null = null;
 
 let trayMenu: any;
 
-function startSession() {
+function startSession({
+  additionalTimeInSeconds,
+}: {
+  additionalTimeInSeconds?: number;
+}) {
   const sessionDuration = 10 * 60 * 1000; //  10 min
-  const endTime = new Date(Date.now() + sessionDuration).toISOString();
+  const { endTime: prevEndTime } = store.get('session') as Session;
+
+  const finalDuration =
+    additionalTimeInSeconds && prevEndTime
+      ? additionalTimeInSeconds * 1000 +
+        new Date(prevEndTime).getTime() -
+        Date.now()
+      : sessionDuration;
+
+  const endTime = new Date(Date.now() + finalDuration).toISOString();
 
   store.set('session', {
     endTime,
@@ -168,7 +181,7 @@ trayMenu = [
   {
     label: 'Start session',
     type: 'normal',
-    click: () => startSession(),
+    click: () => startSession({}),
     visible: sessionTimer === null,
   },
   { label: 'Resume session', type: 'normal' },
@@ -179,8 +192,16 @@ trayMenu = [
     submenu: Menu.buildFromTemplate([
       { label: 'Start this break now', type: 'normal' },
       { type: 'separator' },
-      { label: 'Add 1 minute', type: 'normal' },
-      { label: 'Add 5 minutes', type: 'normal' },
+      {
+        label: 'Add 1 minute',
+        type: 'normal',
+        click: () => startSession({ additionalTimeInSeconds: 60 }),
+      },
+      {
+        label: 'Add 5 minutes',
+        type: 'normal',
+        click: () => startSession({ additionalTimeInSeconds: 60 * 5 }),
+      },
       { type: 'separator' },
       { label: 'Pause session', type: 'normal', click: () => pauseSession() },
       { label: 'Skip this break', type: 'normal' },
