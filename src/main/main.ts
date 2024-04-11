@@ -160,6 +160,7 @@ function pauseSession() {
   const contextMenu = Menu.buildFromTemplate(trayMenu);
   if (tray) {
     tray.setContextMenu(contextMenu);
+    tray.setTitle('Session paused');
   }
 }
 
