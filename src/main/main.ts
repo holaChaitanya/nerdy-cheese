@@ -63,7 +63,7 @@ if (isDebug) {
 
 let tray: Tray | null = null;
 
-const xyz = '12:35';
+const timeLeftForBreak = '12:35';
 
 const createTray = () => {
   const icon = nativeImage.createFromDataURL(
@@ -71,10 +71,11 @@ const createTray = () => {
   );
   tray = new Tray(icon);
   const contextMenu = Menu.buildFromTemplate([
+    // A session will be of 2 minutes, break will be of 25 seconds
     { label: 'Start session', type: 'normal' },
     { label: 'Resume session', type: 'normal' },
     {
-      label: `Your break begins in ${xyz}`,
+      label: `Your break begins in ${timeLeftForBreak}`,
       type: 'submenu',
       submenu: Menu.buildFromTemplate([
         { label: 'Start this break now', type: 'normal' },
