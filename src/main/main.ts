@@ -95,10 +95,18 @@ function startSession({
   const endTime = new Date(Date.now() + finalDuration).toISOString();
 
   store.set('session', {
+    ...(store.get('session') as Session),
     endTime,
-    startTime: new Date(Date.now()).toISOString(),
     paused: false,
   });
+
+  if (!additionalTimeInSeconds) {
+    console.log('setting start time');
+    store.set('session', {
+      ...(store.get('session') as Session),
+      startTime: new Date(Date.now()).toISOString(),
+    });
+  }
 
   trayMenu[0].visible = false;
   trayMenu[2].visible = true;
