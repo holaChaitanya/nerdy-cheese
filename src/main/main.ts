@@ -97,7 +97,7 @@ const createWindow = async () => {
     width: 1024,
     height: 728,
     fullscreen: true,
-    frame: false,
+    frame: true,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
@@ -149,6 +149,8 @@ let tray: Tray | null = null;
 
 let trayMenu: any;
 
+const DEFAULT_DURATION = 10 * 60; // in secs
+
 function startSession({
   additionalTimeInSeconds,
 }: {
@@ -156,7 +158,7 @@ function startSession({
 }) {
   // createWindow();
 
-  const sessionDuration = 10 * 60 * 1000; //  10 min
+  const sessionDuration = DEFAULT_DURATION * 1000; //  10 min
   const { endTime: prevEndTime } = store.get('session') as Session;
 
   const finalDuration =
@@ -289,7 +291,8 @@ trayMenu = [
       {
         label: 'Skip this break',
         type: 'normal',
-        click: () => startSession({ additionalTimeInSeconds: 10 * 60 }),
+        click: () =>
+          startSession({ additionalTimeInSeconds: DEFAULT_DURATION }),
       },
     ]),
   },
