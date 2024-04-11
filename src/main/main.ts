@@ -69,6 +69,7 @@ let sessionTimer: ReturnType<typeof setTimeout> | null = null;
 
 interface Session {
   endTime: string;
+  startTime: string;
   paused: boolean;
 }
 
@@ -80,7 +81,11 @@ function startSession() {
   const sessionDuration = 10 * 60 * 1000; //  10 min
   const endTime = new Date(Date.now() + sessionDuration).toISOString();
 
-  store.set('session', { endTime, paused: false });
+  store.set('session', {
+    endTime,
+    startTime: new Date(Date.now()).toISOString(),
+    paused: false,
+  });
 
   trayMenu[0].visible = false;
   trayMenu[2].visible = true;
@@ -116,6 +121,18 @@ function startSession() {
 
     const contextMenu = Menu.buildFromTemplate(trayMenu);
     if (tray) {
+      const { startTime: currStartTime } = store.get('session') as Session;
+      const startTime = new Date(currStartTime).getTime();
+      const elapsed = Date.now() - startTime;
+
+      if (remaining <= 0) {
+        tray.setTitle('');
+      } else {
+        tray.setTitle(
+          `Session active: ${Math.floor(elapsed / 1000)} seconds elapsed`,
+        );
+      }
+
       tray.setContextMenu(contextMenu);
     }
   }, 1000);
