@@ -40,19 +40,6 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-// IPC Listeners
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
-ipcMain.on('electron-store-get', async (event, val) => {
-  event.returnValue = store.get(val);
-});
-ipcMain.on('electron-store-set', async (_, key, val) => {
-  store.set(key, val);
-});
-
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -335,3 +322,15 @@ app
     });
   })
   .catch(console.log);
+
+// IPC Listeners
+ipcMain.on('electron-store-get', async (event, val) => {
+  event.returnValue = store.get(val);
+});
+ipcMain.on('electron-store-set', async (_, key, val) => {
+  store.set(key, val);
+});
+
+ipcMain.on('start-session', async () => {
+  startSession({});
+});

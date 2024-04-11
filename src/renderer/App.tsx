@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+
 import './App.css';
 
 const BREAK_DURATION = 15; // in secs
@@ -17,6 +18,7 @@ function Hello() {
 
   useEffect(() => {
     if (seconds <= 0) {
+      window.electron.ipcRenderer.sendMessage('start-session');
       window.close();
     }
   }, [seconds]);
