@@ -12,8 +12,11 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import Store from 'electron-store';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+
+const store = new Store();
 
 class AppUpdater {
   constructor() {
@@ -25,10 +28,17 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
+// IPC Listeners
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
+});
+ipcMain.on('electron-store-get', async (event, val) => {
+  event.returnValue = store.get(val);
+});
+ipcMain.on('electron-store-set', async (event, key, val) => {
+  store.set(key, val);
 });
 
 if (process.env.NODE_ENV === 'production') {
