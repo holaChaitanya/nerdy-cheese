@@ -1,13 +1,29 @@
+import { useState, useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
 import './App.css';
 
+const BREAK_DURATION = 15; // in secs
+
 function Hello() {
+  const [seconds, setSeconds] = useState(BREAK_DURATION);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (seconds <= 0) {
+      window.close();
+    }
+  }, [seconds]);
+
   return (
     <div>
-      <div className="Hello">
-        <img width="200" alt="icon" src={icon} />
-      </div>
+      <h2>{seconds > 0 && <p>Timer: {seconds} seconds</p>}</h2>
       <h1>Your eyes need rest :)</h1>
       <div className="Hello">
         World looks more beautiful when your eyes are healthy
