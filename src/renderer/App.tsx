@@ -3,7 +3,7 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 
-const BREAK_DURATION = 15; // in secs
+const BREAK_DURATION = 5; // in secs
 
 function Hello() {
   const [seconds, setSeconds] = useState(BREAK_DURATION);
@@ -30,6 +30,15 @@ function Hello() {
       <div className="Hello">
         World looks more beautiful when your eyes are healthy
       </div>
+      <button
+        type="button"
+        onClick={() => {
+          window.electron.ipcRenderer.sendMessage('start-session');
+          window.close();
+        }}
+      >
+        Skip the break
+      </button>
     </div>
   );
 }
