@@ -131,6 +131,7 @@ let sessionTimer: ReturnType<typeof setTimeout> | null = null;
 interface Session {
   endTime: string;
   startTime: string;
+  remainingTime: string;
   paused: boolean;
 }
 
@@ -148,14 +149,26 @@ function startSession({
   // createWindow();
 
   const sessionDuration = DEFAULT_DURATION * 1000; //  10 min
-  const { endTime: prevEndTime } = store.get('session') as Session;
+  const { endTime: prevEndTime, remainingTime } = store.get(
+    'session',
+  ) as Session;
 
-  const finalDuration =
-    additionalTimeInSeconds && prevEndTime
-      ? additionalTimeInSeconds * 1000 +
-        new Date(prevEndTime).getTime() -
-        Date.now()
-      : sessionDuration;
+  let finalDuration = sessionDuration;
+
+  if (remainingTime) {
+    if (!Number.isNaN(Number(remainingTime))) {
+      finalDuration = Number(remainingTime);
+      store.set('session', {
+        ...(store.get('session') as Session),
+        remainingTime: undefined,
+      });
+    }
+  } else if (additionalTimeInSeconds && prevEndTime) {
+    finalDuration =
+      additionalTimeInSeconds * 1000 +
+      new Date(prevEndTime).getTime() -
+      Date.now();
+  }
 
   const endTime = new Date(Date.now() + finalDuration).toISOString();
 
@@ -237,7 +250,11 @@ function pauseSession() {
 
   const { endTime: currEndTime } = store.get('session') as Session;
   const remaining = new Date(currEndTime).getTime() - Date.now();
-  store.set('remainingTime', remaining);
+  // store.set('remainingTime', remaining);
+  store.set('session', {
+    ...(store.get('session') as Session),
+    remainingTime: remaining,
+  });
 
   trayMenu[2].visible = false;
   trayMenu[0].visible = true;
