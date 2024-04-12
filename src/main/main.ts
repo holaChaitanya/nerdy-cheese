@@ -197,9 +197,13 @@ function startSession({
     const { endTime: currEndTime } = store.get('session') as Session;
     const remaining = new Date(currEndTime).getTime() - Date.now();
 
-    trayMenu[2].label = `Your break begins in ${Math.floor(
-      remaining / (1000 * 60),
-    )} min`;
+    const remainingInMins = Math.floor(remaining / (1000 * 60));
+
+    if (remainingInMins <= 0) {
+      trayMenu[2].label = 'Break in less than a minute';
+    } else {
+      trayMenu[2].label = `Your break begins in ${remainingInMins} min`;
+    }
 
     if (Math.floor(remaining / 1000) === 5) {
       new Notification({
