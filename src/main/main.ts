@@ -18,6 +18,7 @@ import {
   Menu,
   nativeImage,
   Notification,
+  powerMonitor,
 } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
@@ -323,6 +324,16 @@ app
     });
   })
   .catch(console.log);
+
+powerMonitor.on('lock-screen', () => {
+  if (sessionTimer) {
+    pauseSession();
+  }
+});
+
+powerMonitor.on('unlock-screen', () => {
+  console.log('unlock...');
+});
 
 // IPC Listeners
 ipcMain.on('electron-store-get', async (event, val) => {
