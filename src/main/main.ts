@@ -200,6 +200,7 @@ function startSession({
       clearInterval(sessionTimer!);
       sessionTimer = null;
 
+      shell.beep();
       createWindow();
     }
 
@@ -332,5 +333,6 @@ ipcMain.on('electron-store-set', async (_, key, val) => {
 });
 
 ipcMain.on('start-session', async () => {
+  shell.beep();
   startSession({});
 });
