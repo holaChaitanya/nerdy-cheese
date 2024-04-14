@@ -267,7 +267,7 @@ function pauseSession() {
   // store.set('remainingTime', remaining);
   store.set('session', {
     ...(store.get('session') as Session),
-    remainingTime: remaining,
+    remainingTime: remaining.toString(),
   });
 
   trayMenu[2].visible = false;
