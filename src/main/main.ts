@@ -20,7 +20,6 @@ import {
   Notification,
   powerMonitor,
 } from 'electron';
-import log from 'electron-log';
 import Store from 'electron-store';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
