@@ -344,6 +344,8 @@ powerMonitor.on('lock-screen', () => {
 
 powerMonitor.on('unlock-screen', () => {
   console.log('unlock...');
+
+  startSession({});
 });
 
 // IPC Listeners
