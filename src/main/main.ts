@@ -86,21 +86,14 @@ const createWindow = async () => {
     await installExtensions();
   }
 
-  const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../../assets');
-
-  const getAssetPath = (...paths: string[]): string => {
-    return path.join(RESOURCES_PATH, ...paths);
-  };
-
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
     height: 728,
     fullscreen: true,
     frame: false,
-    icon: getAssetPath('icon.png'),
+    // icon: getAssetPath('icon.png'),
+    icon: nativeImage.createFromDataURL(imgData),
     webPreferences: {
       devTools: false,
       preload: app.isPackaged
@@ -217,6 +210,7 @@ function startSession({
 
     if (Math.floor(remaining / 1000) === 5) {
       new Notification({
+        icon: nativeImage.createFromDataURL(imgData),
         title: 'Only 5 secs left',
         body: 'Get ready for a break!!',
       }).show();
@@ -343,6 +337,8 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+app.dock.setIcon(nativeImage.createFromDataURL(imgData));
 
 app
   .whenReady()
