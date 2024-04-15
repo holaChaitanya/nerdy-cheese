@@ -3,7 +3,7 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 
-const BREAK_DURATION = 5; // in secs
+const BREAK_DURATION = 45; // in secs
 
 function Hello() {
   const [seconds, setSeconds] = useState(BREAK_DURATION);

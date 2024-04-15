@@ -142,7 +142,7 @@ let tray: Tray | null = null;
 
 let trayMenu: any;
 
-const DEFAULT_DURATION = 10; // in secs
+const DEFAULT_DURATION = 15 * 60; // in secs
 
 function startSession({
   additionalTimeInSeconds,
@@ -151,7 +151,7 @@ function startSession({
 }) {
   // createWindow();
 
-  const sessionDuration = DEFAULT_DURATION * 1000; //  10 min
+  const sessionDuration = DEFAULT_DURATION * 1000; // in ms
   const { endTime: prevEndTime, remainingTime } = store.get(
     'session',
   ) as Session;
@@ -208,10 +208,10 @@ function startSession({
       trayMenu[2].label = `Your break begins in ${remainingInMins} min`;
     }
 
-    if (Math.floor(remaining / 1000) === 5) {
+    if (Math.floor(remaining / 1000) === 60) {
       new Notification({
         icon: nativeImage.createFromDataURL(imgData),
-        title: 'Only 5 secs left',
+        title: 'Only a min left',
         body: 'Get ready for a break!!',
       }).show();
     }
