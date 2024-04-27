@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
-
-const BREAK_DURATION = 45; // in secs
+import { DEFAULT_BREAK_DURATION } from '../main/constants';
 
 function Hello() {
-  const [seconds, setSeconds] = useState(BREAK_DURATION);
+  const [seconds, setSeconds] = useState(DEFAULT_BREAK_DURATION);
 
   useEffect(() => {
     const interval = setInterval(() => {

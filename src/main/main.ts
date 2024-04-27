@@ -23,6 +23,7 @@ import {
 import Store from 'electron-store';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { BREAK_NOTIFICATION_AT, DEFAULT_INTERVAL_DURATION } from './constants';
 
 type Schema = {
   session: {
@@ -142,8 +143,6 @@ let tray: Tray | null = null;
 
 let trayMenu: any;
 
-const DEFAULT_DURATION = 15 * 60; // in secs
-
 function startSession({
   additionalTimeInSeconds,
 }: {
@@ -151,7 +150,7 @@ function startSession({
 }) {
   // createWindow();
 
-  const sessionDuration = DEFAULT_DURATION * 1000; // in ms
+  const sessionDuration = DEFAULT_INTERVAL_DURATION * 1000; // in ms
   const { endTime: prevEndTime, remainingTime } = store.get(
     'session',
   ) as Session;
@@ -208,7 +207,7 @@ function startSession({
       trayMenu[2].label = `Your break begins in ${remainingInMins} min`;
     }
 
-    if (Math.floor(remaining / 1000) === 60) {
+    if (Math.floor(remaining / 1000) === BREAK_NOTIFICATION_AT) {
       new Notification({
         icon: nativeImage.createFromDataURL(imgData),
         title: 'Only a min left',
@@ -310,7 +309,7 @@ trayMenu = [
         label: 'Skip this break',
         type: 'normal',
         click: () =>
-          startSession({ additionalTimeInSeconds: DEFAULT_DURATION }),
+          startSession({ additionalTimeInSeconds: DEFAULT_INTERVAL_DURATION }),
       },
     ]),
   },
