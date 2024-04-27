@@ -171,7 +171,7 @@
   },
   "build": {
     "productName": "Take a break",
-    "appId": "org.erb.ElectronReact",
+    "appId": "takeABreak",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
