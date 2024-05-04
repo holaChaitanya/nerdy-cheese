@@ -25,7 +25,6 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { BREAK_NOTIFICATION_AT, DEFAULT_INTERVAL_DURATION } from './constants';
 
-// there's a bug - we should handle pause duration as a prefix sum array
 type Schema = {
   session: {
     type: 'object';
