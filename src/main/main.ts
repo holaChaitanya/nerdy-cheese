@@ -234,6 +234,7 @@ function startSession({
       if (remaining <= 0) {
         tray.setTitle('');
       } else {
+        // bug here - this will also include the duration for which a session has been paused
         tray.setTitle(
           `Session active: ${Math.floor(elapsed / 1000)} seconds elapsed`,
         );
