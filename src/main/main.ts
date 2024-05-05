@@ -455,6 +455,13 @@ ipcMain.on('electron-store-get', async (event, val) => {
   event.returnValue = store.get(val);
 });
 ipcMain.on('electron-store-set', async (_, key, val) => {
+  if (key === 'session_duration') {
+    const prevSessionDuration = store.get('session_duration') as number;
+    const diffInSecs = val - prevSessionDuration;
+    if (diffInSecs > 0) {
+      startSession({ additionalTimeInSeconds: diffInSecs });
+    }
+  }
   store.set(key, val);
   if (key === 'launch_at_login') {
     app.setLoginItemSettings({ openAtLogin: val });
