@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { DEFAULT_BREAK_DURATION } from '../main/constants';
+import { getReadableTime } from '../main/util';
 
 function Break() {
   const breakDurationInStore = window.electron.store.get('break_duration');
@@ -24,7 +25,7 @@ function Break() {
 
   return (
     <div>
-      <h2>{seconds > 0 && <p>Timer: {seconds} seconds</p>}</h2>
+      <h2>{seconds > 0 && <p>Timer: {getReadableTime(seconds)}</p>}</h2>
       <h1>Your eyes need rest :)</h1>
       <div className="Hello">
         World looks more beautiful when your eyes are healthy
