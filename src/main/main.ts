@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint global-require: off, no-console: off, promise/always-return: off */
 
 /**
@@ -41,6 +42,9 @@ type Schema = {
   start_timer: {
     type: 'boolean';
   };
+  session_duration: {
+    type: 'number';
+  };
 };
 
 const schema = {
@@ -55,6 +59,7 @@ const schema = {
   },
   launch_at_login: { type: 'boolean' },
   start_timer: { type: 'boolean' },
+  session_duration: { type: 'number' },
 } as Schema;
 
 const store = new Store({
@@ -63,6 +68,7 @@ const store = new Store({
     session: {},
     launch_at_login: false,
     start_timer: false,
+    session_duration: 1500,
   },
 });
 
@@ -214,10 +220,17 @@ function startSession({
 }) {
   // createWindow();
 
-  const sessionDuration = DEFAULT_INTERVAL_DURATION * 1000; // in ms
+  let sessionDuration = DEFAULT_INTERVAL_DURATION * 1000; // in ms
+
   const { endTime: prevEndTime, remainingTime } = store.get(
     'session',
   ) as Session;
+
+  const session_duration = store.get('session_duration') as number;
+
+  if (session_duration) {
+    sessionDuration = session_duration * 1000;
+  }
 
   let finalDuration = sessionDuration;
 
