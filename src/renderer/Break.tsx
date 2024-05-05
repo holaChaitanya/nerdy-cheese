@@ -1,6 +1,27 @@
 import { useState, useEffect } from 'react';
 import { DEFAULT_BREAK_DURATION } from '../main/constants';
-import { getReadableTime } from '../main/util';
+
+function getReadableTime(durationInSeconds: number) {
+  const hours = Math.floor(durationInSeconds / 3600);
+  const minutes = Math.floor((durationInSeconds % 3600) / 60);
+  const seconds = durationInSeconds % 60;
+
+  let result = '';
+
+  if (hours > 0) {
+    result += `${hours}h`;
+  }
+
+  if (minutes > 0) {
+    result += `${minutes}m`;
+  }
+
+  if (seconds > 0) {
+    result += `${seconds}s`;
+  }
+
+  return result;
+}
 
 function Break() {
   const breakDurationInStore = window.electron.store.get('break_duration');
