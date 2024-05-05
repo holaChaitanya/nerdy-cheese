@@ -23,7 +23,7 @@ import {
 } from 'electron';
 import Store from 'electron-store';
 import MenuBuilder from './menu';
-import { resolveHtmlPath } from './util';
+import { getReadableTime, resolveHtmlPath } from './util';
 import { BREAK_NOTIFICATION_AT, DEFAULT_INTERVAL_DURATION } from './constants';
 
 type Schema = {
@@ -312,6 +312,7 @@ function startSession({
     const remaining = new Date(currEndTime).getTime() - Date.now();
 
     const remainingInMins = Math.floor(remaining / (1000 * 60));
+    const remainingInSecs = Math.floor(remaining / 1000);
 
     if (remainingInMins <= 0) {
       trayMenu[2].label = 'Break in less than a minute';
@@ -358,12 +359,17 @@ function startSession({
       const startTime = new Date(currStartTime).getTime();
       const elapsed = Date.now() - startTime;
 
+      const elapsedInSeconds = Math.floor(elapsed / 1000);
+
       if (remaining <= 0) {
         tray.setTitle('');
       } else {
         // bug here - this will also include the duration for which a session has been paused
+        const showElapsedTime = false;
         tray.setTitle(
-          `Session active: ${Math.floor(elapsed / 1000)} seconds elapsed`,
+          showElapsedTime
+            ? getReadableTime(elapsedInSeconds)
+            : getReadableTime(remainingInSecs),
         );
       }
 
