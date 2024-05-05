@@ -105,7 +105,7 @@ const createWindow = async () => {
     },
   });
 
-  mainWindow.loadURL(resolveHtmlPath('index.html'));
+  mainWindow.loadURL(resolveHtmlPath('index.html', 'break'));
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
@@ -152,7 +152,7 @@ const createSettingsWindow = async () => {
     },
   });
 
-  settingsWindow.loadURL(resolveHtmlPath('index.html'));
+  settingsWindow.loadURL(resolveHtmlPath('index.html', 'settings'));
 
   settingsWindow.on('ready-to-show', () => {
     if (!settingsWindow) {
