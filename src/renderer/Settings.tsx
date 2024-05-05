@@ -96,7 +96,7 @@ function Settings() {
             {activeMenu === 'general' && (
               <div>
                 <h1>Startup</h1>
-                Launch at login&nbsp;
+                <h3>Launch at login</h3>&nbsp;
                 <Switch
                   key="launch_at_login"
                   checked={launchAtLogin}
@@ -106,7 +106,7 @@ function Settings() {
                   }}
                 />
                 <br />
-                Start timer automatically on launch&nbsp;
+                <h3>Start timer automatically on launch</h3>&nbsp;
                 <Switch
                   key="start_timer"
                   checked={startTimer}
