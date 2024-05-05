@@ -30,6 +30,7 @@ function Settings() {
   const launchAtLoginInStore = window.electron.store.get('launch_at_login');
   const startTimerInStore = window.electron.store.get('start_timer');
 
+  const [activeMenu, setActiveMenu] = useState('general');
   const [launchAtLogin, setLaunchAtLogin] = useState(launchAtLoginInStore);
   const [startTimer, setStartTimer] = useState(startTimerInStore);
 
@@ -49,9 +50,10 @@ function Settings() {
       <Layout style={{ minHeight: '100vh' }}>
         <Sider>
           <Menu
-            defaultSelectedKeys={['1']}
+            activeKey={activeMenu}
             mode="vertical"
             items={SideBarItems}
+            onClick={(e) => setActiveMenu(e.key)}
           />
         </Sider>
         <Layout>
@@ -63,26 +65,30 @@ function Settings() {
                 minHeight: 360,
               }}
             >
-              <h1>Startup</h1>
-              Launch at login&nbsp;
-              <Switch
-                key="launch_at_login"
-                checked={launchAtLogin}
-                onChange={(checked) => {
-                  setLaunchAtLogin(checked);
-                  window.electron.store.set('launch_at_login', checked);
-                }}
-              />
-              <br />
-              Start timer automatically on launch&nbsp;
-              <Switch
-                key="start_timer"
-                checked={startTimer}
-                onChange={(checked) => {
-                  setStartTimer(checked);
-                  window.electron.store.set('start_timer', checked);
-                }}
-              />
+              {activeMenu === 'general' && (
+                <div>
+                  <h1>Startup</h1>
+                  Launch at login&nbsp;
+                  <Switch
+                    key="launch_at_login"
+                    checked={launchAtLogin}
+                    onChange={(checked) => {
+                      setLaunchAtLogin(checked);
+                      window.electron.store.set('launch_at_login', checked);
+                    }}
+                  />
+                  <br />
+                  Start timer automatically on launch&nbsp;
+                  <Switch
+                    key="start_timer"
+                    checked={startTimer}
+                    onChange={(checked) => {
+                      setStartTimer(checked);
+                      window.electron.store.set('start_timer', checked);
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </Content>
         </Layout>
