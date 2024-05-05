@@ -29,11 +29,6 @@ const SideBarItems = [
     label: 'Rest mode',
     // icon: <AppstoreOutlined />,
   },
-  {
-    key: 'menu_bar',
-    label: 'Menu bar',
-    // icon: <SettingOutlined />,
-  },
 ];
 
 function Settings() {
@@ -69,8 +64,6 @@ function Settings() {
     resetTimerEnabledInStore,
   );
   const [timerStyle, setTimerStyle] = useState(timerStyleInStore);
-
-  console.log({ timerStyle });
 
   return (
     <ConfigProvider
