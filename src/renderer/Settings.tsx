@@ -35,6 +35,9 @@ function Settings() {
   const preBreakReminderEnabledInStore = window.electron.store.get(
     'pre_break_reminder_enabled',
   );
+  const preBreakReminderAtInStore = window.electron.store.get(
+    'pre_break_reminder_at',
+  );
 
   const [activeMenu, setActiveMenu] = useState('general');
   const [launchAtLogin, setLaunchAtLogin] = useState(launchAtLoginInStore);
@@ -45,6 +48,9 @@ function Settings() {
   const [breakDuration, setBreakDuration] = useState(breakDurationInStore);
   const [preBreakReminderEnabled, setPreBreakReminderEnabled] = useState(
     preBreakReminderEnabledInStore,
+  );
+  const [preBreakReminderAt, setPreBreakReminderAt] = useState(
+    preBreakReminderAtInStore,
   );
 
   return (
@@ -192,6 +198,30 @@ function Settings() {
                       );
                     }}
                   />
+                  <h3>Pre break notification before ending of session</h3>&nbsp;
+                  <Select
+                    value={preBreakReminderAt}
+                    onChange={(val) => {
+                      setPreBreakReminderAt(val);
+                      window.electron.store.set('pre_break_reminder_at', val);
+                    }}
+                  >
+                    <Option key={2} value={2}>
+                      2 secs
+                    </Option>
+                    <Option key={30} value={30}>
+                      30 secs
+                    </Option>
+                    <Option key={60} value={60}>
+                      1 min
+                    </Option>
+                    <Option key={120} value={120}>
+                      2 min
+                    </Option>
+                    <Option key={300} value={300}>
+                      5 min
+                    </Option>
+                  </Select>
                 </div>
               )}
             </div>

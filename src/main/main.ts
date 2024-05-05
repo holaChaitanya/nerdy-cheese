@@ -51,6 +51,9 @@ type Schema = {
   pre_break_reminder_enabled: {
     type: 'boolean';
   };
+  pre_break_reminder_at: {
+    type: 'number';
+  };
 };
 
 const schema = {
@@ -68,6 +71,7 @@ const schema = {
   session_duration: { type: 'number' },
   break_duration: { type: 'number' },
   pre_break_reminder_enabled: { type: 'boolean' },
+  pre_break_reminder_at: { type: 'number' },
 } as Schema;
 
 const store = new Store({
@@ -79,6 +83,7 @@ const store = new Store({
     session_duration: 1500,
     break_duration: 30,
     pre_break_reminder_enabled: true,
+    pre_break_reminder_at: 60,
   },
 });
 
@@ -295,10 +300,16 @@ function startSession({
     }
 
     const preBreakReminderEnabled = store.get('pre_break_reminder_enabled');
+    const preBreakReminderAt = store.get('pre_break_reminder_at') as number;
+
+    let breakNotificationAt = BREAK_NOTIFICATION_AT;
+    if (preBreakReminderEnabled && preBreakReminderAt) {
+      breakNotificationAt = preBreakReminderAt;
+    }
 
     if (
       preBreakReminderEnabled &&
-      Math.floor(remaining / 1000) === BREAK_NOTIFICATION_AT
+      Math.floor(remaining / 1000) === breakNotificationAt
     ) {
       new Notification({
         icon: nativeImage.createFromDataURL(imgData),
