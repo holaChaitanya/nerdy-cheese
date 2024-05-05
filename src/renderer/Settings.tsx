@@ -38,6 +38,9 @@ function Settings() {
   const preBreakReminderAtInStore = window.electron.store.get(
     'pre_break_reminder_at',
   );
+  const resetTimerEnabledInStore = window.electron.store.get(
+    'reset_timer_enabled',
+  );
 
   const [activeMenu, setActiveMenu] = useState('general');
   const [launchAtLogin, setLaunchAtLogin] = useState(launchAtLoginInStore);
@@ -51,6 +54,9 @@ function Settings() {
   );
   const [preBreakReminderAt, setPreBreakReminderAt] = useState(
     preBreakReminderAtInStore,
+  );
+  const [resetTimerEnabled, setResetTimerEnabled] = useState(
+    resetTimerEnabledInStore,
   );
 
   return (
@@ -147,6 +153,15 @@ function Settings() {
                       50 mins
                     </Option>
                   </Select>
+                  <h3>Reset timer on inactivity - screen locked</h3>&nbsp;
+                  <Switch
+                    key="reset_timer_enabled"
+                    checked={resetTimerEnabled}
+                    onChange={(checked) => {
+                      setResetTimerEnabled(checked);
+                      window.electron.store.set('reset_timer_enabled', checked);
+                    }}
+                  />
                 </div>
               )}
               {activeMenu === 'rest_mode' && (

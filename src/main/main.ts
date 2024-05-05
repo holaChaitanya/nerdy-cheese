@@ -55,6 +55,9 @@ type Schema = {
   pre_break_reminder_at: {
     type: 'number';
   };
+  reset_timer_enabled: {
+    type: 'boolean';
+  };
 };
 
 const schema = {
@@ -74,6 +77,7 @@ const schema = {
   break_duration: { type: 'number' },
   pre_break_reminder_enabled: { type: 'boolean' },
   pre_break_reminder_at: { type: 'number' },
+  reset_timer_enabled: { type: 'boolean' },
 } as Schema;
 
 const store = new Store({
@@ -86,6 +90,7 @@ const store = new Store({
     break_duration: 30,
     pre_break_reminder_enabled: true,
     pre_break_reminder_at: 60,
+    reset_timer_enabled: true,
   },
 });
 
