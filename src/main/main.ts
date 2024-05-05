@@ -56,6 +56,8 @@ const imgData =
 
 let mainWindow: BrowserWindow | null = null;
 
+let settingsWindow: BrowserWindow | null = null;
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -125,6 +127,53 @@ const createWindow = async () => {
 
   // Open urls in the user's browser
   mainWindow.webContents.setWindowOpenHandler((edata) => {
+    shell.openExternal(edata.url);
+    return { action: 'deny' };
+  });
+};
+
+const createSettingsWindow = async () => {
+  if (isDebug) {
+    await installExtensions();
+  }
+
+  settingsWindow = new BrowserWindow({
+    show: false,
+    width: 1024,
+    height: 728,
+    fullscreen: true,
+    frame: false,
+    icon: nativeImage.createFromDataURL(imgData),
+    webPreferences: {
+      devTools: false,
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
+    },
+  });
+
+  settingsWindow.loadURL(resolveHtmlPath('index.html'));
+
+  settingsWindow.on('ready-to-show', () => {
+    if (!settingsWindow) {
+      throw new Error('"settingsWindow" is not defined');
+    }
+    if (process.env.START_MINIMIZED) {
+      settingsWindow.minimize();
+    } else {
+      settingsWindow.show();
+    }
+  });
+
+  settingsWindow.on('closed', () => {
+    settingsWindow = null;
+  });
+
+  const menuBuilder = new MenuBuilder(settingsWindow);
+  menuBuilder.buildMenu();
+
+  // Open urls in the user's browser
+  settingsWindow.webContents.setWindowOpenHandler((edata) => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
@@ -314,6 +363,8 @@ trayMenu = [
       },
     ]),
   },
+  { type: 'separator' },
+  { label: 'Settings', type: 'normal', click: () => createSettingsWindow() },
   { type: 'separator' },
   { label: 'Quit', role: 'quit', type: 'normal', click: () => app.quit() },
 ];
