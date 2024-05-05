@@ -1,4 +1,5 @@
 import { ConfigProvider, theme, Layout, Menu, Switch } from 'antd';
+import { useState } from 'react';
 
 const { Sider, Content, Header } = Layout;
 
@@ -26,6 +27,12 @@ const SideBarItems = [
 ];
 
 function Settings() {
+  const settingsInStore = window.electron.store.get('settings');
+  const [launchAtLogin, setLaunchAtLogin] = useState(
+    settingsInStore.launch_at_login,
+  );
+  const [startTimer, setStartTimer] = useState(settingsInStore.start_timer);
+
   return (
     <ConfigProvider
       theme={{
@@ -58,10 +65,30 @@ function Settings() {
             >
               <h1>Startup</h1>
               Launch at login&nbsp;
-              <Switch key="launch_at_login" />
+              <Switch
+                key="launch_at_login"
+                checked={launchAtLogin}
+                onChange={(checked) => {
+                  setLaunchAtLogin(checked);
+                  window.electron.store.set('settings', {
+                    ...settingsInStore,
+                    launch_at_login: checked,
+                  });
+                }}
+              />
               <br />
               Start timer automatically on launch&nbsp;
-              <Switch key="start_timer" />
+              <Switch
+                key="start_timer"
+                checked={startTimer}
+                onChange={(checked) => {
+                  setStartTimer(checked);
+                  window.electron.store.set('settings', {
+                    ...settingsInStore,
+                    start_timer: checked,
+                  });
+                }}
+              />
             </div>
           </Content>
         </Layout>
