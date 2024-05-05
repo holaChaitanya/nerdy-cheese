@@ -1,5 +1,14 @@
-import { ConfigProvider, theme, Layout, Menu, Switch, Select } from 'antd';
+import {
+  ConfigProvider,
+  theme,
+  Layout,
+  Menu,
+  Switch,
+  Select,
+  Radio,
+} from 'antd';
 import { useState } from 'react';
+import { TIMER_STYLE } from '../main/constants';
 
 const { Sider, Content, Header } = Layout;
 const { Option } = Select;
@@ -41,6 +50,7 @@ function Settings() {
   const resetTimerEnabledInStore = window.electron.store.get(
     'reset_timer_enabled',
   );
+  const timerStyleInStore = window.electron.store.get('toolbar_timer_style');
 
   const [activeMenu, setActiveMenu] = useState('general');
   const [launchAtLogin, setLaunchAtLogin] = useState(launchAtLoginInStore);
@@ -58,6 +68,9 @@ function Settings() {
   const [resetTimerEnabled, setResetTimerEnabled] = useState(
     resetTimerEnabledInStore,
   );
+  const [timerStyle, setTimerStyle] = useState(timerStyleInStore);
+
+  console.log({ timerStyle });
 
   return (
     <ConfigProvider
@@ -166,6 +179,26 @@ function Settings() {
                       window.electron.store.set('reset_timer_enabled', checked);
                     }}
                   />
+                  <br />
+                  <h3>Timer style in tool bar</h3>
+                  <Radio.Group
+                    value={timerStyle}
+                    defaultValue={TIMER_STYLE.elapsed}
+                    onChange={(e) => {
+                      setTimerStyle(e.target.value);
+                      window.electron.store.set(
+                        'toolbar_timer_style',
+                        e.target.value,
+                      );
+                    }}
+                  >
+                    <Radio.Button value={TIMER_STYLE.elapsed}>
+                      Elapsed time
+                    </Radio.Button>
+                    <Radio.Button value={TIMER_STYLE.remaining}>
+                      Remaining time
+                    </Radio.Button>
+                  </Radio.Group>
                 </div>
               )}
               {activeMenu === 'rest_mode' && (

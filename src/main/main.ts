@@ -24,7 +24,11 @@ import {
 import Store from 'electron-store';
 import MenuBuilder from './menu';
 import { getReadableTime, resolveHtmlPath } from './util';
-import { BREAK_NOTIFICATION_AT, DEFAULT_INTERVAL_DURATION } from './constants';
+import {
+  BREAK_NOTIFICATION_AT,
+  DEFAULT_INTERVAL_DURATION,
+  TIMER_STYLE,
+} from './constants';
 
 type Schema = {
   session: {
@@ -58,6 +62,9 @@ type Schema = {
   reset_timer_enabled: {
     type: 'boolean';
   };
+  toolbar_timer_style: {
+    type: 'string';
+  };
 };
 
 const schema = {
@@ -78,6 +85,7 @@ const schema = {
   pre_break_reminder_enabled: { type: 'boolean' },
   pre_break_reminder_at: { type: 'number' },
   reset_timer_enabled: { type: 'boolean' },
+  toolbar_timer_style: { type: 'string' },
 } as Schema;
 
 const store = new Store({
@@ -91,6 +99,7 @@ const store = new Store({
     pre_break_reminder_enabled: true,
     pre_break_reminder_at: 60,
     reset_timer_enabled: true,
+    toolbar_timer_style: TIMER_STYLE.elapsed,
   },
 });
 
@@ -365,7 +374,9 @@ function startSession({
         tray.setTitle('');
       } else {
         // bug here - this will also include the duration for which a session has been paused
-        const showElapsedTime = false;
+        const showElapsedTime =
+          store.get('toolbar_timer_style') === TIMER_STYLE.elapsed;
+
         tray.setTitle(
           showElapsedTime
             ? getReadableTime(elapsedInSeconds)
@@ -459,7 +470,6 @@ const createTray = () => {
   const icon = nativeImage.createFromDataURL(imgData);
   tray = new Tray(icon.resize({ width: 16, height: 16 }));
   const contextMenu = Menu.buildFromTemplate(trayMenu);
-  tray.setToolTip('holaChaitanya');
   tray.setContextMenu(contextMenu);
 };
 
