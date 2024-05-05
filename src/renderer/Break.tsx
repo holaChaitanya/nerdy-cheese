@@ -64,10 +64,17 @@ function Break() {
         algorithm: theme.darkAlgorithm,
       }}
     >
-      <Content>
-        <h2>{seconds > 0 && <p>Timer: {getReadableTime(seconds)}</p>}</h2>
+      <Content
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh', // Set the height of the Content to the full viewport height
+        }}
+      >
+        <h2>{seconds > 0 && <p>{getReadableTime(seconds)}</p>}</h2>
         <h1>Your eyes need rest :)</h1>
-        <h2>World looks more beautiful when your eyes are less tired</h2>
         <Button
           onClick={() => {
             window.electron.ipcRenderer.sendMessage('start-session');
