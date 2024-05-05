@@ -425,6 +425,16 @@ function pauseSession() {
   }
 }
 
+function takeBreakNow() {
+  trayMenu[0].visible = true;
+  trayMenu[2].visible = false;
+  clearInterval(sessionTimer!);
+  sessionTimer = null;
+
+  shell.beep();
+  createWindow();
+}
+
 trayMenu = [
   {
     label: 'Start session',
@@ -438,7 +448,11 @@ trayMenu = [
     visible: sessionTimer !== null,
     type: 'submenu',
     submenu: Menu.buildFromTemplate([
-      { label: 'Start this break now', type: 'normal' },
+      {
+        label: 'Start this break now',
+        type: 'normal',
+        click: () => takeBreakNow(),
+      },
       { type: 'separator' },
       {
         label: 'Add 1 minute',
