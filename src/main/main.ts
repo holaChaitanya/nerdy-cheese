@@ -369,6 +369,7 @@ function pauseSession() {
   store.set('session', {
     ...(store.get('session') as Session),
     remainingTime: remaining.toString(),
+    paused: true,
   });
 
   trayMenu[2].visible = false;
@@ -475,9 +476,11 @@ powerMonitor.on('lock-screen', () => {
 });
 
 powerMonitor.on('unlock-screen', () => {
-  console.log('unlock...');
+  const { paused: wasSessionPaused } = store.get('session') as Session;
 
-  startSession({});
+  if (wasSessionPaused) {
+    startSession({});
+  }
 });
 
 // IPC Listeners
