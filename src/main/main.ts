@@ -513,7 +513,7 @@ powerMonitor.on('unlock-screen', () => {
   }
 
   if (wasSessionPaused) {
-    if (pausedSinceInSecs < 5) {
+    if (pausedSinceInSecs < 5 * 60) {
       startSession({});
     } else {
       startSession({ reset: true });

@@ -153,7 +153,11 @@ function Settings() {
                       50 mins
                     </Option>
                   </Select>
-                  <h3>Reset timer on inactivity - screen locked</h3>&nbsp;
+                  <h3>
+                    Reset timer on inactivity - screen locked for more than 5
+                    minutes
+                  </h3>
+                  &nbsp;
                   <Switch
                     key="reset_timer_enabled"
                     checked={resetTimerEnabled}
