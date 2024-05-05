@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
+import { ConfigProvider, theme, Button, Layout } from 'antd';
 import { DEFAULT_BREAK_DURATION } from '../main/constants';
+
+const { Content } = Layout;
 
 function getReadableTime(durationInSeconds: number) {
   const hours = Math.floor(durationInSeconds / 3600);
@@ -45,22 +48,36 @@ function Break() {
   }, [seconds]);
 
   return (
-    <div>
-      <h2>{seconds > 0 && <p>Timer: {getReadableTime(seconds)}</p>}</h2>
-      <h1>Your eyes need rest :)</h1>
-      <div className="Hello">
-        World looks more beautiful when your eyes are healthy
-      </div>
-      <button
-        type="button"
-        onClick={() => {
-          window.electron.ipcRenderer.sendMessage('start-session');
-          window.close();
-        }}
-      >
-        Skip the break
-      </button>
-    </div>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#eaf1fa',
+          colorInfo: '#eaf1fa',
+          fontSize: 14,
+          wireframe: false,
+          borderRadius: 6,
+          colorTextBase: '#f3efda',
+          colorBgBase: '#064483',
+          colorBgSpotlight: '#dee3e9',
+          colorBgContainer: '#2f6397',
+        },
+        algorithm: theme.darkAlgorithm,
+      }}
+    >
+      <Content>
+        <h2>{seconds > 0 && <p>Timer: {getReadableTime(seconds)}</p>}</h2>
+        <h1>Your eyes need rest :)</h1>
+        <h2>World looks more beautiful when your eyes are less tired</h2>
+        <Button
+          onClick={() => {
+            window.electron.ipcRenderer.sendMessage('start-session');
+            window.close();
+          }}
+        >
+          Skip the break
+        </Button>
+      </Content>
+    </ConfigProvider>
   );
 }
 
