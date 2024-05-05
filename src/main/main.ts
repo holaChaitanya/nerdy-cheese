@@ -378,9 +378,9 @@ function startSession({
           store.get('toolbar_timer_style') === TIMER_STYLE.elapsed;
 
         tray.setTitle(
-          showElapsedTime
-            ? getReadableTime(elapsedInSeconds)
-            : getReadableTime(remainingInSecs),
+          `${getReadableTime(
+            showElapsedTime ? elapsedInSeconds : remainingInSecs,
+          )} ${showElapsedTime ? 'elapsed' : 'left'}`,
         );
       }
 
