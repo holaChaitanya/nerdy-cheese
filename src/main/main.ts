@@ -45,6 +45,9 @@ type Schema = {
   session_duration: {
     type: 'number';
   };
+  break_duration: {
+    type: 'number';
+  };
 };
 
 const schema = {
@@ -60,6 +63,7 @@ const schema = {
   launch_at_login: { type: 'boolean' },
   start_timer: { type: 'boolean' },
   session_duration: { type: 'number' },
+  break_duration: { type: 'number' },
 } as Schema;
 
 const store = new Store({
@@ -69,6 +73,7 @@ const store = new Store({
     launch_at_login: false,
     start_timer: false,
     session_duration: 1500,
+    break_duration: 30,
   },
 });
 

@@ -31,6 +31,7 @@ function Settings() {
   const launchAtLoginInStore = window.electron.store.get('launch_at_login');
   const startTimerInStore = window.electron.store.get('start_timer');
   const sessionDurationInStore = window.electron.store.get('session_duration');
+  const breakDurationInStore = window.electron.store.get('break_duration');
 
   const [activeMenu, setActiveMenu] = useState('general');
   const [launchAtLogin, setLaunchAtLogin] = useState(launchAtLoginInStore);
@@ -38,6 +39,7 @@ function Settings() {
   const [sessionDuration, setSessionDuration] = useState(
     sessionDurationInStore,
   );
+  const [breakDuration, setBreakDuration] = useState(breakDurationInStore);
 
   return (
     <ConfigProvider
@@ -105,6 +107,9 @@ function Settings() {
                       window.electron.store.set('session_duration', val);
                     }}
                   >
+                    <Option key={6} value={6}>
+                      6 secs
+                    </Option>
                     <Option key={900} value={900}>
                       15 mins
                     </Option>
@@ -128,6 +133,44 @@ function Settings() {
                     </Option>
                     <Option key={3000} value={3000}>
                       50 mins
+                    </Option>
+                  </Select>
+                </div>
+              )}
+              {activeMenu === 'rest_mode' && (
+                <div>
+                  <h1>Short breaks</h1>
+                  Duration&nbsp;
+                  <Select
+                    value={breakDuration}
+                    onChange={(val) => {
+                      setBreakDuration(val);
+                      window.electron.store.set('break_duration', val);
+                    }}
+                  >
+                    <Option key={20} value={20}>
+                      20 secs
+                    </Option>
+                    <Option key={25} value={25}>
+                      25 secs
+                    </Option>
+                    <Option key={30} value={30}>
+                      30 secs
+                    </Option>
+                    <Option key={35} value={35}>
+                      35 secs
+                    </Option>
+                    <Option key={45} value={45}>
+                      45 secs
+                    </Option>
+                    <Option key={50} value={50}>
+                      50
+                    </Option>
+                    <Option key={55} value={55}>
+                      55 secs
+                    </Option>
+                    <Option key={60} value={60}>
+                      1 min
                     </Option>
                   </Select>
                 </div>

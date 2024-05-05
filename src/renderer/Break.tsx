@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import { DEFAULT_BREAK_DURATION } from '../main/constants';
 
 function Break() {
-  const [seconds, setSeconds] = useState(DEFAULT_BREAK_DURATION);
+  const breakDurationInStore = window.electron.store.get('break_duration');
+  const [seconds, setSeconds] = useState<number>(
+    breakDurationInStore ?? DEFAULT_BREAK_DURATION,
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
