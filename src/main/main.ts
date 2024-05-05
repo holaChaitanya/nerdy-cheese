@@ -313,7 +313,11 @@ function startSession({
     ) {
       new Notification({
         icon: nativeImage.createFromDataURL(imgData),
-        title: 'Only a min left',
+        title: `Only ${
+          breakNotificationAt / 60 > 1
+            ? breakNotificationAt / 60
+            : 'less than a'
+        } min left`,
         body: 'Get ready for a break!!',
       }).show();
     }
