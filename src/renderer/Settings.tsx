@@ -1,4 +1,4 @@
-import { ConfigProvider, theme, Layout, Menu } from 'antd';
+import { ConfigProvider, theme, Layout, Menu, Switch } from 'antd';
 
 const { Sider, Content, Header } = Layout;
 
@@ -36,7 +36,7 @@ function Settings() {
           wireframe: false,
           borderRadius: 6,
         },
-        algorithm: theme.darkAlgorithm,
+        algorithm: theme.defaultAlgorithm,
       }}
     >
       <Layout style={{ minHeight: '100vh' }}>
@@ -55,7 +55,14 @@ function Settings() {
                 padding: 24,
                 minHeight: 360,
               }}
-            />
+            >
+              <h1>Startup</h1>
+              Launch at login&nbsp;
+              <Switch key="launch_at_login" />
+              <br />
+              Start timer automatically on launch&nbsp;
+              <Switch key="start_timer" />
+            </div>
           </Content>
         </Layout>
       </Layout>
