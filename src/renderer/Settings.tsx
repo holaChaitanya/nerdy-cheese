@@ -10,7 +10,7 @@ import {
 import { useState } from 'react';
 import { TIMER_STYLE } from '../main/constants';
 
-const { Sider, Content, Header } = Layout;
+const { Sider, Content } = Layout;
 const { Option } = Select;
 
 const SideBarItems = [
@@ -75,7 +75,7 @@ function Settings() {
           wireframe: false,
           borderRadius: 6,
         },
-        algorithm: theme.defaultAlgorithm,
+        algorithm: theme.darkAlgorithm,
       }}
     >
       <Layout style={{ minHeight: '100vh' }}>
@@ -88,188 +88,180 @@ function Settings() {
           />
         </Sider>
         <Layout>
-          <Header style={{ padding: 0 }} />
           <Content style={{ margin: '0 16px' }}>
-            <div
-              style={{
-                padding: 24,
-                minHeight: 360,
-              }}
-            >
-              {activeMenu === 'general' && (
-                <div>
-                  <h1>Startup</h1>
-                  Launch at login&nbsp;
-                  <Switch
-                    key="launch_at_login"
-                    checked={launchAtLogin}
-                    onChange={(checked) => {
-                      setLaunchAtLogin(checked);
-                      window.electron.store.set('launch_at_login', checked);
-                    }}
-                  />
-                  <br />
-                  Start timer automatically on launch&nbsp;
-                  <Switch
-                    key="start_timer"
-                    checked={startTimer}
-                    onChange={(checked) => {
-                      setStartTimer(checked);
-                      window.electron.store.set('start_timer', checked);
-                    }}
-                  />
-                </div>
-              )}
-              {activeMenu === 'focus_mode' && (
-                <div>
-                  <h1>Focus</h1>
-                  Duration&nbsp;
-                  <Select
-                    value={sessionDuration}
-                    onChange={(val) => {
-                      setSessionDuration(val);
-                      window.electron.store.set('session_duration', val);
-                    }}
-                  >
-                    <Option key={6} value={6}>
-                      6 secs
-                    </Option>
-                    <Option key={900} value={900}>
-                      15 mins
-                    </Option>
-                    <Option key={1200} value={1200}>
-                      20 mins
-                    </Option>
-                    <Option key={1500} value={1500}>
-                      25 mins
-                    </Option>
-                    <Option key={1800} value={1800}>
-                      30 mins
-                    </Option>
-                    <Option key={2100} value={2100}>
-                      35 mins
-                    </Option>
-                    <Option key={2400} value={2400}>
-                      40 mins
-                    </Option>
-                    <Option key={2700} value={2700}>
-                      45 mins
-                    </Option>
-                    <Option key={3000} value={3000}>
-                      50 mins
-                    </Option>
-                  </Select>
-                  <h3>
-                    Reset timer on inactivity - screen locked for more than 5
-                    minutes
-                  </h3>
-                  &nbsp;
-                  <Switch
-                    key="reset_timer_enabled"
-                    checked={resetTimerEnabled}
-                    onChange={(checked) => {
-                      setResetTimerEnabled(checked);
-                      window.electron.store.set('reset_timer_enabled', checked);
-                    }}
-                  />
-                  <br />
-                  <h3>Timer style in tool bar</h3>
-                  <Radio.Group
-                    value={timerStyle}
-                    defaultValue={TIMER_STYLE.elapsed}
-                    onChange={(e) => {
-                      setTimerStyle(e.target.value);
-                      window.electron.store.set(
-                        'toolbar_timer_style',
-                        e.target.value,
-                      );
-                    }}
-                  >
-                    <Radio.Button value={TIMER_STYLE.elapsed}>
-                      Elapsed time
-                    </Radio.Button>
-                    <Radio.Button value={TIMER_STYLE.remaining}>
-                      Remaining time
-                    </Radio.Button>
-                  </Radio.Group>
-                </div>
-              )}
-              {activeMenu === 'rest_mode' && (
-                <div>
-                  <h1>Short breaks</h1>
-                  Duration&nbsp;
-                  <Select
-                    value={breakDuration}
-                    onChange={(val) => {
-                      setBreakDuration(val);
-                      window.electron.store.set('break_duration', val);
-                    }}
-                  >
-                    <Option key={20} value={20}>
-                      20 secs
-                    </Option>
-                    <Option key={25} value={25}>
-                      25 secs
-                    </Option>
-                    <Option key={30} value={30}>
-                      30 secs
-                    </Option>
-                    <Option key={35} value={35}>
-                      35 secs
-                    </Option>
-                    <Option key={45} value={45}>
-                      45 secs
-                    </Option>
-                    <Option key={50} value={50}>
-                      50 secs
-                    </Option>
-                    <Option key={55} value={55}>
-                      55 secs
-                    </Option>
-                    <Option key={60} value={60}>
-                      1 min
-                    </Option>
-                  </Select>
-                  <h1>Pre-break reminder</h1>
-                  Enabled&nbsp;
-                  <Switch
-                    key="pre_break_reminder_enabled"
-                    checked={preBreakReminderEnabled}
-                    onChange={(checked) => {
-                      setPreBreakReminderEnabled(checked);
-                      window.electron.store.set(
-                        'pre_break_reminder_enabled',
-                        checked,
-                      );
-                    }}
-                  />
-                  <h3>Pre break notification before ending of session</h3>&nbsp;
-                  <Select
-                    value={preBreakReminderAt}
-                    onChange={(val) => {
-                      setPreBreakReminderAt(val);
-                      window.electron.store.set('pre_break_reminder_at', val);
-                    }}
-                  >
-                    <Option key={2} value={2}>
-                      2 secs
-                    </Option>
-                    <Option key={30} value={30}>
-                      30 secs
-                    </Option>
-                    <Option key={60} value={60}>
-                      1 min
-                    </Option>
-                    <Option key={120} value={120}>
-                      2 min
-                    </Option>
-                    <Option key={300} value={300}>
-                      5 min
-                    </Option>
-                  </Select>
-                </div>
-              )}
-            </div>
+            {activeMenu === 'general' && (
+              <div>
+                <h1>Startup</h1>
+                Launch at login&nbsp;
+                <Switch
+                  key="launch_at_login"
+                  checked={launchAtLogin}
+                  onChange={(checked) => {
+                    setLaunchAtLogin(checked);
+                    window.electron.store.set('launch_at_login', checked);
+                  }}
+                />
+                <br />
+                Start timer automatically on launch&nbsp;
+                <Switch
+                  key="start_timer"
+                  checked={startTimer}
+                  onChange={(checked) => {
+                    setStartTimer(checked);
+                    window.electron.store.set('start_timer', checked);
+                  }}
+                />
+              </div>
+            )}
+            {activeMenu === 'focus_mode' && (
+              <div>
+                <h1>Focus</h1>
+                Duration&nbsp;
+                <Select
+                  value={sessionDuration}
+                  onChange={(val) => {
+                    setSessionDuration(val);
+                    window.electron.store.set('session_duration', val);
+                  }}
+                >
+                  <Option key={6} value={6}>
+                    6 secs
+                  </Option>
+                  <Option key={900} value={900}>
+                    15 mins
+                  </Option>
+                  <Option key={1200} value={1200}>
+                    20 mins
+                  </Option>
+                  <Option key={1500} value={1500}>
+                    25 mins
+                  </Option>
+                  <Option key={1800} value={1800}>
+                    30 mins
+                  </Option>
+                  <Option key={2100} value={2100}>
+                    35 mins
+                  </Option>
+                  <Option key={2400} value={2400}>
+                    40 mins
+                  </Option>
+                  <Option key={2700} value={2700}>
+                    45 mins
+                  </Option>
+                  <Option key={3000} value={3000}>
+                    50 mins
+                  </Option>
+                </Select>
+                <h3>
+                  Reset timer on inactivity - screen locked for more than 5
+                  minutes
+                </h3>
+                &nbsp;
+                <Switch
+                  key="reset_timer_enabled"
+                  checked={resetTimerEnabled}
+                  onChange={(checked) => {
+                    setResetTimerEnabled(checked);
+                    window.electron.store.set('reset_timer_enabled', checked);
+                  }}
+                />
+                <br />
+                <h3>Timer style in tool bar</h3>
+                <Radio.Group
+                  value={timerStyle}
+                  defaultValue={TIMER_STYLE.elapsed}
+                  onChange={(e) => {
+                    setTimerStyle(e.target.value);
+                    window.electron.store.set(
+                      'toolbar_timer_style',
+                      e.target.value,
+                    );
+                  }}
+                >
+                  <Radio.Button value={TIMER_STYLE.elapsed}>
+                    Elapsed time
+                  </Radio.Button>
+                  <Radio.Button value={TIMER_STYLE.remaining}>
+                    Remaining time
+                  </Radio.Button>
+                </Radio.Group>
+              </div>
+            )}
+            {activeMenu === 'rest_mode' && (
+              <div>
+                <h1>Short breaks</h1>
+                Duration&nbsp;
+                <Select
+                  value={breakDuration}
+                  onChange={(val) => {
+                    setBreakDuration(val);
+                    window.electron.store.set('break_duration', val);
+                  }}
+                >
+                  <Option key={20} value={20}>
+                    20 secs
+                  </Option>
+                  <Option key={25} value={25}>
+                    25 secs
+                  </Option>
+                  <Option key={30} value={30}>
+                    30 secs
+                  </Option>
+                  <Option key={35} value={35}>
+                    35 secs
+                  </Option>
+                  <Option key={45} value={45}>
+                    45 secs
+                  </Option>
+                  <Option key={50} value={50}>
+                    50 secs
+                  </Option>
+                  <Option key={55} value={55}>
+                    55 secs
+                  </Option>
+                  <Option key={60} value={60}>
+                    1 min
+                  </Option>
+                </Select>
+                <h1>Pre-break reminder</h1>
+                Enabled&nbsp;
+                <Switch
+                  key="pre_break_reminder_enabled"
+                  checked={preBreakReminderEnabled}
+                  onChange={(checked) => {
+                    setPreBreakReminderEnabled(checked);
+                    window.electron.store.set(
+                      'pre_break_reminder_enabled',
+                      checked,
+                    );
+                  }}
+                />
+                <h3>Pre break notification before ending of session</h3>&nbsp;
+                <Select
+                  value={preBreakReminderAt}
+                  onChange={(val) => {
+                    setPreBreakReminderAt(val);
+                    window.electron.store.set('pre_break_reminder_at', val);
+                  }}
+                >
+                  <Option key={2} value={2}>
+                    2 secs
+                  </Option>
+                  <Option key={30} value={30}>
+                    30 secs
+                  </Option>
+                  <Option key={60} value={60}>
+                    1 min
+                  </Option>
+                  <Option key={120} value={120}>
+                    2 min
+                  </Option>
+                  <Option key={300} value={300}>
+                    5 min
+                  </Option>
+                </Select>
+              </div>
+            )}
           </Content>
         </Layout>
       </Layout>
