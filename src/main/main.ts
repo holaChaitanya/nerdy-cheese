@@ -35,12 +35,11 @@ type Schema = {
       paused: { type: 'boolean' };
     };
   };
-  settings: {
-    type: 'object';
-    properties: {
-      launch_at_login: { type: 'boolean' };
-      start_timer: { type: 'boolean' };
-    };
+  launch_at_login: {
+    type: 'boolean';
+  };
+  start_timer: {
+    type: 'boolean';
   };
 };
 
@@ -54,20 +53,16 @@ const schema = {
       paused: { type: 'boolean' },
     },
   },
-  settings: {
-    type: 'object',
-    properties: {
-      launch_at_login: { type: 'boolean' },
-      start_timer: { type: 'boolean' },
-    },
-  },
+  launch_at_login: { type: 'boolean' },
+  start_timer: { type: 'boolean' },
 } as Schema;
 
 const store = new Store({
   schema,
   defaults: {
     session: {},
-    settings: { launch_at_login: false, start_timer: false },
+    launch_at_login: false,
+    start_timer: false,
   },
 });
 

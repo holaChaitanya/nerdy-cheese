@@ -27,11 +27,11 @@ const SideBarItems = [
 ];
 
 function Settings() {
-  const settingsInStore = window.electron.store.get('settings');
-  const [launchAtLogin, setLaunchAtLogin] = useState(
-    settingsInStore.launch_at_login,
-  );
-  const [startTimer, setStartTimer] = useState(settingsInStore.start_timer);
+  const launchAtLoginInStore = window.electron.store.get('launch_at_login');
+  const startTimerInStore = window.electron.store.get('start_timer');
+
+  const [launchAtLogin, setLaunchAtLogin] = useState(launchAtLoginInStore);
+  const [startTimer, setStartTimer] = useState(startTimerInStore);
 
   return (
     <ConfigProvider
@@ -70,10 +70,7 @@ function Settings() {
                 checked={launchAtLogin}
                 onChange={(checked) => {
                   setLaunchAtLogin(checked);
-                  window.electron.store.set('settings', {
-                    ...settingsInStore,
-                    launch_at_login: checked,
-                  });
+                  window.electron.store.set('launch_at_login', checked);
                 }}
               />
               <br />
@@ -83,10 +80,7 @@ function Settings() {
                 checked={startTimer}
                 onChange={(checked) => {
                   setStartTimer(checked);
-                  window.electron.store.set('settings', {
-                    ...settingsInStore,
-                    start_timer: checked,
-                  });
+                  window.electron.store.set('start_timer', checked);
                 }}
               />
             </div>
