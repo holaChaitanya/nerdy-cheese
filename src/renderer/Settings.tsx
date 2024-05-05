@@ -69,11 +69,15 @@ function Settings() {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#0a3e89',
-          colorInfo: '#0a3e89',
+          colorPrimary: '#eaf1fa',
+          colorInfo: '#eaf1fa',
           fontSize: 14,
           wireframe: false,
           borderRadius: 6,
+          colorTextBase: '#f3efda',
+          colorBgBase: '#064483',
+          colorBgSpotlight: '#dee3e9',
+          colorBgContainer: '#2f6397',
         },
         algorithm: theme.darkAlgorithm,
       }}
