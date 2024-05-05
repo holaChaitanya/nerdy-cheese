@@ -466,12 +466,12 @@ trayMenu = [
       },
       { type: 'separator' },
       { label: 'Pause session', type: 'normal', click: () => pauseSession() },
-      {
-        label: 'Skip this break',
-        type: 'normal',
-        click: () =>
-          startSession({ additionalTimeInSeconds: DEFAULT_INTERVAL_DURATION }),
-      },
+      // {
+      //   label: 'Skip this break',
+      //   type: 'normal',
+      //   click: () =>
+      //     startSession({ additionalTimeInSeconds: DEFAULT_INTERVAL_DURATION }),
+      // },
     ]),
   },
   { type: 'separator' },
