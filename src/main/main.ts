@@ -288,6 +288,11 @@ function startSession({
   }
 
   sessionTimer = setInterval(() => {
+    // const idleState = powerMonitor.getSystemIdleState(5);
+    // const idleTime = powerMonitor.getSystemIdleTime();
+
+    // console.log({ idleState, idleTime });
+
     const { endTime: currEndTime } = store.get('session') as Session;
     const remaining = new Date(currEndTime).getTime() - Date.now();
 
