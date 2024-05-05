@@ -440,6 +440,9 @@ ipcMain.on('electron-store-get', async (event, val) => {
 });
 ipcMain.on('electron-store-set', async (_, key, val) => {
   store.set(key, val);
+  if (key === 'launch_at_login') {
+    app.setLoginItemSettings({ openAtLogin: val });
+  }
 });
 
 ipcMain.on('start-session', async () => {
