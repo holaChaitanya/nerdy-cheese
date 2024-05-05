@@ -22,7 +22,7 @@ import {
   powerMonitor,
 } from 'electron';
 import Store from 'electron-store';
-import MenuBuilder from './menu';
+// import MenuBuilder from './menu';
 import { getReadableTime, resolveHtmlPath } from './util';
 import {
   BREAK_NOTIFICATION_AT,
@@ -174,8 +174,8 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  // const menuBuilder = new MenuBuilder(mainWindow);
+  // menuBuilder.buildMenu();
 
   // Open urls in the user's browser
   mainWindow.webContents.setWindowOpenHandler((edata) => {
@@ -222,8 +222,8 @@ const createSettingsWindow = async () => {
     settingsWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(settingsWindow);
-  menuBuilder.buildMenu();
+  // const menuBuilder = new MenuBuilder(settingsWindow);
+  // menuBuilder.buildMenu();
 
   // Open urls in the user's browser
   settingsWindow.webContents.setWindowOpenHandler((edata) => {
