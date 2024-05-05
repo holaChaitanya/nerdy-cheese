@@ -433,6 +433,13 @@ function takeBreakNow() {
   sessionTimer = null;
 
   shell.beep();
+
+  const contextMenu = Menu.buildFromTemplate(trayMenu);
+  if (tray) {
+    tray.setContextMenu(contextMenu);
+    tray.setTitle('');
+  }
+
   createWindow();
 }
 
