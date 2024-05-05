@@ -10,7 +10,13 @@ export function resolveHtmlPath(htmlFileName: string, search: string) {
     url.search = search;
     return url.href;
   }
-  return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}`;
+  const res = `file://${path.resolve(
+    __dirname,
+    '../renderer/',
+    htmlFileName,
+  )}?${search}`;
+
+  return res;
 }
 
 export function getReadableTime(durationInSeconds: number) {
