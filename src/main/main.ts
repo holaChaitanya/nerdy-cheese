@@ -48,6 +48,9 @@ type Schema = {
   break_duration: {
     type: 'number';
   };
+  pre_break_reminder_enabled: {
+    type: 'boolean';
+  };
 };
 
 const schema = {
@@ -64,6 +67,7 @@ const schema = {
   start_timer: { type: 'boolean' },
   session_duration: { type: 'number' },
   break_duration: { type: 'number' },
+  pre_break_reminder_enabled: { type: 'boolean' },
 } as Schema;
 
 const store = new Store({
@@ -74,6 +78,7 @@ const store = new Store({
     start_timer: false,
     session_duration: 1500,
     break_duration: 30,
+    pre_break_reminder_enabled: true,
   },
 });
 
@@ -289,7 +294,12 @@ function startSession({
       trayMenu[2].label = `Your break begins in ${remainingInMins} min`;
     }
 
-    if (Math.floor(remaining / 1000) === BREAK_NOTIFICATION_AT) {
+    const preBreakReminderEnabled = store.get('pre_break_reminder_enabled');
+
+    if (
+      preBreakReminderEnabled &&
+      Math.floor(remaining / 1000) === BREAK_NOTIFICATION_AT
+    ) {
       new Notification({
         icon: nativeImage.createFromDataURL(imgData),
         title: 'Only a min left',

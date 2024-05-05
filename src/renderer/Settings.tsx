@@ -32,6 +32,9 @@ function Settings() {
   const startTimerInStore = window.electron.store.get('start_timer');
   const sessionDurationInStore = window.electron.store.get('session_duration');
   const breakDurationInStore = window.electron.store.get('break_duration');
+  const preBreakReminderEnabledInStore = window.electron.store.get(
+    'pre_break_reminder_enabled',
+  );
 
   const [activeMenu, setActiveMenu] = useState('general');
   const [launchAtLogin, setLaunchAtLogin] = useState(launchAtLoginInStore);
@@ -40,6 +43,9 @@ function Settings() {
     sessionDurationInStore,
   );
   const [breakDuration, setBreakDuration] = useState(breakDurationInStore);
+  const [preBreakReminderEnabled, setPreBreakReminderEnabled] = useState(
+    preBreakReminderEnabledInStore,
+  );
 
   return (
     <ConfigProvider
@@ -173,6 +179,19 @@ function Settings() {
                       1 min
                     </Option>
                   </Select>
+                  <h1>Pre-break reminder</h1>
+                  Enabled&nbsp;
+                  <Switch
+                    key="pre_break_reminder_enabled"
+                    checked={preBreakReminderEnabled}
+                    onChange={(checked) => {
+                      setPreBreakReminderEnabled(checked);
+                      window.electron.store.set(
+                        'pre_break_reminder_enabled',
+                        checked,
+                      );
+                    }}
+                  />
                 </div>
               )}
             </div>
