@@ -221,7 +221,7 @@ function Settings() {
                       45 secs
                     </Option>
                     <Option key={50} value={50}>
-                      50
+                      50 secs
                     </Option>
                     <Option key={55} value={55}>
                       55 secs
