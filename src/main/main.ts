@@ -138,11 +138,11 @@ const createSettingsWindow = async () => {
   }
 
   settingsWindow = new BrowserWindow({
-    show: false,
+    show: true,
     width: 1024,
     height: 728,
-    fullscreen: true,
-    frame: false,
+    fullscreen: false,
+    frame: true,
     icon: nativeImage.createFromDataURL(imgData),
     webPreferences: {
       devTools: false,
