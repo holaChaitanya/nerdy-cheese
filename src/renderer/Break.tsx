@@ -66,6 +66,8 @@ function Break() {
     >
       <Content
         style={{
+          background:
+            'radial-gradient(circle, rgba(36,211,219,1) 5%, rgba(16,83,187,1) 100%)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
