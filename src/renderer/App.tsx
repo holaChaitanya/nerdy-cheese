@@ -1,16 +1,15 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import Break from './Break';
+import Settings from './Settings';
 
 import './App.css';
-
-// http://localhost:1212/settings
 
 function ViewManager() {
   const w = window.location;
 
   const isSettings = w.search === '?settings';
 
-  return isSettings ? <p>This is Settings</p> : <Break />;
+  return isSettings ? <Settings /> : <Break />;
 }
 
 export default function App() {
