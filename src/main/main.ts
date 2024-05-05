@@ -34,6 +34,7 @@ type Schema = {
       startTime: { type: 'string' };
       remainingTime: { type: 'string' };
       paused: { type: 'boolean' };
+      pausedAt: { type: 'string' };
     };
   };
   launch_at_login: {
@@ -64,6 +65,7 @@ const schema = {
       startTime: { type: 'string' },
       remainingTime: { type: 'string' },
       paused: { type: 'boolean' },
+      pausedAt: { type: 'string' },
     },
   },
   launch_at_login: { type: 'boolean' },
@@ -222,6 +224,7 @@ interface Session {
   startTime: string;
   remainingTime: string;
   paused: boolean;
+  pausedAt: string;
 }
 
 let tray: Tray | null = null;
@@ -230,8 +233,10 @@ let trayMenu: any;
 
 function startSession({
   additionalTimeInSeconds,
+  reset,
 }: {
   additionalTimeInSeconds?: number;
+  reset?: boolean;
 }) {
   // createWindow();
 
@@ -249,7 +254,12 @@ function startSession({
 
   let finalDuration = sessionDuration;
 
-  if (remainingTime) {
+  if (reset) {
+    store.set('session', {
+      ...(store.get('session') as Session),
+      remainingTime: undefined,
+    });
+  } else if (remainingTime) {
     if (!Number.isNaN(Number(remainingTime))) {
       finalDuration = Number(remainingTime);
       store.set('session', {
@@ -375,6 +385,7 @@ function pauseSession() {
     ...(store.get('session') as Session),
     remainingTime: remaining.toString(),
     paused: true,
+    pausedAt: new Date(Date.now()).toISOString(),
   });
 
   trayMenu[2].visible = false;
@@ -483,8 +494,25 @@ powerMonitor.on('lock-screen', () => {
 powerMonitor.on('unlock-screen', () => {
   const { paused: wasSessionPaused } = store.get('session') as Session;
 
+  const { pausedAt } = store.get('session') as Session;
+  let pausedSinceInSecs = 0;
+  if (pausedAt) {
+    pausedSinceInSecs = (Date.now() - new Date(pausedAt).getTime()) / 1000;
+  }
+
   if (wasSessionPaused) {
-    startSession({});
+    store.set('session', {
+      ...(store.get('session') as Session),
+      pausedAt: undefined,
+    });
+  }
+
+  if (wasSessionPaused) {
+    if (pausedSinceInSecs < 5) {
+      startSession({});
+    } else {
+      startSession({ reset: true });
+    }
   }
 });
 
