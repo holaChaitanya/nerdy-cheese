@@ -1,7 +1,8 @@
-import { ConfigProvider, theme, Layout, Menu, Switch } from 'antd';
+import { ConfigProvider, theme, Layout, Menu, Switch, Select } from 'antd';
 import { useState } from 'react';
 
 const { Sider, Content, Header } = Layout;
+const { Option } = Select;
 
 const SideBarItems = [
   {
@@ -87,6 +88,38 @@ function Settings() {
                       window.electron.store.set('start_timer', checked);
                     }}
                   />
+                </div>
+              )}
+              {activeMenu === 'focus_mode' && (
+                <div>
+                  <h1>Focus</h1>
+                  Duration&nbsp;
+                  <Select>
+                    <Option key="15mins" value={900}>
+                      15 mins
+                    </Option>
+                    <Option key="20mins" value={1200}>
+                      20 mins
+                    </Option>
+                    <Option key="25mins" value={1500}>
+                      25 mins
+                    </Option>
+                    <Option key="30mins" value={1800}>
+                      30 mins
+                    </Option>
+                    <Option key="35mins" value={2100}>
+                      35 mins
+                    </Option>
+                    <Option key="40mins" value={2400}>
+                      40 mins
+                    </Option>
+                    <Option key="45mins" value={2700}>
+                      45 mins
+                    </Option>
+                    <Option key="50mins" value={3000}>
+                      50 mins
+                    </Option>
+                  </Select>
                 </div>
               )}
             </div>
