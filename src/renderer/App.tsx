@@ -3,6 +3,7 @@ import Break from './Break';
 import Settings from './Settings';
 
 import './App.css';
+// import 'tailwindcss/tailwind.css';
 
 function ViewManager() {
   const w = window.location;
