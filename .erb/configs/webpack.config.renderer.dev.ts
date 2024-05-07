@@ -76,7 +76,7 @@ const configuration: webpack.Configuration = {
           },
           'sass-loader',
         ],
-        include: /\.module\.s?(c|a)ss$/,
+        include: /\.s?(c|a)ss$/,
       },
       {
         test: /\.s?(c|a)ss$/,
@@ -93,7 +93,7 @@ const configuration: webpack.Configuration = {
             },
           },
         ],
-        exclude: /\.module\.s?(c|a)ss$/,
+        exclude: /\.s?(c|a)ss$/,
       },
       // Fonts
       {
