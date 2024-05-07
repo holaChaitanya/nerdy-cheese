@@ -35,7 +35,7 @@ function Break() {
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds((prev) => prev - 1);
-    }, 1000);
+    }, 1000000);
 
     return () => clearInterval(interval);
   }, []);
@@ -48,45 +48,51 @@ function Break() {
   }, [seconds]);
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: '#eaf1fa',
-          colorInfo: '#eaf1fa',
-          fontSize: 14,
-          wireframe: false,
-          borderRadius: 6,
-          colorTextBase: '#f3efda',
-          colorBgBase: '#064483',
-          colorBgSpotlight: '#dee3e9',
-          colorBgContainer: '#2f6397',
-        },
-        algorithm: theme.darkAlgorithm,
-      }}
-    >
-      <Content
-        style={{
-          background:
-            'radial-gradient(circle, rgba(36,211,219,1) 5%, rgba(16,83,187,1) 100%)',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh', // Set the height of the Content to the full viewport height
+    <div>
+      <h1 className="text-3xl font-bold underline text-clifford">
+        Hello world!
+      </h1>
+
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#eaf1fa',
+            colorInfo: '#eaf1fa',
+            fontSize: 14,
+            wireframe: false,
+            borderRadius: 6,
+            colorTextBase: '#f3efda',
+            colorBgBase: '#064483',
+            colorBgSpotlight: '#dee3e9',
+            colorBgContainer: '#2f6397',
+          },
+          algorithm: theme.darkAlgorithm,
         }}
       >
-        <h2>{seconds > 0 && <p>{getReadableTime(seconds)}</p>}</h2>
-        <h1>Your eyes need rest :)</h1>
-        <Button
-          onClick={() => {
-            window.electron.ipcRenderer.sendMessage('start-session');
-            window.close();
+        <Content
+          style={{
+            background:
+              'radial-gradient(circle, rgba(36,211,219,1) 5%, rgba(16,83,187,1) 100%)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh', // Set the height of the Content to the full viewport height
           }}
         >
-          Skip the break
-        </Button>
-      </Content>
-    </ConfigProvider>
+          <h2>{seconds > 0 && <p>{getReadableTime(seconds)}</p>}</h2>
+          <h1>Your eyes need rest :)</h1>
+          <Button
+            onClick={() => {
+              window.electron.ipcRenderer.sendMessage('start-session');
+              window.close();
+            }}
+          >
+            Skip the break
+          </Button>
+        </Content>
+      </ConfigProvider>
+    </div>
   );
 }
 

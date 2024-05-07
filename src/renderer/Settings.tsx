@@ -95,6 +95,9 @@ function Settings() {
           <Content style={{ margin: '0 16px' }}>
             {activeMenu === 'general' && (
               <div>
+                <h1 className="text-3xl font-bold underline text-clifford">
+                  Hello world!
+                </h1>
                 <h1>Startup</h1>
                 <h3>Launch at login</h3>&nbsp;
                 <Switch
