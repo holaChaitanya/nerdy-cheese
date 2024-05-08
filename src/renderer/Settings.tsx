@@ -14,6 +14,7 @@ import { UpdateSettings } from './updateSettings';
 import { AnalyticSettings } from './analyticSettings';
 import { FocusSettings } from './focusSettings';
 import { TimeLabelSettings } from './timeLabelSettings';
+import { IdleTimeSettings } from './idleTimeSettings';
 
 function Settings() {
   const [activeMenu, setActiveMenu] = useState('general');
@@ -102,6 +103,9 @@ function Settings() {
               </div>
               <div className="flex items-center justify-center [&>div]:w-full">
                 <TimeLabelSettings />
+              </div>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <IdleTimeSettings />
               </div>
             </>
           )}
