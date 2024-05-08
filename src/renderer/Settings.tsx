@@ -11,6 +11,7 @@ import {
 } from './components/ui/card';
 import { StartupSettings } from './startupSettings';
 import { UpdateSettings } from './updateSettings';
+import { AnalyticSettings } from './analyticSettings';
 
 function Settings() {
   const [activeMenu, setActiveMenu] = useState('general');
@@ -93,6 +94,12 @@ function Settings() {
             // {...props}
           >
             <UpdateSettings />
+          </div>
+          <div
+            className="flex items-center justify-center [&>div]:w-full"
+            // {...props}
+          >
+            <AnalyticSettings />
           </div>
           <div
             className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
