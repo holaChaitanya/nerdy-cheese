@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from './components/ui/card';
 import { StartupSettings } from './startupSettings';
+import { UpdateSettings } from './updateSettings';
 
 function Settings() {
   const [activeMenu, setActiveMenu] = useState('general');
@@ -86,6 +87,12 @@ function Settings() {
             // {...props}
           >
             <StartupSettings />
+          </div>
+          <div
+            className="flex items-center justify-center [&>div]:w-full"
+            // {...props}
+          >
+            <UpdateSettings />
           </div>
           <div
             className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
