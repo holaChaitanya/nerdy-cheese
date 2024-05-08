@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from './components/ui/card';
+import { StartupSettings } from './startupSettings';
 
 function Settings() {
   const [activeMenu, setActiveMenu] = useState('general');
@@ -74,6 +75,23 @@ function Settings() {
             </Card>
           </div>
         </div>
+      </div>
+      <div className="flex flex-col">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+          {/* <div className="flex items-center">
+            <h1 className="text-lg font-semibold md:text-2xl">Startup</h1>
+          </div> */}
+          <div
+            className="flex items-center justify-center [&>div]:w-full"
+            // {...props}
+          >
+            <StartupSettings />
+          </div>
+          <div
+            className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
+            // x-chunk="dashboard-02-chunk-1"
+          />
+        </main>
       </div>
     </div>
   );
