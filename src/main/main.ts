@@ -145,7 +145,7 @@ const createSettingsWindow = async () => {
     frame: true,
     icon: nativeImage.createFromDataURL(imgData),
     webPreferences: {
-      devTools: false,
+      devTools: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
