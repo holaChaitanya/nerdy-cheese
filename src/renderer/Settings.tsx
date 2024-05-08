@@ -13,6 +13,7 @@ import { StartupSettings } from './startupSettings';
 import { UpdateSettings } from './updateSettings';
 import { AnalyticSettings } from './analyticSettings';
 import { FocusSettings } from './focusSettings';
+import { TimeLabelSettings } from './timeLabelSettings';
 
 function Settings() {
   const [activeMenu, setActiveMenu] = useState('general');
@@ -95,9 +96,14 @@ function Settings() {
             </>
           )}
           {activeMenu === 'focus' && (
-            <div className="flex items-center justify-center [&>div]:w-full">
-              <FocusSettings />
-            </div>
+            <>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <FocusSettings />
+              </div>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <TimeLabelSettings />
+              </div>
+            </>
           )}
         </main>
       </div>
