@@ -12,6 +12,7 @@ import {
 import { StartupSettings } from './startupSettings';
 import { UpdateSettings } from './updateSettings';
 import { AnalyticSettings } from './analyticSettings';
+import { FocusSettings } from './focusSettings';
 
 function Settings() {
   const [activeMenu, setActiveMenu] = useState('general');
@@ -92,6 +93,11 @@ function Settings() {
                 <AnalyticSettings />
               </div>
             </>
+          )}
+          {activeMenu === 'focus' && (
+            <div className="flex items-center justify-center [&>div]:w-full">
+              <FocusSettings />
+            </div>
           )}
         </main>
       </div>
