@@ -20,7 +20,31 @@ import { ShortBreakSettings } from './shortBreakSettings';
 import { PreBreakSettings } from './preBreakSettings';
 
 function Settings() {
+  // const breakDurationInStore = window.electron.store.get('break_duration');
+  // const preBreakReminderEnabledInStore = window.electron.store.get(
+  //   'pre_break_reminder_enabled',
+  // );
+  // const preBreakReminderAtInStore = window.electron.store.get(
+  //   'pre_break_reminder_at',
+  // );
+  // const resetTimerEnabledInStore = window.electron.store.get(
+  //   'reset_timer_enabled',
+  // );
+  // const timerStyleInStore = window.electron.store.get('toolbar_timer_style');
+
   const [activeMenu, setActiveMenu] = useState('general');
+
+  // const [breakDuration, setBreakDuration] = useState(breakDurationInStore);
+  // const [preBreakReminderEnabled, setPreBreakReminderEnabled] = useState(
+  //   preBreakReminderEnabledInStore,
+  // );
+  // const [preBreakReminderAt, setPreBreakReminderAt] = useState(
+  //   preBreakReminderAtInStore,
+  // );
+  // const [resetTimerEnabled, setResetTimerEnabled] = useState(
+  //   resetTimerEnabledInStore,
+  // );
+  // const [timerStyle, setTimerStyle] = useState(timerStyleInStore);
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">

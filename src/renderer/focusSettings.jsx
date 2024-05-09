@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Label } from './components/ui/label';
 import {
@@ -12,6 +13,11 @@ import {
 } from './components/ui/select';
 
 export function FocusSettings() {
+  const sessionDurationInStore = window.electron.store.get('session_duration');
+  const [sessionDuration, setSessionDuration] = useState(
+    sessionDurationInStore,
+  );
+
   return (
     <Card>
       <CardHeader>
@@ -27,7 +33,13 @@ export function FocusSettings() {
               to delay it.
             </span>
           </Label>
-          <Select>
+          <Select
+            value={sessionDuration}
+            onValueChange={(val) => {
+              setSessionDuration(val);
+              window.electron.store.set('session_duration', val);
+            }}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Duration" />
             </SelectTrigger>
