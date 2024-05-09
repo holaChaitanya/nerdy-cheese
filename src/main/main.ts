@@ -500,7 +500,7 @@ const createTray = () => {
   const icon = nativeImage.createFromDataURL(imgData);
   tray = new Tray(icon.resize({ width: 16, height: 16 }));
   const contextMenu = Menu.buildFromTemplate(trayMenu);
-  tray.setToolTip('holaChaitanya');
+  tray.setToolTip('Take a Break');
   tray.setContextMenu(contextMenu);
 };
 
