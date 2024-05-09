@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Label } from './components/ui/label';
 import {
@@ -13,6 +14,19 @@ import {
 import { Switch } from './components/ui/switch';
 
 export function PreBreakSettings() {
+  const preBreakReminderEnabledInStore = window.electron.store.get(
+    'pre_break_reminder_enabled',
+  );
+  const preBreakReminderAtInStore = window.electron.store.get(
+    'pre_break_reminder_at',
+  );
+  const [preBreakReminderEnabled, setPreBreakReminderEnabled] = useState(
+    preBreakReminderEnabledInStore,
+  );
+  const [preBreakReminderAt, setPreBreakReminderAt] = useState(
+    preBreakReminderAtInStore,
+  );
+
   return (
     <Card>
       <CardHeader>
@@ -20,19 +34,39 @@ export function PreBreakSettings() {
       </CardHeader>
       <CardContent className="grid gap-6">
         <div className="flex items-center justify-between space-x-2">
-          <Label htmlFor="necessary" className="flex flex-col space-y-1">
+          <Label
+            htmlFor="pre_break_reminder_enabled"
+            className="flex flex-col space-y-1"
+          >
             <span>Enabled</span>
           </Label>
-          <Switch id="necessary" defaultChecked />
+          <Switch
+            id="pre_break_reminder_enabled"
+            key="pre_break_reminder_enabled"
+            checked={preBreakReminderEnabled}
+            onCheckedChange={(checked) => {
+              setPreBreakReminderEnabled(checked);
+              window.electron.store.set('pre_break_reminder_enabled', checked);
+            }}
+          />
         </div>
         <div className="flex items-center justify-between space-x-2">
-          <Label htmlFor="necessary" className="flex flex-col space-y-1">
-            {/* <span>Duration</span> */}
+          <Label
+            htmlFor="pre_break_reminder_at"
+            className="flex flex-col space-y-1"
+          >
             <span className="font-normal leading-snug text-muted-foreground">
               Show reminder before
             </span>
           </Label>
-          <Select>
+          <Select
+            key="pre_break_reminder_at"
+            value={preBreakReminderAt}
+            onValueChange={(val) => {
+              setPreBreakReminderAt(val);
+              window.electron.store.set('pre_break_reminder_at', val);
+            }}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Duration" />
             </SelectTrigger>

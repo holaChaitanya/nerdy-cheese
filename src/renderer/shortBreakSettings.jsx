@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Label } from './components/ui/label';
 import {
@@ -12,6 +13,9 @@ import {
 } from './components/ui/select';
 
 export function ShortBreakSettings() {
+  const breakDurationInStore = window.electron.store.get('break_duration');
+  const [breakDuration, setBreakDuration] = useState(breakDurationInStore);
+
   return (
     <Card>
       <CardHeader>
@@ -26,7 +30,13 @@ export function ShortBreakSettings() {
               eyes a rest
             </span>
           </Label>
-          <Select>
+          <Select
+            value={breakDuration}
+            onValueChange={(val) => {
+              setBreakDuration(val);
+              window.electron.store.set('break_duration', val);
+            }}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Duration" />
             </SelectTrigger>
