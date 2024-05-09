@@ -183,6 +183,14 @@ const createWindow = async () => {
 };
 
 const createSettingsWindow = async () => {
+  if (settingsWindow) {
+    // If a Settings window is already open, bring it to focus
+    settingsWindow.focus();
+    settingsWindow.show();
+
+    return;
+  }
+
   if (isDebug) {
     await installExtensions();
   }
