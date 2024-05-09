@@ -33,7 +33,7 @@ function Break() {
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds((prev) => prev - 1);
-    }, 100000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
