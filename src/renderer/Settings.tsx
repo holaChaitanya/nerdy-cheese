@@ -10,12 +10,12 @@ import {
   CardTitle,
 } from './components/ui/card';
 import { StartupSettings } from './startupSettings';
-import { UpdateSettings } from './updateSettings';
-import { AnalyticSettings } from './analyticSettings';
+// import { UpdateSettings } from './updateSettings';
+// import { AnalyticSettings } from './analyticSettings';
 import { FocusSettings } from './focusSettings';
 import { TimeLabelSettings } from './timeLabelSettings';
 import { IdleTimeSettings } from './idleTimeSettings';
-import { MeetingSetting } from './meetingSettings';
+// import { MeetingSetting } from './meetingSettings';
 import { ShortBreakSettings } from './shortBreakSettings';
 import { PreBreakSettings } from './preBreakSettings';
 
@@ -115,12 +115,12 @@ function Settings() {
               <div className="flex items-center justify-center [&>div]:w-full">
                 <StartupSettings />
               </div>
-              <div className="flex items-center justify-center [&>div]:w-full">
+              {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <UpdateSettings />
-              </div>
-              <div className="flex items-center justify-center [&>div]:w-full">
+              </div> */}
+              {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <AnalyticSettings />
-              </div>
+              </div> */}
             </>
           )}
           {activeMenu === 'focus' && (
@@ -134,9 +134,9 @@ function Settings() {
               <div className="flex items-center justify-center [&>div]:w-full">
                 <IdleTimeSettings />
               </div>
-              <div className="flex items-center justify-center [&>div]:w-full">
+              {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <MeetingSetting />
-              </div>
+              </div> */}
             </>
           )}
           {activeMenu === 'rest' && (
