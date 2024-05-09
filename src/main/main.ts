@@ -259,8 +259,6 @@ function startSession({
   additionalTimeInSeconds?: number;
   reset?: boolean;
 }) {
-  // createWindow();
-
   let sessionDuration = DEFAULT_INTERVAL_DURATION * 1000; // in ms
 
   const { endTime: prevEndTime, remainingTime } = store.get(
@@ -480,12 +478,16 @@ trayMenu = [
       },
       { type: 'separator' },
       { label: 'Pause session', type: 'normal', click: () => pauseSession() },
-      // {
-      //   label: 'Skip this break',
-      //   type: 'normal',
-      //   click: () =>
-      //     startSession({ additionalTimeInSeconds: DEFAULT_INTERVAL_DURATION }),
-      // },
+      {
+        label: 'Skip this break',
+        type: 'normal',
+        click: () =>
+          startSession({
+            additionalTimeInSeconds:
+              (store.get('session_duration') as number) ||
+              DEFAULT_INTERVAL_DURATION,
+          }),
+      },
     ]),
   },
   { type: 'separator' },
@@ -519,7 +521,6 @@ app.dock.setIcon(nativeImage.createFromDataURL(imgData));
 app
   .whenReady()
   .then(() => {
-    // createWindow();
     createTray();
     if (store.get('start_timer')) {
       startSession({});
@@ -528,7 +529,6 @@ app
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
       if (mainWindow === null && tray === null) {
-        // createWindow();
         createTray();
       }
     });
