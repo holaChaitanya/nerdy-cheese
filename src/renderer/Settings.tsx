@@ -16,6 +16,7 @@ import { FocusSettings } from './focusSettings';
 import { TimeLabelSettings } from './timeLabelSettings';
 import { IdleTimeSettings } from './idleTimeSettings';
 import { MeetingSetting } from './meetingSettings';
+import { ShortBreakSettings } from './shortBreakSettings';
 
 function Settings() {
   const [activeMenu, setActiveMenu] = useState('general');
@@ -111,6 +112,14 @@ function Settings() {
               <div className="flex items-center justify-center [&>div]:w-full">
                 <MeetingSetting />
               </div>
+            </>
+          )}
+          {activeMenu === 'rest' && (
+            <>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <ShortBreakSettings />
+              </div>
+              <div className="flex items-center justify-center [&>div]:w-full" />
             </>
           )}
         </main>
