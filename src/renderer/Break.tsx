@@ -3,9 +3,33 @@ import { motion } from 'framer-motion';
 import { DEFAULT_BREAK_DURATION } from '../main/constants';
 import { AuroraBackground } from './components/ui/aurora-background';
 
-function Break() {
-  const [seconds, setSeconds] = useState(DEFAULT_BREAK_DURATION);
+function getReadableTime(durationInSeconds: number) {
+  const hours = Math.floor(durationInSeconds / 3600);
+  const minutes = Math.floor((durationInSeconds % 3600) / 60);
+  const seconds = durationInSeconds % 60;
 
+  let result = '';
+
+  if (hours > 0) {
+    result += `${hours}h`;
+  }
+
+  if (minutes > 0) {
+    result += `${minutes}m`;
+  }
+
+  if (seconds > 0) {
+    result += `${seconds}s`;
+  }
+
+  return result;
+}
+
+function Break() {
+  const breakDurationInStore = window.electron.store.get('break_duration');
+  const [seconds, setSeconds] = useState<number>(
+    breakDurationInStore ?? DEFAULT_BREAK_DURATION,
+  );
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds((prev) => prev - 1);
@@ -34,7 +58,7 @@ function Break() {
         className="relative flex flex-col gap-4 items-center justify-center px-4"
       >
         <div className="text-2xl font-medium text-white text-center">
-          {seconds > 0 && <p>{seconds} seconds</p>}
+          {seconds > 0 && <p>{getReadableTime(seconds)}</p>}
         </div>
         <div className="text-3xl md:text-7xl font-bold text-white text-center">
           Your eyes need rest :)
