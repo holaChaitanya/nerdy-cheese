@@ -1,42 +1,53 @@
 /* eslint-disable import/prefer-default-export */
 
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Label } from './components/ui/label';
 import { RadioGroup, RadioGroupItem } from './components/ui/radio-group';
+import { TIMER_STYLE } from '../main/constants';
 
 export function TimeLabelSettings() {
+  const timerStyleInStore = window.electron.store.get('toolbar_timer_style');
+  const [timerStyle, setTimerStyle] = useState(timerStyleInStore);
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Time label style</CardTitle>
       </CardHeader>
       <CardContent className="grid gap-6">
-        {/* <div className="flex items-center justify-between space-x-2">
-          <Label htmlFor="necessary" className="flex flex-col space-y-1">
-            <span>Duration</span>
-          </Label>
-        </div> */}
-        <RadioGroup defaultValue="card" className="grid grid-cols-2 gap-4">
+        <RadioGroup
+          className="grid grid-cols-2 gap-4"
+          value={timerStyle}
+          onValueChange={(val) => {
+            setTimerStyle(val);
+            window.electron.store.set('toolbar_timer_style', val);
+          }}
+        >
           <div>
-            <RadioGroupItem value="card" id="card" className="peer sr-only" />
+            <RadioGroupItem
+              value={TIMER_STYLE.elapsed}
+              id={TIMER_STYLE.elapsed}
+              className="peer sr-only"
+            />
             <Label
-              htmlFor="card"
-              className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+              htmlFor={TIMER_STYLE.elapsed}
+              className="text-white text-[15px] leading-none pl-[15px]"
             >
-              Elapsed Since
+              &nbsp;Elapsed Since
             </Label>
           </div>
           <div>
             <RadioGroupItem
-              value="paypal"
-              id="paypal"
+              value={TIMER_STYLE.remaining}
+              id={TIMER_STYLE.remaining}
               className="peer sr-only"
             />
             <Label
-              htmlFor="paypal"
-              className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+              htmlFor={TIMER_STYLE.remaining}
+              className="text-white text-[15px] leading-none pl-[15px]"
             >
-              Time left
+              &nbsp;Time left
             </Label>
           </div>
         </RadioGroup>
