@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint global-require: off, no-console: off, promise/always-return: off */
 
 /**
@@ -21,9 +22,12 @@ import {
   powerMonitor,
 } from 'electron';
 import Store from 'electron-store';
-import MenuBuilder from './menu';
-import { resolveHtmlPath } from './util';
-import { BREAK_NOTIFICATION_AT, DEFAULT_INTERVAL_DURATION } from './constants';
+import { resolveHtmlPath, getReadableTime } from './util';
+import {
+  BREAK_NOTIFICATION_AT,
+  DEFAULT_INTERVAL_DURATION,
+  TIMER_STYLE,
+} from './constants';
 
 type Schema = {
   session: {
@@ -33,7 +37,32 @@ type Schema = {
       startTime: { type: 'string' };
       remainingTime: { type: 'string' };
       paused: { type: 'boolean' };
+      pausedAt: { type: 'string' };
     };
+  };
+  launch_at_login: {
+    type: 'boolean';
+  };
+  start_timer: {
+    type: 'boolean';
+  };
+  session_duration: {
+    type: 'number';
+  };
+  break_duration: {
+    type: 'number';
+  };
+  pre_break_reminder_enabled: {
+    type: 'boolean';
+  };
+  pre_break_reminder_at: {
+    type: 'number';
+  };
+  reset_timer_enabled: {
+    type: 'boolean';
+  };
+  toolbar_timer_style: {
+    type: 'string';
   };
 };
 
@@ -45,12 +74,33 @@ const schema = {
       startTime: { type: 'string' },
       remainingTime: { type: 'string' },
       paused: { type: 'boolean' },
+      pausedAt: { type: 'string' },
     },
   },
+  launch_at_login: { type: 'boolean' },
+  start_timer: { type: 'boolean' },
+  session_duration: { type: 'number' },
+  break_duration: { type: 'number' },
+  pre_break_reminder_enabled: { type: 'boolean' },
+  pre_break_reminder_at: { type: 'number' },
+  reset_timer_enabled: { type: 'boolean' },
+  toolbar_timer_style: { type: 'string' },
 } as Schema;
 
-const store = new Store({ schema, defaults: { session: {} } });
-
+const store = new Store({
+  schema,
+  defaults: {
+    session: {},
+    launch_at_login: false,
+    start_timer: false,
+    session_duration: 1500,
+    break_duration: 30,
+    pre_break_reminder_enabled: true,
+    pre_break_reminder_at: 60,
+    reset_timer_enabled: true,
+    toolbar_timer_style: TIMER_STYLE.elapsed,
+  },
+});
 const imgData =
   'data:image/png;base64,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';
 
@@ -122,8 +172,8 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  // const menuBuilder = new MenuBuilder(mainWindow);
+  // menuBuilder.buildMenu();
 
   // Open urls in the user's browser
   mainWindow.webContents.setWindowOpenHandler((edata) => {
@@ -169,8 +219,8 @@ const createSettingsWindow = async () => {
     settingsWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(settingsWindow);
-  menuBuilder.buildMenu();
+  // const menuBuilder = new MenuBuilder(settingsWindow);
+  // menuBuilder.buildMenu();
 
   // Open urls in the user's browser
   settingsWindow.webContents.setWindowOpenHandler((edata) => {
@@ -186,6 +236,7 @@ interface Session {
   startTime: string;
   remainingTime: string;
   paused: boolean;
+  pausedAt: string;
 }
 
 let tray: Tray | null = null;
@@ -194,19 +245,33 @@ let trayMenu: any;
 
 function startSession({
   additionalTimeInSeconds,
+  reset,
 }: {
   additionalTimeInSeconds?: number;
+  reset?: boolean;
 }) {
   // createWindow();
 
-  const sessionDuration = DEFAULT_INTERVAL_DURATION * 1000; // in ms
+  let sessionDuration = DEFAULT_INTERVAL_DURATION * 1000; // in ms
+
   const { endTime: prevEndTime, remainingTime } = store.get(
     'session',
   ) as Session;
 
+  const session_duration = store.get('session_duration') as number;
+
+  if (session_duration) {
+    sessionDuration = session_duration * 1000;
+  }
+
   let finalDuration = sessionDuration;
 
-  if (remainingTime) {
+  if (reset) {
+    store.set('session', {
+      ...(store.get('session') as Session),
+      remainingTime: undefined,
+    });
+  } else if (remainingTime) {
     if (!Number.isNaN(Number(remainingTime))) {
       finalDuration = Number(remainingTime);
       store.set('session', {
@@ -245,10 +310,16 @@ function startSession({
   }
 
   sessionTimer = setInterval(() => {
+    // const idleState = powerMonitor.getSystemIdleState(5);
+    // const idleTime = powerMonitor.getSystemIdleTime();
+
+    // console.log({ idleState, idleTime });
+
     const { endTime: currEndTime } = store.get('session') as Session;
     const remaining = new Date(currEndTime).getTime() - Date.now();
 
     const remainingInMins = Math.floor(remaining / (1000 * 60));
+    const remainingInSecs = Math.floor(remaining / 1000);
 
     if (remainingInMins <= 0) {
       trayMenu[2].label = 'Break in less than a minute';
@@ -256,10 +327,25 @@ function startSession({
       trayMenu[2].label = `Your break begins in ${remainingInMins} min`;
     }
 
-    if (Math.floor(remaining / 1000) === BREAK_NOTIFICATION_AT) {
+    const preBreakReminderEnabled = store.get('pre_break_reminder_enabled');
+    const preBreakReminderAt = store.get('pre_break_reminder_at') as number;
+
+    let breakNotificationAt = BREAK_NOTIFICATION_AT;
+    if (preBreakReminderEnabled && preBreakReminderAt) {
+      breakNotificationAt = preBreakReminderAt;
+    }
+
+    if (
+      preBreakReminderEnabled &&
+      Math.floor(remaining / 1000) === breakNotificationAt
+    ) {
       new Notification({
         icon: nativeImage.createFromDataURL(imgData),
-        title: 'Only a min left',
+        title: `Only ${
+          breakNotificationAt / 60 > 1
+            ? breakNotificationAt / 60
+            : 'less than a'
+        } min left`,
         body: 'Get ready for a break!!',
       }).show();
     }
@@ -280,12 +366,19 @@ function startSession({
       const startTime = new Date(currStartTime).getTime();
       const elapsed = Date.now() - startTime;
 
+      const elapsedInSeconds = Math.floor(elapsed / 1000);
+
       if (remaining <= 0) {
         tray.setTitle('');
       } else {
         // bug here - this will also include the duration for which a session has been paused
+        const showElapsedTime =
+          store.get('toolbar_timer_style') === TIMER_STYLE.elapsed;
+
         tray.setTitle(
-          `Session active: ${Math.floor(elapsed / 1000)} seconds elapsed`,
+          `${getReadableTime(
+            showElapsedTime ? elapsedInSeconds : remainingInSecs,
+          )} ${showElapsedTime ? 'elapsed' : 'left'}`,
         );
       }
 
@@ -311,6 +404,8 @@ function pauseSession() {
   store.set('session', {
     ...(store.get('session') as Session),
     remainingTime: remaining.toString(),
+    paused: true,
+    pausedAt: new Date(Date.now()).toISOString(),
   });
 
   trayMenu[2].visible = false;
@@ -328,6 +423,23 @@ function pauseSession() {
   }
 }
 
+function takeBreakNow() {
+  trayMenu[0].visible = true;
+  trayMenu[2].visible = false;
+  clearInterval(sessionTimer!);
+  sessionTimer = null;
+
+  shell.beep();
+
+  const contextMenu = Menu.buildFromTemplate(trayMenu);
+  if (tray) {
+    tray.setContextMenu(contextMenu);
+    tray.setTitle('');
+  }
+
+  createWindow();
+}
+
 trayMenu = [
   {
     label: 'Start session',
@@ -341,7 +453,11 @@ trayMenu = [
     visible: sessionTimer !== null,
     type: 'submenu',
     submenu: Menu.buildFromTemplate([
-      { label: 'Start this break now', type: 'normal' },
+      {
+        label: 'Start this break now',
+        type: 'normal',
+        click: () => takeBreakNow(),
+      },
       { type: 'separator' },
       {
         label: 'Add 1 minute',
@@ -355,12 +471,12 @@ trayMenu = [
       },
       { type: 'separator' },
       { label: 'Pause session', type: 'normal', click: () => pauseSession() },
-      {
-        label: 'Skip this break',
-        type: 'normal',
-        click: () =>
-          startSession({ additionalTimeInSeconds: DEFAULT_INTERVAL_DURATION }),
-      },
+      // {
+      //   label: 'Skip this break',
+      //   type: 'normal',
+      //   click: () =>
+      //     startSession({ additionalTimeInSeconds: DEFAULT_INTERVAL_DURATION }),
+      // },
     ]),
   },
   { type: 'separator' },
@@ -396,6 +512,9 @@ app
   .then(() => {
     // createWindow();
     createTray();
+    if (store.get('start_timer')) {
+      startSession({});
+    }
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
@@ -414,9 +533,28 @@ powerMonitor.on('lock-screen', () => {
 });
 
 powerMonitor.on('unlock-screen', () => {
-  console.log('unlock...');
+  const { paused: wasSessionPaused } = store.get('session') as Session;
 
-  startSession({});
+  const { pausedAt } = store.get('session') as Session;
+  let pausedSinceInSecs = 0;
+  if (pausedAt) {
+    pausedSinceInSecs = (Date.now() - new Date(pausedAt).getTime()) / 1000;
+  }
+
+  if (wasSessionPaused) {
+    store.set('session', {
+      ...(store.get('session') as Session),
+      pausedAt: undefined,
+    });
+  }
+
+  if (wasSessionPaused) {
+    if (pausedSinceInSecs < 5 * 60) {
+      startSession({});
+    } else {
+      startSession({ reset: true });
+    }
+  }
 });
 
 // IPC Listeners
@@ -424,7 +562,17 @@ ipcMain.on('electron-store-get', async (event, val) => {
   event.returnValue = store.get(val);
 });
 ipcMain.on('electron-store-set', async (_, key, val) => {
+  if (key === 'session_duration') {
+    const prevSessionDuration = store.get('session_duration') as number;
+    const diffInSecs = val - prevSessionDuration;
+    if (diffInSecs > 0) {
+      startSession({ additionalTimeInSeconds: diffInSecs });
+    }
+  }
   store.set(key, val);
+  if (key === 'launch_at_login') {
+    app.setLoginItemSettings({ openAtLogin: val });
+  }
 });
 
 ipcMain.on('start-session', async () => {
