@@ -1,4 +1,5 @@
-import { Home, Package, Package2, ShoppingCart } from 'lucide-react';
+import { Soup, Settings as SettingsIcon, Eye } from 'lucide-react';
+
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Button } from './components/ui/button';
@@ -28,7 +29,6 @@ function Settings() {
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <div className="flex items-center gap-2 font-semibold">
-              <Package2 className="h-6 w-6" />
               <span className="">Take a Break</span>
             </div>
           </div>
@@ -41,7 +41,7 @@ function Settings() {
                   activeMenu === 'general' ? 'bg-muted text-primary' : ''
                 }`}
               >
-                <Home className="h-4 w-4" />
+                <SettingsIcon className="h-4 w-4" />
                 General
               </Link>
               <Link
@@ -51,7 +51,7 @@ function Settings() {
                   activeMenu === 'focus' ? 'bg-muted text-primary' : ''
                 }`}
               >
-                <ShoppingCart className="h-4 w-4" />
+                <Eye className="h-4 w-4" />
                 Focus mode
               </Link>
               <Link
@@ -61,7 +61,7 @@ function Settings() {
                   activeMenu === 'rest' ? 'bg-muted text-primary' : ''
                 }`}
               >
-                <Package className="h-4 w-4" />
+                <Soup className="h-4 w-4" />
                 Rest mode
               </Link>
             </nav>
