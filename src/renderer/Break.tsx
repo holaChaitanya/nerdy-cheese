@@ -33,32 +33,24 @@ function Break() {
         }}
         className="relative flex flex-col gap-4 items-center justify-center px-4"
       >
-        {/* <h2>{seconds > 0 && <p>Timer: {seconds} seconds</p>}</h2>
-        <h1>Your eyes need rest :)</h1>
-        <div className="Hello">
+        <div className="text-2xl font-medium text-white text-center">
+          {seconds > 0 && <p>{seconds} seconds</p>}
+        </div>
+        <div className="text-3xl md:text-7xl font-bold text-white text-center">
+          Your eyes need rest :)
+        </div>
+        <div className="font-extralight text-base md:text-4xl text-neutral-200 py-4">
           World looks more beautiful when your eyes are healthy
         </div>
         <button
           type="button"
+          className=" bg-white rounded-full w-fit text-black px-4 py-2"
           onClick={() => {
             window.electron.ipcRenderer.sendMessage('start-session');
             window.close();
           }}
         >
-          Skip the break
-        </button> */}
-
-        <div className="text-3xl md:text-7xl font-bold dark:text-white text-center">
-          Background lights are cool you know.
-        </div>
-        <div className="font-extralight text-base md:text-4xl dark:text-neutral-200 py-4">
-          And this, is chemical burn.
-        </div>
-        <button
-          type="button"
-          className="bg-black dark:bg-white rounded-full w-fit text-white dark:text-black px-4 py-2"
-        >
-          Debug now
+          Skip this break
         </button>
       </motion.div>
     </AuroraBackground>
