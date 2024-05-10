@@ -72,6 +72,7 @@ function Break() {
           onClick={() => {
             window.electron.ipcRenderer.sendMessage('start-session');
             window.close();
+            window.electron.ipcRenderer.sendMessage('skip-break');
           }}
         >
           Skip this break

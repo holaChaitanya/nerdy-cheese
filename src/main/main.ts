@@ -20,6 +20,7 @@ import {
   nativeImage,
   Notification,
   powerMonitor,
+  screen,
 } from 'electron';
 import Store from 'electron-store';
 import { resolveHtmlPath, getReadableTime } from './util';
@@ -139,47 +140,55 @@ const createWindow = async () => {
     await installExtensions();
   }
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
-    height: 728,
-    fullscreen: true,
-    frame: false,
-    // icon: getAssetPath('icon.png'),
-    icon: nativeImage.createFromDataURL(imgData),
-    webPreferences: {
-      devTools: false,
-      preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
-    },
-  });
+  const displays = screen.getAllDisplays();
+  displays.forEach((display) => {
+    const { x, y } = display.bounds;
 
-  mainWindow.loadURL(resolveHtmlPath('index.html', 'break'));
+    mainWindow = new BrowserWindow({
+      title: 'break',
+      show: false,
+      width: 1024,
+      height: 728,
+      fullscreen: true,
+      frame: false,
+      x,
+      y,
+      // icon: getAssetPath('icon.png'),
+      icon: nativeImage.createFromDataURL(imgData),
+      webPreferences: {
+        devTools: false,
+        preload: app.isPackaged
+          ? path.join(__dirname, 'preload.js')
+          : path.join(__dirname, '../../.erb/dll/preload.js'),
+      },
+    });
 
-  mainWindow.on('ready-to-show', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    if (process.env.START_MINIMIZED) {
-      mainWindow.minimize();
-    } else {
-      mainWindow.show();
-    }
-  });
+    mainWindow.loadURL(resolveHtmlPath('index.html', 'break'));
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+    mainWindow.on('ready-to-show', () => {
+      if (!mainWindow) {
+        throw new Error('"mainWindow" is not defined');
+      }
+      if (process.env.START_MINIMIZED) {
+        mainWindow.minimize();
+      } else {
+        mainWindow.show();
+      }
+    });
+
+    mainWindow.on('closed', () => {
+      mainWindow = null;
+    });
   });
 
   // const menuBuilder = new MenuBuilder(mainWindow);
   // menuBuilder.buildMenu();
 
   // Open urls in the user's browser
-  mainWindow.webContents.setWindowOpenHandler((edata) => {
-    shell.openExternal(edata.url);
-    return { action: 'deny' };
-  });
+  // mainWindow.webContents.setWindowOpenHandler((edata) => {
+  //   shell.openExternal(edata.url);
+  //   return { action: 'deny' };
+  // });
 };
 
 const createSettingsWindow = async () => {
@@ -196,6 +205,7 @@ const createSettingsWindow = async () => {
   }
 
   settingsWindow = new BrowserWindow({
+    title: 'settings',
     show: true,
     width: 1024,
     height: 728,
@@ -587,4 +597,14 @@ ipcMain.on('electron-store-set', async (_, key, val) => {
 ipcMain.on('start-session', async () => {
   shell.beep();
   startSession({});
+});
+
+ipcMain.on('skip-break', async () => {
+  let res: any = [];
+  if (mainWindow) {
+    res = BrowserWindow.getAllWindows();
+    res = res.filter(({ title }: { title: string }) => title !== 'break');
+    // todo: bug here which closes all the window and not just the break window
+    res.forEach((win: any) => win.close());
+  }
 });
