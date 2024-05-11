@@ -609,6 +609,7 @@ powerMonitor.on('unlock-screen', () => {
       startSession({});
     } else {
       startSession({ reset: true });
+      store.set('short_break_count', 0);
     }
   }
 });
