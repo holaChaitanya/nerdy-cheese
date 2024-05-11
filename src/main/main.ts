@@ -153,6 +153,7 @@ const createWindow = async () => {
       frame: false,
       x,
       y,
+      kiosk: true,
       // icon: getAssetPath('icon.png'),
       icon: nativeImage.createFromDataURL(imgData),
       webPreferences: {
