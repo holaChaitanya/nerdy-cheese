@@ -8,8 +8,13 @@ function ViewManager() {
   const w = window.location;
 
   const isSettings = w.search === '?settings';
+  const isLongBreak = w.search === '?long-break';
 
-  return isSettings ? <Settings /> : <Break />;
+  if (isSettings) {
+    return <Settings />;
+  }
+
+  return <Break isLongBreak={isLongBreak} />;
 }
 
 export default function App() {

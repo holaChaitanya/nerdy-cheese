@@ -160,6 +160,20 @@ const createWindow = async () => {
     await installExtensions();
   }
 
+  const longBreakEnabled = store.get('long_break_enabled') as boolean;
+  const longBreakAfter = store.get('long_break_after') as number;
+  const shortBreakCount = store.get('short_break_count') as number;
+
+  const isThisLongBreak = longBreakEnabled
+    ? shortBreakCount === longBreakAfter
+    : false;
+
+  if (isThisLongBreak) {
+    store.set('short_break_count', 0);
+  } else {
+    store.set('short_break_count', shortBreakCount + 1);
+  }
+
   const displays = screen.getAllDisplays();
   displays.forEach((display) => {
     const { x, y } = display.bounds;
@@ -184,7 +198,9 @@ const createWindow = async () => {
       },
     });
 
-    mainWindow.loadURL(resolveHtmlPath('index.html', 'break'));
+    mainWindow.loadURL(
+      resolveHtmlPath('index.html', isThisLongBreak ? 'long-break' : 'break'),
+    );
 
     mainWindow.on('ready-to-show', () => {
       if (!mainWindow) {

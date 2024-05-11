@@ -25,10 +25,15 @@ function getReadableTime(durationInSeconds: number) {
   return result;
 }
 
-function Break() {
+function Break({ isLongBreak }: { isLongBreak: boolean }) {
   const breakDurationInStore = window.electron.store.get('break_duration');
+  const longBreakDurationInStore = window.electron.store.get(
+    'long_break_duration',
+  );
   const [seconds, setSeconds] = useState<number>(
-    breakDurationInStore ?? DEFAULT_BREAK_DURATION,
+    isLongBreak
+      ? longBreakDurationInStore ?? DEFAULT_BREAK_DURATION
+      : breakDurationInStore ?? DEFAULT_BREAK_DURATION,
   );
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,6 +64,9 @@ function Break() {
       >
         <div className="text-2xl font-medium text-white text-center">
           {seconds > 0 && <p>{getReadableTime(seconds)}</p>}
+        </div>
+        <div className="text-3xl md:text-7xl font-bold text-white text-center">
+          {isLongBreak ? 'Long break' : 'Short break'}
         </div>
         <div className="text-3xl md:text-7xl font-bold text-white text-center">
           Your eyes need rest :)
