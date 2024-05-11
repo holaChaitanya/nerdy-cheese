@@ -19,6 +19,7 @@ import { IdleTimeSettings } from './idleTimeSettings';
 // import { MeetingSetting } from './meetingSettings';
 import { ShortBreakSettings } from './shortBreakSettings';
 import { PreBreakSettings } from './preBreakSettings';
+import { LongBreakSettings } from './longBreakSettings';
 
 function Settings() {
   const [activeMenu, setActiveMenu] = useState('general');
@@ -118,6 +119,9 @@ function Settings() {
             <>
               <div className="flex items-center justify-center [&>div]:w-full">
                 <ShortBreakSettings />
+              </div>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <LongBreakSettings />
               </div>
               <div className="flex items-center justify-center [&>div]:w-full">
                 <PreBreakSettings />
