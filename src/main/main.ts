@@ -65,6 +65,18 @@ type Schema = {
   toolbar_timer_style: {
     type: 'string';
   };
+  long_break_enabled: {
+    type: 'boolean';
+  };
+  long_break_duration: {
+    type: 'number';
+  };
+  long_break_after: {
+    type: 'number';
+  };
+  short_break_count: {
+    type: 'number';
+  };
 };
 
 const schema = {
@@ -86,6 +98,10 @@ const schema = {
   pre_break_reminder_at: { type: 'number' },
   reset_timer_enabled: { type: 'boolean' },
   toolbar_timer_style: { type: 'string' },
+  long_break_enabled: { type: 'boolean' },
+  long_break_duration: { type: 'number' },
+  long_break_after: { type: 'number' },
+  short_break_count: { type: 'number' },
 } as Schema;
 
 const store = new Store({
@@ -100,6 +116,10 @@ const store = new Store({
     pre_break_reminder_at: 60,
     reset_timer_enabled: true,
     toolbar_timer_style: TIMER_STYLE.elapsed,
+    long_break_enabled: true,
+    long_break_duration: 120,
+    long_break_after: 2,
+    short_break_count: 0,
   },
 });
 const imgData =
