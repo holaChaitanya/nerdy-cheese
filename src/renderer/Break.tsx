@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { DEFAULT_BREAK_DURATION } from '../main/constants';
 import { AuroraBackground } from './components/ui/aurora-background';
+import { COPIES } from './constants';
 
 function getReadableTime(durationInSeconds: number) {
   const hours = Math.floor(durationInSeconds / 3600);
@@ -25,6 +26,8 @@ function getReadableTime(durationInSeconds: number) {
 
   return result;
 }
+
+const copy = COPIES[Math.floor(Math.random() * COPIES.length)];
 
 function Break({ isLongBreak }: { isLongBreak: boolean }) {
   const breakDurationInStore = window.electron.store.get('break_duration');
@@ -93,14 +96,14 @@ function Break({ isLongBreak }: { isLongBreak: boolean }) {
         <div className="text-2xl font-medium text-white text-center">
           {seconds > 0 && <p>{getReadableTime(seconds)}</p>}
         </div>
-        <div className="text-3xl md:text-7xl font-bold text-white text-center">
+        {/* <div className="text-3xl md:text-7xl font-bold text-white text-center">
           {isLongBreak ? 'Long break' : 'Short break'}
-        </div>
+        </div> */}
         <div className="text-3xl md:text-7xl font-bold text-white text-center">
-          Your eyes need rest :)
+          {copy.title}
         </div>
         <div className="font-extralight text-base md:text-4xl text-neutral-200 py-4">
-          World looks more beautiful when your eyes are healthy
+          {copy.subtitle}
         </div>
         <button
           type="button"
