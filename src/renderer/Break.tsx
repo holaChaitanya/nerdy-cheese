@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import { DEFAULT_BREAK_DURATION } from '../main/constants';
 import { AuroraBackground } from './components/ui/aurora-background';
 
@@ -49,6 +50,33 @@ function Break({ isLongBreak }: { isLongBreak: boolean }) {
       window.close();
     }
   }, [seconds]);
+
+  useEffect(() => {
+    const end = Date.now() + 1.5 * 1000;
+
+    const colors = ['#bb0000', '#ffffff'];
+
+    (function frame() {
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors,
+      });
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors,
+      });
+
+      if (Date.now() < end && isLongBreak) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  }, [isLongBreak]);
 
   return (
     <AuroraBackground>
