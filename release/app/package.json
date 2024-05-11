@@ -1,12 +1,12 @@
 {
-  "name": "electron-react-boilerplate",
+  "name": "Take a Break",
   "version": "0.1.1",
   "description": "A foundation for scalable desktop apps",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "Chaitanya Aaditya",
+    "email": "ca.chaitanya.2204@gmail.com",
+    "url": "https://github.com/holaChaitanya"
   },
   "main": "./dist/main/main.js",
   "scripts": {
