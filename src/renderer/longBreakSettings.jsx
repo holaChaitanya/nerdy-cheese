@@ -67,6 +67,7 @@ export function LongBreakSettings() {
               setLongBreakDuration(val);
               window.electron.store.set('long_break_duration', val);
             }}
+            disabled={!longBreakEnabled}
           >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Duration" />
@@ -102,6 +103,7 @@ export function LongBreakSettings() {
               setLongBreakAfter(val);
               window.electron.store.set('long_break_after', val);
             }}
+            disabled={!longBreakEnabled}
           >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Duration" />

@@ -66,6 +66,7 @@ export function PreBreakSettings() {
               setPreBreakReminderAt(val);
               window.electron.store.set('pre_break_reminder_at', val);
             }}
+            disabled={!preBreakReminderEnabled}
           >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Duration" />
