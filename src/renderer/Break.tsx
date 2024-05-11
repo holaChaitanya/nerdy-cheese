@@ -5,23 +5,26 @@ import { DEFAULT_BREAK_DURATION } from '../main/constants';
 import { AuroraBackground } from './components/ui/aurora-background';
 import { COPIES } from './constants';
 
-function getReadableTime(durationInSeconds: number) {
+function getTime(durationInSeconds: number) {
   const hours = Math.floor(durationInSeconds / 3600);
   const minutes = Math.floor((durationInSeconds % 3600) / 60);
   const seconds = durationInSeconds % 60;
 
-  let result = '';
+  const result = { hrs: 0, mins: 0, secs: 0 };
 
   if (hours > 0) {
-    result += `${hours}h`;
+    // result += `${hours}h`;
+    result.hrs = hours;
   }
 
   if (minutes > 0) {
-    result += `${minutes}m`;
+    // result += `${minutes}m`;
+    result.mins = minutes;
   }
 
   if (seconds > 0) {
-    result += `${seconds}s`;
+    // result += `${seconds}s`;
+    result.secs = seconds;
   }
 
   return result;
@@ -81,6 +84,8 @@ function Break({ isLongBreak }: { isLongBreak: boolean }) {
     })();
   }, [isLongBreak]);
 
+  const { mins, secs } = getTime(seconds);
+
   return (
     <AuroraBackground>
       <motion.div
@@ -93,8 +98,23 @@ function Break({ isLongBreak }: { isLongBreak: boolean }) {
         }}
         className="relative flex flex-col gap-4 items-center justify-center px-4"
       >
-        <div className="text-2xl font-medium text-white text-center">
-          {seconds > 0 && <p>{getReadableTime(seconds)}</p>}
+        <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
+          {mins ? (
+            <div className="flex flex-col p-2 rounded-box text-neutral-content">
+              <span className="countdown font-mono text-5xl">
+                <span style={{ '--value': mins }} />
+              </span>
+              mins
+            </div>
+          ) : undefined}
+          {secs ? (
+            <div className="flex flex-col p-2 rounded-box text-neutral-content">
+              <span className="countdown font-mono text-5xl">
+                <span style={{ '--value': secs }} />
+              </span>
+              secs
+            </div>
+          ) : undefined}
         </div>
         {/* <div className="text-3xl md:text-7xl font-bold text-white text-center">
           {isLongBreak ? 'Long break' : 'Short break'}
