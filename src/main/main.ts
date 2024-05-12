@@ -438,6 +438,7 @@ function startSession({
           `${getReadableTime(
             showElapsedTime ? elapsedInSeconds : remainingInSecs,
           )} ${showElapsedTime ? 'elapsed' : 'left'}`,
+          { fontType: 'monospacedDigit' },
         );
       }
 
@@ -478,7 +479,9 @@ function pauseSession() {
     const elapsed = Date.now() - startTime;
 
     tray.setContextMenu(contextMenu);
-    tray.setTitle(`Session paused at ${Math.floor(elapsed / 1000)} secs`);
+    tray.setTitle(`Session paused at ${Math.floor(elapsed / 1000)} secs`, {
+      fontType: 'monospacedDigit',
+    });
   }
 }
 
