@@ -26,16 +26,20 @@ export function getReadableTime(durationInSeconds: number) {
 
   let result = '';
 
+  const formattedHours = hours.toString().padStart(2, '0');
+  const formattedMinutes = minutes.toString().padStart(2, '0');
+  const formattedSeconds = seconds.toString().padStart(2, '0');
+
   if (hours > 0) {
-    result += `${hours}h`;
+    result += `${formattedHours}h`;
   }
 
   if (minutes > 0) {
-    result += `${minutes}m`;
+    result += `${formattedMinutes}m`;
   }
 
   if (seconds > 0) {
-    result += `${seconds}s`;
+    result += `${formattedSeconds}s`;
   }
 
   return result;
