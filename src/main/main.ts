@@ -259,6 +259,11 @@ const createSettingsWindow = async () => {
 
   settingsWindow.loadURL(resolveHtmlPath('index.html', 'settings'));
 
+  // eslint-disable-next-line promise/catch-or-return
+  app.dock.show().then(() => {
+    app.dock.setIcon(nativeImage.createFromDataURL(imgData));
+  });
+
   settingsWindow.on('ready-to-show', () => {
     if (!settingsWindow) {
       throw new Error('"settingsWindow" is not defined');
@@ -271,6 +276,7 @@ const createSettingsWindow = async () => {
   });
 
   settingsWindow.on('closed', () => {
+    app.dock.hide();
     settingsWindow = null;
   });
 
@@ -562,7 +568,7 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.dock.setIcon(nativeImage.createFromDataURL(imgData));
+app.dock.hide();
 
 app
   .whenReady()
