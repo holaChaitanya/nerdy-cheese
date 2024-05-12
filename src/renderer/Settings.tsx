@@ -20,6 +20,7 @@ import { IdleTimeSettings } from './idleTimeSettings';
 import { ShortBreakSettings } from './shortBreakSettings';
 import { PreBreakSettings } from './preBreakSettings';
 import { LongBreakSettings } from './longBreakSettings';
+import { imgData } from '../constants';
 
 function Settings() {
   const [activeMenu, setActiveMenu] = useState('general');
@@ -30,6 +31,7 @@ function Settings() {
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <div className="flex items-center gap-2 font-semibold">
+              <img alt="Take a Break" src={imgData} width={24} height={24} />
               <span className="">Take a Break</span>
             </div>
           </div>
