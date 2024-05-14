@@ -474,12 +474,12 @@ function pauseSession() {
 
   const contextMenu = Menu.buildFromTemplate(trayMenu);
   if (tray) {
-    const { startTime: currStartTime } = store.get('session') as Session;
-    const startTime = new Date(currStartTime).getTime();
-    const elapsed = Date.now() - startTime;
+    // const { startTime: currStartTime } = store.get('session') as Session;
+    // const startTime = new Date(currStartTime).getTime();
+    // const elapsed = Date.now() - startTime;
 
     tray.setContextMenu(contextMenu);
-    tray.setTitle(`Session paused at ${Math.floor(elapsed / 1000)} secs`, {
+    tray.setTitle(`Session paused`, {
       fontType: 'monospacedDigit',
     });
   }
