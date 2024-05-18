@@ -120,15 +120,19 @@ function Settings() {
               <div className="flex items-center justify-center [&>div]:w-full">
                 <StartupSettings />
               </div>
+              <Separator className="my-4" />
               <div className="flex items-center justify-center [&>div]:w-full">
                 <TimeLabelSettings />
               </div>
+              <Separator className="my-4" />
               <div className="flex items-center justify-center [&>div]:w-full">
                 <UpdateSettings />
               </div>
+              <Separator className="my-4" />
               <div className="flex items-center justify-center [&>div]:w-full">
                 <AnalyticSettings />
               </div>
+              <Separator className="my-4" />
             </TabsContent>
           </Tabs>
           {activeMenu === 'general' && (
