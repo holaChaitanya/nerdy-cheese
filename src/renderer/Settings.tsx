@@ -103,15 +103,18 @@ function Settings() {
                 <FocusSettings />
               </div>
               <Separator className="my-4" />
-              <div className="flex items-center justify-center [&>div]:w-full">
+              <div className="flex items-center [&>div]:w-full">
                 <ShortBreakSettings />
               </div>
+              <Separator className="my-4" />
               <div className="flex items-center justify-center [&>div]:w-full">
                 <LongBreakSettings />
               </div>
+              <Separator className="my-4" />
               <div className="flex items-center justify-center [&>div]:w-full">
                 <PreBreakSettings />
               </div>
+              <Separator className="my-4" />
             </TabsContent>
             <TabsContent value="system">
               <div className="flex items-center justify-center [&>div]:w-full">
