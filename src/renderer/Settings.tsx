@@ -98,7 +98,7 @@ function Settings() {
               <TabsTrigger value="system">System</TabsTrigger>
             </TabsList>
             <TabsContent value="general">
-              <div className="flex items-center justify-center">
+              <div className="flex items-center [&>div]:w-full">
                 <FocusSettings />
               </div>
               <div className="flex items-center justify-center [&>div]:w-full">
