@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Soup, Settings as SettingsIcon, Eye } from 'lucide-react';
 
 import { Link } from 'react-router-dom';
@@ -10,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from './components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { StartupSettings } from './startupSettings';
 // import { UpdateSettings } from './updateSettings';
 // import { AnalyticSettings } from './analyticSettings';
@@ -21,13 +23,15 @@ import { ShortBreakSettings } from './shortBreakSettings';
 import { PreBreakSettings } from './preBreakSettings';
 import { LongBreakSettings } from './longBreakSettings';
 import { imgData } from '../constants';
+import { AnalyticSettings } from './analyticSettings';
+import { UpdateSettings } from './updateSettings';
 
 function Settings() {
-  const [activeMenu, setActiveMenu] = useState('general');
+  const [activeMenu, setActiveMenu] = useState();
 
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
+    <div className="grid min-h-screen w-full bg-muted/40">
+      {/* <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <div className="flex items-center gap-2 font-semibold">
@@ -85,14 +89,51 @@ function Settings() {
             </Card>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-col">
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          {activeMenu === 'general' && (
-            <>
+          <Tabs defaultValue="account" className="">
+            <TabsList>
+              <TabsTrigger value="general">General</TabsTrigger>
+              <TabsTrigger value="system">System</TabsTrigger>
+            </TabsList>
+            <TabsContent value="general">
+              <div className="flex items-center justify-center">
+                <FocusSettings />
+              </div>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <IdleTimeSettings />
+              </div>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <ShortBreakSettings />
+              </div>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <LongBreakSettings />
+              </div>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <PreBreakSettings />
+              </div>
+            </TabsContent>
+            <TabsContent value="system">
               <div className="flex items-center justify-center [&>div]:w-full">
                 <StartupSettings />
               </div>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <TimeLabelSettings />
+              </div>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <UpdateSettings />
+              </div>
+              <div className="flex items-center justify-center [&>div]:w-full">
+                <AnalyticSettings />
+              </div>
+            </TabsContent>
+          </Tabs>
+          {activeMenu === 'general' && (
+            <>
+              {/* <div className="flex items-center justify-center [&>div]:w-full">
+                <StartupSettings />
+              </div> */}
               {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <UpdateSettings />
               </div> */}
@@ -103,15 +144,15 @@ function Settings() {
           )}
           {activeMenu === 'focus' && (
             <>
-              <div className="flex items-center justify-center [&>div]:w-full">
+              {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <FocusSettings />
-              </div>
-              <div className="flex items-center justify-center [&>div]:w-full">
+              </div> */}
+              {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <TimeLabelSettings />
-              </div>
-              <div className="flex items-center justify-center [&>div]:w-full">
+              </div> */}
+              {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <IdleTimeSettings />
-              </div>
+              </div> */}
               {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <MeetingSetting />
               </div> */}
@@ -119,15 +160,15 @@ function Settings() {
           )}
           {activeMenu === 'rest' && (
             <>
-              <div className="flex items-center justify-center [&>div]:w-full">
+              {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <ShortBreakSettings />
-              </div>
-              <div className="flex items-center justify-center [&>div]:w-full">
+              </div> */}
+              {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <LongBreakSettings />
-              </div>
-              <div className="flex items-center justify-center [&>div]:w-full">
+              </div> */}
+              {/* <div className="flex items-center justify-center [&>div]:w-full">
                 <PreBreakSettings />
-              </div>
+              </div> */}
             </>
           )}
         </main>
