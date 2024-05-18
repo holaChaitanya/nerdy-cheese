@@ -11,11 +11,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from './components/ui/select';
+import { Switch } from './components/ui/switch';
 
 export function FocusSettings() {
   const sessionDurationInStore = window.electron.store.get('session_duration');
+  const resetTimerEnabledInStore = window.electron.store.get(
+    'reset_timer_enabled',
+  );
   const [sessionDuration, setSessionDuration] = useState(
     sessionDurationInStore,
+  );
+  const [resetTimerEnabled, setResetTimerEnabled] = useState(
+    resetTimerEnabledInStore,
   );
 
   return (
@@ -72,6 +79,23 @@ export function FocusSettings() {
               </SelectGroup>
             </SelectContent>
           </Select>
+        </div>
+        <div className="flex items-center justify-between space-x-2">
+          <Label
+            htmlFor="reset_timer_enabled"
+            className="flex flex-col space-y-1"
+          >
+            <span>Reset timer after 5 min of inactivity</span>
+          </Label>
+          <Switch
+            id="reset_timer_enabled"
+            key="reset_timer_enabled"
+            checked={resetTimerEnabled}
+            onCheckedChange={(checked) => {
+              setResetTimerEnabled(checked);
+              window.electron.store.set('reset_timer_enabled', checked);
+            }}
+          />
         </div>
       </CardContent>
     </Card>

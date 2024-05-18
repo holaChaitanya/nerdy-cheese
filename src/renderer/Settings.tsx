@@ -102,9 +102,6 @@ function Settings() {
                 <FocusSettings />
               </div>
               <div className="flex items-center justify-center [&>div]:w-full">
-                <IdleTimeSettings />
-              </div>
-              <div className="flex items-center justify-center [&>div]:w-full">
                 <ShortBreakSettings />
               </div>
               <div className="flex items-center justify-center [&>div]:w-full">
