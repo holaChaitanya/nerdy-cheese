@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from './components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
+import { Separator } from './components/ui/separator';
 import { StartupSettings } from './startupSettings';
 // import { UpdateSettings } from './updateSettings';
 // import { AnalyticSettings } from './analyticSettings';
@@ -101,6 +102,7 @@ function Settings() {
               <div className="flex items-center [&>div]:w-full">
                 <FocusSettings />
               </div>
+              <Separator className="my-4" />
               <div className="flex items-center justify-center [&>div]:w-full">
                 <ShortBreakSettings />
               </div>
