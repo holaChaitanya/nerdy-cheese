@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Soup, Settings as SettingsIcon, Eye } from 'lucide-react';
+import { Soup, Settings as SettingsIcon, Eye, Monitor } from 'lucide-react';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -92,14 +92,41 @@ function Settings() {
         </div>
       </div> */}
       <div className="flex flex-col">
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+        <main className="flex flex-1 flex-col p-4 lg:p-6">
           <Tabs defaultValue="account" className="">
             <TabsList>
               <TabsTrigger value="general">General</TabsTrigger>
               <TabsTrigger value="system">System</TabsTrigger>
             </TabsList>
             <TabsContent value="general">
-              <div className="flex items-center [&>div]:w-full">
+              <Card className="mt-8">
+                <CardHeader>
+                  <CardTitle>Account</CardTitle>
+                  <CardDescription>
+                    Make changes to your account here. Click save when you are
+                    done.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div className="flex items-start [&>div]:w-full">
+                    <Monitor />
+                    <FocusSettings />
+                  </div>
+                  <Separator className="my-4" />
+                  <div className="flex items-center [&>div]:w-full">
+                    <ShortBreakSettings />
+                  </div>
+                  <Separator className="my-4" />
+                  <div className="flex items-center justify-center [&>div]:w-full">
+                    <LongBreakSettings />
+                  </div>
+                  <Separator className="my-4" />
+                  <div className="flex items-center justify-center [&>div]:w-full">
+                    <PreBreakSettings />
+                  </div>
+                </CardContent>
+              </Card>
+              {/* <div className="flex items-center [&>div]:w-full">
                 <FocusSettings />
               </div>
               <Separator className="my-4" />
@@ -114,10 +141,10 @@ function Settings() {
               <div className="flex items-center justify-center [&>div]:w-full">
                 <PreBreakSettings />
               </div>
-              <Separator className="my-4" />
+              <Separator className="my-4" /> */}
             </TabsContent>
             <TabsContent value="system">
-              <div className="flex items-center justify-center [&>div]:w-full">
+              <div className="flex items-center justify-center [&>div]:w-full mt-8">
                 <StartupSettings />
               </div>
               <Separator className="my-4" />
