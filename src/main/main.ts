@@ -23,6 +23,7 @@ import {
   screen,
 } from 'electron';
 import Store from 'electron-store';
+import playSound from 'play-sound';
 import { resolveHtmlPath, getReadableTime } from './util';
 import {
   BREAK_NOTIFICATION_AT,
@@ -30,6 +31,15 @@ import {
   TIMER_STYLE,
 } from './constants';
 import { imgData } from '../constants';
+
+const audioPlayer = playSound({});
+
+const playAudio = () => {
+  const soundPath = path.join(__dirname, 'chime.mp3');
+  audioPlayer.play(soundPath, (err: Error | null) => {
+    if (err) console.error('Failed to play sound:', err);
+  });
+};
 
 type Schema = {
   session: {
@@ -433,7 +443,8 @@ function startSession({
       clearInterval(sessionTimer!);
       sessionTimer = null;
 
-      shell.beep();
+      // shell.beep();
+      playAudio();
       createWindow();
     }
 
@@ -509,7 +520,8 @@ function takeBreakNow() {
   clearInterval(sessionTimer!);
   sessionTimer = null;
 
-  shell.beep();
+  // shell.beep();
+  playAudio();
 
   const contextMenu = Menu.buildFromTemplate(trayMenu);
   if (tray) {
@@ -659,7 +671,8 @@ ipcMain.on('electron-store-set', async (_, key, val) => {
 });
 
 ipcMain.on('start-session', async (_, args) => {
-  shell.beep();
+  // shell.beep();
+  playAudio();
   startSession({ sessionDurationInSeconds: args?.snoozedForInSecs });
 });
 
