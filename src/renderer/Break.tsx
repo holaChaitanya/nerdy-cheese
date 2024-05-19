@@ -136,6 +136,19 @@ function Break({ isLongBreak }: { isLongBreak: boolean }) {
         >
           Skip this break
         </button>
+        <button
+          type="button"
+          className=" bg-white rounded-full w-fit text-black px-4 py-2"
+          onClick={() => {
+            window.electron.ipcRenderer.sendMessage('start-session', {
+              snoozedForInSecs: 5 * 60,
+            });
+            window.close();
+            window.electron.ipcRenderer.sendMessage('skip-break');
+          }}
+        >
+          Snooze for 5 minutes
+        </button>
       </motion.div>
     </AuroraBackground>
   );

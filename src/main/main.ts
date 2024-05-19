@@ -307,11 +307,15 @@ let trayMenu: any;
 function startSession({
   additionalTimeInSeconds,
   reset,
+  sessionDurationInSeconds,
 }: {
   additionalTimeInSeconds?: number;
   reset?: boolean;
+  sessionDurationInSeconds?: number;
 }) {
-  let sessionDuration = DEFAULT_INTERVAL_DURATION * 1000; // in ms
+  let sessionDuration = sessionDurationInSeconds
+    ? sessionDurationInSeconds * 1000
+    : DEFAULT_INTERVAL_DURATION * 1000; // in ms
 
   const { endTime: prevEndTime, remainingTime } = store.get(
     'session',
@@ -319,7 +323,18 @@ function startSession({
 
   const session_duration = store.get('session_duration') as number;
 
-  if (session_duration) {
+  if (sessionDurationInSeconds) {
+    const shortBreakCount = store.get('short_break_count') as number;
+    const longBreakAfter = store.get('long_break_after') as number;
+
+    if (shortBreakCount === 0) {
+      store.set('short_break_count', longBreakAfter);
+    } else {
+      store.set('short_break_count', shortBreakCount - 1);
+    }
+  }
+
+  if (session_duration && !sessionDurationInSeconds) {
     sessionDuration = session_duration * 1000;
   }
 
@@ -373,6 +388,9 @@ function startSession({
     // const idleTime = powerMonitor.getSystemIdleTime();
 
     // console.log({ idleState, idleTime });
+
+    // const shortBreakCount = store.get('short_break_count') as number;
+    // console.log({ shortBreakCount });
 
     const { endTime: currEndTime } = store.get('session') as Session;
     const remaining = new Date(currEndTime).getTime() - Date.now();
@@ -640,9 +658,9 @@ ipcMain.on('electron-store-set', async (_, key, val) => {
   }
 });
 
-ipcMain.on('start-session', async () => {
+ipcMain.on('start-session', async (_, args) => {
   shell.beep();
-  startSession({});
+  startSession({ sessionDurationInSeconds: args?.snoozedForInSecs });
 });
 
 ipcMain.on('skip-break', async () => {
