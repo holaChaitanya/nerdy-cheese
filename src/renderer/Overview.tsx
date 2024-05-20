@@ -130,25 +130,46 @@ function Overview({
           )}
           <div className="mt-8">
             {paused && (
-              <Button variant="link">
+              <Button
+                variant="link"
+                onClick={() => {
+                  setPaused(false);
+                  window.electron.ipcRenderer.sendMessage('start-session');
+                }}
+              >
                 <Play width={20} height={20} />
                 &nbsp;Resume Session
               </Button>
             )}
             {!paused && (
-              <Button variant="link">
+              <Button
+                variant="link"
+                onClick={() => {
+                  window.electron.ipcRenderer.sendMessage('take-break-now');
+                }}
+              >
                 <EyeOff width={20} height={20} />
                 &nbsp;Start this break now
               </Button>
             )}
             {!paused && (
-              <Button variant="link">
+              <Button
+                variant="link"
+                onClick={() => {
+                  window.electron.ipcRenderer.sendMessage('pause-session');
+                }}
+              >
                 <CirclePause width={20} height={20} />
                 &nbsp;Pause Session
               </Button>
             )}
             {!paused && (
-              <Button variant="link">
+              <Button
+                variant="link"
+                onClick={() => {
+                  window.electron.ipcRenderer.sendMessage('skip-break');
+                }}
+              >
                 <ChevronsRight width={20} height={20} />
                 &nbsp;Skip this break
               </Button>

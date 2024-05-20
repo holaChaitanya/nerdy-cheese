@@ -684,3 +684,18 @@ ipcMain.on('skip-break', async () => {
     res.forEach((win: any) => win.close());
   }
 });
+
+ipcMain.on('take-break-now', async () => {
+  takeBreakNow();
+});
+
+ipcMain.on('pause-session', async () => {
+  pauseSession();
+});
+
+ipcMain.on('skip-break', async () => {
+  startSession({
+    additionalTimeInSeconds:
+      (store.get('session_duration') as number) || DEFAULT_INTERVAL_DURATION,
+  });
+});
