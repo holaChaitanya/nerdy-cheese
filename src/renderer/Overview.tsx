@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
-import { Play, Settings } from 'lucide-react';
+import {
+  Play,
+  Settings,
+  EyeOff,
+  CirclePause,
+  ChevronsRight,
+} from 'lucide-react';
 import { Button } from './components/ui/button';
 import {
   Select,
@@ -10,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './components/ui/select';
+import { imgData } from '../constants';
 
 export function getReadableTime(durationInSeconds: number) {
   const hours = Math.floor(durationInSeconds / 3600);
@@ -44,7 +51,9 @@ function Overview({
 }) {
   const sessionDurationInStore = window.electron.store.get('session_duration');
   const breakDurationInStore = window.electron.store.get('break_duration');
-  const { paused, endTime } = window.electron.store.get('session');
+  const { pausedInStore, endTime } = window.electron.store.get('session');
+
+  const [paused, setPaused] = useState(pausedInStore);
 
   const [breakDuration, setBreakDuration] = useState(breakDurationInStore);
   const [sessionDuration, setSessionDuration] = useState(
@@ -52,19 +61,26 @@ function Overview({
   );
   const [displayTime, setDisplayTime] = useState<string>();
 
+  const isSessionActive = endTime && !paused;
+
   useEffect(() => {
     const id = setInterval(() => {
       const { endTime: currEndTime, paused: isPaused } =
         window.electron.store.get('session');
 
-      const remaining = new Date(currEndTime).getTime() - Date.now();
-      const remainingInSecs = Math.floor(remaining / 1000);
+      if (isPaused) {
+        setPaused(true);
+      } else {
+        setPaused(false);
+        const remaining = new Date(currEndTime).getTime() - Date.now();
+        const remainingInSecs = Math.floor(remaining / 1000);
 
-      const timeString: string | undefined = `${getReadableTime(
-        remainingInSecs,
-      )} left`;
+        const timeString: string | undefined = `${getReadableTime(
+          remainingInSecs,
+        )}`;
 
-      setDisplayTime(isPaused ? 'Paused' : timeString);
+        setDisplayTime(timeString);
+      }
     }, 1000);
 
     return () => clearInterval(id);
@@ -75,20 +91,73 @@ function Overview({
       {/* <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
         Wave goodbye to eye strain!
       </div> */}
-      <div className="text-2xl font-bold text-white text-center">
-        Wave goodbye to eye strain!
-      </div>
-      <div className="font-xl text-center text-neutral-200 py-4">
-        Subtle reminders for mindful breaks from screens without disturbing
-        focus
-        <br />
-        Customize breaks for a journey to better eye health
-      </div>
-      {paused ? 'Paused' : undefined}
-      <span className="font-mono">
-        {!paused && endTime ? displayTime : undefined}
-      </span>
-      {!paused && !endTime && (
+      {!endTime ? (
+        <>
+          <div className="text-2xl font-bold text-white text-center">
+            Wave goodbye to eye strain!
+          </div>
+          <div className="font-xl text-center text-neutral-200 py-4">
+            Subtle reminders for mindful breaks from screens without disturbing
+            focus
+            <br />
+            Customize breaks for a journey to better eye health
+          </div>
+        </>
+      ) : undefined}
+
+      {endTime ? (
+        <>
+          <div className="font-xl text-center text-neutral-200 py-4">
+            Take a break in action, your eyes will thank you!&nbsp;
+            <img
+              className="inline-block"
+              src={imgData}
+              alt="eyes"
+              width={20}
+              height={20}
+            />
+          </div>
+          {isSessionActive && (
+            <div className="text-2xl font-bold text-white text-center">
+              Next break begins in&nbsp;
+              <span className="font-mono">{displayTime}</span>
+            </div>
+          )}
+          {paused && (
+            <div className="text-2xl font-bold text-white text-center">
+              Session paused
+            </div>
+          )}
+          <div className="mt-8">
+            {paused && (
+              <Button variant="link">
+                <Play width={20} height={20} />
+                &nbsp;Resume Session
+              </Button>
+            )}
+            {!paused && (
+              <Button variant="link">
+                <EyeOff width={20} height={20} />
+                &nbsp;Start this break now
+              </Button>
+            )}
+            {!paused && (
+              <Button variant="link">
+                <CirclePause width={20} height={20} />
+                &nbsp;Pause Session
+              </Button>
+            )}
+            {!paused && (
+              <Button variant="link">
+                <ChevronsRight width={20} height={20} />
+                &nbsp;Skip this break
+              </Button>
+            )}
+          </div>
+        </>
+      ) : undefined}
+
+      {!endTime && (
         <button
           type="button"
           onClick={() => {
