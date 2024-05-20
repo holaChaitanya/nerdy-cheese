@@ -237,6 +237,14 @@ const createWindow = async () => {
   // });
 };
 
+interface Session {
+  endTime: string;
+  startTime: string;
+  remainingTime: string;
+  paused: boolean;
+  pausedAt: string;
+}
+
 const createSettingsWindow = async () => {
   if (settingsWindow) {
     // If a Settings window is already open, bring it to focus
@@ -301,14 +309,6 @@ const createSettingsWindow = async () => {
 };
 
 let sessionTimer: ReturnType<typeof setTimeout> | null = null;
-
-interface Session {
-  endTime: string;
-  startTime: string;
-  remainingTime: string;
-  paused: boolean;
-  pausedAt: string;
-}
 
 let tray: Tray | null = null;
 
@@ -463,12 +463,11 @@ function startSession({
         const showElapsedTime =
           store.get('toolbar_timer_style') === TIMER_STYLE.elapsed;
 
-        tray.setTitle(
-          `${getReadableTime(
-            showElapsedTime ? elapsedInSeconds : remainingInSecs,
-          )} ${showElapsedTime ? 'elapsed' : 'left'}`,
-          { fontType: 'monospacedDigit' },
-        );
+        const timeString = `${getReadableTime(
+          showElapsedTime ? elapsedInSeconds : remainingInSecs,
+        )} ${showElapsedTime ? 'elapsed' : 'left'}`;
+
+        tray.setTitle(timeString, { fontType: 'monospacedDigit' });
       }
 
       tray.setContextMenu(contextMenu);

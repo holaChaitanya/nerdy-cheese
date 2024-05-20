@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Play, Settings } from 'lucide-react';
 import { Button } from './components/ui/button';
 import {
@@ -11,6 +11,32 @@ import {
   SelectValue,
 } from './components/ui/select';
 
+export function getReadableTime(durationInSeconds: number) {
+  const hours = Math.floor(durationInSeconds / 3600);
+  const minutes = Math.floor((durationInSeconds % 3600) / 60);
+  const seconds = durationInSeconds % 60;
+
+  let result = '';
+
+  const formattedHours = hours.toString().padStart(2, '0');
+  const formattedMinutes = minutes.toString().padStart(2, '0');
+  const formattedSeconds = seconds.toString().padStart(2, '0');
+
+  if (hours > 0) {
+    result += `${formattedHours}h`;
+  }
+
+  if (minutes > 0) {
+    result += `${formattedMinutes}m`;
+  }
+
+  if (seconds > 0) {
+    result += `${formattedSeconds}s`;
+  }
+
+  return result;
+}
+
 function Overview({
   setShowSettings,
 }: {
@@ -18,10 +44,29 @@ function Overview({
 }) {
   const sessionDurationInStore = window.electron.store.get('session_duration');
   const breakDurationInStore = window.electron.store.get('break_duration');
+
   const [breakDuration, setBreakDuration] = useState(breakDurationInStore);
   const [sessionDuration, setSessionDuration] = useState(
     sessionDurationInStore,
   );
+  const [displayTime, setDisplayTime] = useState<string>();
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      const { endTime: currEndTime } = window.electron.store.get('session');
+
+      const remaining = new Date(currEndTime).getTime() - Date.now();
+      const remainingInSecs = Math.floor(remaining / 1000);
+
+      const timeString: string | undefined = `${getReadableTime(
+        remainingInSecs,
+      )} left`;
+
+      setDisplayTime(timeString);
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div className="flex flex-col h-[100vh] items-center justify-center bg-zinc-900 text-white">
@@ -37,16 +82,21 @@ function Overview({
         <br />
         Customize breaks for a journey to better eye health
       </div>
-      <button
-        type="button"
-        className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-      >
-        <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-zinc-900 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-          <Play width={20} height={20} />
-          &nbsp;Start Session
-        </span>
-      </button>
+      {displayTime || (
+        <button
+          type="button"
+          onClick={() => {
+            window.electron.ipcRenderer.sendMessage('start-session');
+          }}
+          className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+        >
+          <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-zinc-900 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+            <Play width={20} height={20} />
+            &nbsp;Start Session
+          </span>
+        </button>
+      )}
 
       <div className="font-xl text-center text-neutral-200 py-4 flex items-baseline mt-32">
         After every
