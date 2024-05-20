@@ -44,6 +44,7 @@ function Overview({
 }) {
   const sessionDurationInStore = window.electron.store.get('session_duration');
   const breakDurationInStore = window.electron.store.get('break_duration');
+  const { paused, endTime } = window.electron.store.get('session');
 
   const [breakDuration, setBreakDuration] = useState(breakDurationInStore);
   const [sessionDuration, setSessionDuration] = useState(
@@ -53,7 +54,8 @@ function Overview({
 
   useEffect(() => {
     const id = setInterval(() => {
-      const { endTime: currEndTime } = window.electron.store.get('session');
+      const { endTime: currEndTime, paused: isPaused } =
+        window.electron.store.get('session');
 
       const remaining = new Date(currEndTime).getTime() - Date.now();
       const remainingInSecs = Math.floor(remaining / 1000);
@@ -62,7 +64,7 @@ function Overview({
         remainingInSecs,
       )} left`;
 
-      setDisplayTime(timeString);
+      setDisplayTime(isPaused ? 'Paused' : timeString);
     }, 1000);
 
     return () => clearInterval(id);
@@ -82,7 +84,11 @@ function Overview({
         <br />
         Customize breaks for a journey to better eye health
       </div>
-      {displayTime || (
+      {paused ? 'Paused' : undefined}
+      <span className="font-mono">
+        {!paused && endTime ? displayTime : undefined}
+      </span>
+      {!paused && !endTime && (
         <button
           type="button"
           onClick={() => {
