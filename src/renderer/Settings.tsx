@@ -105,8 +105,8 @@ function Settings() {
       </div> */}
       <div className="flex flex-col">
         <main className="flex flex-1 flex-col p-4 lg:p-6">
-          <Tabs defaultValue="account" className="">
-            <TabsList>
+          <Tabs defaultValue="general">
+            <TabsList className="justify-center">
               <TabsTrigger value="general">General</TabsTrigger>
               <TabsTrigger value="system">System</TabsTrigger>
             </TabsList>
