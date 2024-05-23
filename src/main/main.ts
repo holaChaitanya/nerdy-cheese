@@ -600,6 +600,17 @@ app.on('window-all-closed', () => {
   }
 });
 
+app.on('quit', () => {
+  store.set('session', {
+    ...(store.get('session') as Session),
+    pausedAt: undefined,
+    paused: false,
+    endTime: undefined,
+    startTime: undefined,
+    remainingTime: undefined,
+  });
+});
+
 app.dock.hide();
 
 app

@@ -51,7 +51,8 @@ function Overview({
 }) {
   const sessionDurationInStore = window.electron.store.get('session_duration');
   const breakDurationInStore = window.electron.store.get('break_duration');
-  const { pausedInStore, endTime } = window.electron.store.get('session');
+  const { paused: pausedInStore, endTime } =
+    window.electron.store.get('session');
 
   const [paused, setPaused] = useState(pausedInStore);
 
