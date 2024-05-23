@@ -11,6 +11,7 @@ import {
   Tag,
   CloudDownload,
   BarChart4,
+  ArrowLeft,
 } from 'lucide-react';
 
 import { Link } from 'react-router-dom';
@@ -39,7 +40,11 @@ import { imgData } from '../constants';
 import { AnalyticSettings } from './analyticSettings';
 import { UpdateSettings } from './updateSettings';
 
-function Settings() {
+function Settings({
+  setShowSettings,
+}: {
+  setShowSettings: (arg0: boolean) => void;
+}) {
   const [activeMenu, setActiveMenu] = useState();
 
   return (
@@ -107,6 +112,17 @@ function Settings() {
         <main className="flex flex-1 flex-col p-4 lg:p-6">
           <Tabs defaultValue="general">
             <TabsList className="justify-center">
+              {/* <Button variant="link">Back</Button> */}
+              <ArrowLeft
+                width={20}
+                height={20}
+                className="cursor-pointer"
+                onClick={() => setShowSettings(false)}
+              />
+              {/* <div className="inline-flex h-9 items-center text-muted-foreground justify-start rounded-none border-b bg-transparent p-0">
+                <ArrowLeft width={20} height={20} />
+              </div> */}
+
               <TabsTrigger value="general">General</TabsTrigger>
               <TabsTrigger value="system">System</TabsTrigger>
             </TabsList>

@@ -16,7 +16,7 @@ function ViewManager() {
 
   if (isSettings) {
     return showSettings ? (
-      <Settings />
+      <Settings setShowSettings={setShowSettings} />
     ) : (
       <Overview setShowSettings={setShowSettings} />
     );
