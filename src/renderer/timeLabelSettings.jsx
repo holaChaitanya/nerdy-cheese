@@ -12,7 +12,7 @@ export function TimeLabelSettings() {
   return (
     <div className="grid gap-6">
       <Label htmlFor="toolbar_timer_style" className="flex flex-col space-y-1">
-        <span>Launch at login</span>
+        <span>Time label type</span>
       </Label>
       <RadioGroup
         className="grid grid-cols-2 gap-4"

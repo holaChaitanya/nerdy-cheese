@@ -12,7 +12,7 @@ export function StartupSettings() {
   const [startTimer, setStartTimer] = useState(startTimerInStore);
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4">
       <div className="flex items-center justify-between space-x-2">
         <Label htmlFor="launch_at_login" className="flex flex-col space-y-1">
           <span>Launch at login</span>

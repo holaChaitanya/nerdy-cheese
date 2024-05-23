@@ -7,6 +7,10 @@ import {
   EyeOff,
   Footprints,
   BellRing,
+  LogIn,
+  Tag,
+  CloudDownload,
+  BarChart4,
 } from 'lucide-react';
 
 import { Link } from 'react-router-dom';
@@ -108,13 +112,6 @@ function Settings() {
             </TabsList>
             <TabsContent value="general">
               <Card className="mt-8">
-                {/* <CardHeader>
-                  <CardTitle>Account</CardTitle>
-                  <CardDescription>
-                    Make changes to your account here. Click save when you are
-                    done.
-                  </CardDescription>
-                </CardHeader> */}
                 <CardContent className="space-y-2">
                   <div className="flex items-start gap-x-8 [&>div]:w-full">
                     <Monitor className="self-center" width={20} height={20} />
@@ -147,40 +144,37 @@ function Settings() {
                   </div>
                 </CardContent>
               </Card>
-              {/* <div className="flex items-center [&>div]:w-full">
-                <FocusSettings />
-              </div>
-              <Separator className="my-4" />
-              <div className="flex items-center [&>div]:w-full">
-                <ShortBreakSettings />
-              </div>
-              <Separator className="my-4" />
-              <div className="flex items-center justify-center [&>div]:w-full">
-                <LongBreakSettings />
-              </div>
-              <Separator className="my-4" />
-              <div className="flex items-center justify-center [&>div]:w-full">
-                <PreBreakSettings />
-              </div>
-              <Separator className="my-4" /> */}
             </TabsContent>
             <TabsContent value="system">
-              <div className="flex items-center justify-center [&>div]:w-full mt-8">
-                <StartupSettings />
-              </div>
-              <Separator className="my-4" />
-              <div className="flex items-center justify-center [&>div]:w-full">
-                <TimeLabelSettings />
-              </div>
-              <Separator className="my-4" />
-              <div className="flex items-center justify-center [&>div]:w-full">
-                <UpdateSettings />
-              </div>
-              <Separator className="my-4" />
-              <div className="flex items-center justify-center [&>div]:w-full">
-                <AnalyticSettings />
-              </div>
-              <Separator className="my-4" />
+              <Card className="mt-8">
+                <CardContent className="space-y-2">
+                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                    <LogIn width={20} height={20} />
+                    <StartupSettings />
+                  </div>
+                  <div className="pt-4" />
+                  <Separator className="my-4" />
+                  <div className="pt-4" />
+                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                    <Tag width={20} height={20} />
+                    <TimeLabelSettings />
+                  </div>
+                  <div className="pt-4" />
+                  <Separator className="my-4" />
+                  <div className="pt-4" />
+                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                    <CloudDownload width={20} height={20} />
+                    <UpdateSettings />
+                  </div>
+                  <div className="pt-4" />
+                  <Separator className="my-4" />
+                  <div className="pt-4" />
+                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                    <BarChart4 width={20} height={20} />
+                    <AnalyticSettings />
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
           </Tabs>
           {activeMenu === 'general' && (

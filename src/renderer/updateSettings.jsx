@@ -19,7 +19,13 @@ export function UpdateSettings() {
         </Label>
         <Switch id="functional" />
       </div>
-      <Button variant="outline">Check for updates</Button>
+      <Button
+        variant="outline"
+        className="w-[120px]"
+        style={{ justifySelf: 'baseline' }}
+      >
+        Check for updates
+      </Button>
     </div>
   );
 }
