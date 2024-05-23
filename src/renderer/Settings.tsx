@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Soup, Settings as SettingsIcon, Eye, Monitor } from 'lucide-react';
+import {
+  Soup,
+  Settings as SettingsIcon,
+  Eye,
+  Monitor,
+  EyeOff,
+  Footprints,
+  BellRing,
+} from 'lucide-react';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -100,28 +108,38 @@ function Settings() {
             </TabsList>
             <TabsContent value="general">
               <Card className="mt-8">
-                <CardHeader>
+                {/* <CardHeader>
                   <CardTitle>Account</CardTitle>
                   <CardDescription>
                     Make changes to your account here. Click save when you are
                     done.
                   </CardDescription>
-                </CardHeader>
+                </CardHeader> */}
                 <CardContent className="space-y-2">
-                  <div className="flex items-start [&>div]:w-full">
-                    <Monitor />
+                  <div className="flex items-start gap-x-4 [&>div]:w-full">
+                    <Monitor className="self-center" width={20} height={20} />
                     <FocusSettings />
                   </div>
-                  <Separator className="my-4" />
-                  <div className="flex items-center [&>div]:w-full">
+                  {/* <Separator className="my-4" /> */}
+                  <div className="pt-4" />
+                  <div className="flex items-center gap-x-4 [&>div]:w-full">
+                    <EyeOff className="self-center" width={20} height={20} />
                     <ShortBreakSettings />
                   </div>
-                  <Separator className="my-4" />
-                  <div className="flex items-center justify-center [&>div]:w-full">
+                  {/* <Separator className="my-4" /> */}
+                  <div className="pt-4" />
+                  <div className="flex items-center justify-center gap-x-4 [&>div]:w-full">
+                    <Footprints
+                      className="self-center"
+                      width={20}
+                      height={20}
+                    />
                     <LongBreakSettings />
                   </div>
-                  <Separator className="my-4" />
-                  <div className="flex items-center justify-center [&>div]:w-full">
+                  {/* <Separator className="my-4" /> */}
+                  <div className="pt-4" />
+                  <div className="flex items-center justify-center gap-x-4 [&>div]:w-full">
+                    <BellRing className="self-center" width={20} height={20} />
                     <PreBreakSettings />
                   </div>
                 </CardContent>

@@ -26,7 +26,7 @@ export function FocusSettings() {
   );
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4">
       <div className="flex items-center justify-between space-x-2">
         <Label htmlFor="necessary" className="flex flex-col">
           <span>Focus Duration</span>

@@ -28,7 +28,7 @@ export function LongBreakSettings() {
   const [longBreakAfter, setLongBreakAfter] = useState(longBreakAfterInStore);
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4">
       <div className="flex items-center justify-between space-x-2">
         <Label htmlFor="long_break_enabled" className="flex flex-col space-y-1">
           <span>Long Breaks</span>
