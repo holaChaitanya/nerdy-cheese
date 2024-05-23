@@ -6,7 +6,7 @@ import { Switch } from './components/ui/switch';
 
 export function UpdateSettings() {
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4">
       <div className="flex items-center justify-between space-x-2">
         <Label htmlFor="necessary" className="flex flex-col space-y-1">
           <span>Automatically check for updates</span>

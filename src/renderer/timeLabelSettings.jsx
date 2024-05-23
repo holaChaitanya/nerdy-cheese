@@ -10,7 +10,7 @@ export function TimeLabelSettings() {
   const [timerStyle, setTimerStyle] = useState(timerStyleInStore);
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4">
       <Label htmlFor="toolbar_timer_style" className="flex flex-col space-y-1">
         <span>Time label type</span>
       </Label>
