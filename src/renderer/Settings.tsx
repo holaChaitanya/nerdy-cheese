@@ -116,19 +116,21 @@ function Settings() {
                   </CardDescription>
                 </CardHeader> */}
                 <CardContent className="space-y-2">
-                  <div className="flex items-start gap-x-4 [&>div]:w-full">
+                  <div className="flex items-start gap-x-8 [&>div]:w-full">
                     <Monitor className="self-center" width={20} height={20} />
                     <FocusSettings />
                   </div>
-                  {/* <Separator className="my-4" /> */}
                   <div className="pt-4" />
-                  <div className="flex items-center gap-x-4 [&>div]:w-full">
+                  <Separator className="my-4" />
+                  <div className="pt-4" />
+                  <div className="flex items-center gap-x-8 [&>div]:w-full">
                     <EyeOff className="self-center" width={20} height={20} />
                     <ShortBreakSettings />
                   </div>
-                  {/* <Separator className="my-4" /> */}
                   <div className="pt-4" />
-                  <div className="flex items-center justify-center gap-x-4 [&>div]:w-full">
+                  <Separator className="my-4" />
+                  <div className="pt-4" />
+                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
                     <Footprints
                       className="self-center"
                       width={20}
@@ -136,9 +138,10 @@ function Settings() {
                     />
                     <LongBreakSettings />
                   </div>
-                  {/* <Separator className="my-4" /> */}
                   <div className="pt-4" />
-                  <div className="flex items-center justify-center gap-x-4 [&>div]:w-full">
+                  <Separator className="my-24" />
+                  <div className="pt-4" />
+                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
                     <BellRing className="self-center" width={20} height={20} />
                     <PreBreakSettings />
                   </div>
