@@ -22,6 +22,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['"GT Walsheim Pro"', 'sans-serif'],
+      },
       colors: {
         white: colors.white,
         border: 'hsl(var(--border))',

@@ -35,6 +35,13 @@
     --radius: 0.5rem;
   } */
 
+  @font-face {
+    font-family: 'GT Walsheim Pro';
+    src: url('/assets/fonts/GTWalsheimProRegular.OTF') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   :root {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
