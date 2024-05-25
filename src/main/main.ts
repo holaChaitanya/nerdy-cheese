@@ -24,6 +24,10 @@ import {
 } from 'electron';
 import Store from 'electron-store';
 import playSound from 'play-sound';
+import {
+  setupTitlebar,
+  attachTitlebarToWindow,
+} from 'custom-electron-titlebar/main';
 import { resolveHtmlPath, getReadableTime } from './util';
 import {
   BREAK_NOTIFICATION_AT,
@@ -245,67 +249,77 @@ interface Session {
   pausedAt: string;
 }
 
+setupTitlebar();
+
 const createSettingsWindow = async () => {
-  if (settingsWindow) {
-    // If a Settings window is already open, bring it to focus
-    settingsWindow.focus();
-    settingsWindow.show();
-
-    return;
-  }
-
-  if (isDebug) {
-    await installExtensions();
-  }
-
-  settingsWindow = new BrowserWindow({
-    title: 'settings',
-    show: true,
-    width: 1024,
-    height: 728,
-    fullscreen: false,
-    frame: true,
-    resizable: false,
-    icon: nativeImage.createFromDataURL(imgData),
-    webPreferences: {
-      devTools: true,
-      preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
-    },
-  });
-
-  settingsWindow.loadURL(resolveHtmlPath('index.html', 'settings'));
-
-  // eslint-disable-next-line promise/catch-or-return
-  app.dock.show().then(() => {
-    app.dock.setIcon(nativeImage.createFromDataURL(imgData));
-  });
-
-  settingsWindow.on('ready-to-show', () => {
-    if (!settingsWindow) {
-      throw new Error('"settingsWindow" is not defined');
-    }
-    if (process.env.START_MINIMIZED) {
-      settingsWindow.minimize();
-    } else {
+  try {
+    if (settingsWindow) {
+      // If a Settings window is already open, bring it to focus
+      settingsWindow.focus();
       settingsWindow.show();
+
+      return;
     }
-  });
 
-  settingsWindow.on('closed', () => {
-    app.dock.hide();
-    settingsWindow = null;
-  });
+    if (isDebug) {
+      await installExtensions();
+    }
 
-  // const menuBuilder = new MenuBuilder(settingsWindow);
-  // menuBuilder.buildMenu();
+    settingsWindow = new BrowserWindow({
+      title: 'settings',
+      show: true,
+      width: 1024,
+      height: 728,
+      fullscreen: false,
+      frame: true,
+      resizable: false,
+      icon: nativeImage.createFromDataURL(imgData),
+      titleBarStyle: 'hidden',
+      titleBarOverlay: true,
+      webPreferences: {
+        devTools: true,
+        preload: app.isPackaged
+          ? path.join(__dirname, 'preload.js')
+          : path.join(__dirname, '../../.erb/dll/preload.js'),
+      },
+    });
 
-  // Open urls in the user's browser
-  settingsWindow.webContents.setWindowOpenHandler((edata) => {
-    shell.openExternal(edata.url);
-    return { action: 'deny' };
-  });
+    attachTitlebarToWindow(settingsWindow);
+
+    settingsWindow.loadURL(resolveHtmlPath('index.html', 'settings'));
+
+    // eslint-disable-next-line promise/catch-or-return
+    app.dock.show().then(() => {
+      app.dock.setIcon(nativeImage.createFromDataURL(imgData));
+    });
+
+    settingsWindow.on('ready-to-show', () => {
+      if (!settingsWindow) {
+        throw new Error('"settingsWindow" is not defined');
+      }
+      if (process.env.START_MINIMIZED) {
+        settingsWindow.minimize();
+      } else {
+        settingsWindow.show();
+      }
+    });
+
+    settingsWindow.on('closed', () => {
+      app.dock.hide();
+      settingsWindow = null;
+    });
+
+    // const menuBuilder = new MenuBuilder(settingsWindow);
+    // menuBuilder.buildMenu();
+
+    // Open urls in the user's browser
+    settingsWindow.webContents.setWindowOpenHandler((edata) => {
+      shell.openExternal(edata.url);
+      return { action: 'deny' };
+    });
+  } catch (err) {
+    console.log({ err });
+  }
 };
 
 let sessionTimer: ReturnType<typeof setTimeout> | null = null;

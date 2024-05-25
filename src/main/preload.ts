@@ -1,6 +1,27 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import {
+  contextBridge,
+  ipcRenderer,
+  IpcRendererEvent,
+  nativeImage,
+} from 'electron';
+
+import { Titlebar, TitlebarColor } from 'custom-electron-titlebar';
+import { imgData } from '../constants';
+
+window.addEventListener('DOMContentLoaded', (e) => {
+  // Title bar implementation
+
+  if (e?.target?.location?.search !== '?break') {
+    const t = new Titlebar({
+      backgroundColor: TitlebarColor.BLACK,
+      icon: nativeImage.createFromDataURL(imgData),
+      iconSize: 20,
+      maximizable: false,
+    });
+  }
+});
 
 export type Channels =
   | 'ipc-example'
