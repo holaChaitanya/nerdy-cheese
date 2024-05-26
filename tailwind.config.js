@@ -26,6 +26,7 @@ module.exports = {
         sans: ['"GT Walsheim Pro"', 'sans-serif'],
       },
       colors: {
+        yellow: '#cc8000',
         white: colors.white,
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

@@ -94,128 +94,139 @@ function Overview({
   }, []);
 
   return (
-    <div className="flex flex-col h-[100vh] items-center justify-center bg-zinc-900 text-white">
+    <div className="flex flex-col h-[100vh] items-center justify-around bg-zinc-900 text-white">
       {/* <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
         Wave goodbye to eye strain!
       </div> */}
       <Toaster />
-
-      {!endTime ? (
-        <>
-          <div className="text-2xl font-bold text-white text-center">
-            Wave goodbye to eye strain!
-          </div>
-          <div className="font-xl text-center text-neutral-200 py-4">
-            Subtle reminders for mindful breaks from screens without disturbing
-            focus
-            <br />
-            Customize breaks for a journey to better eye health
-          </div>
-        </>
-      ) : undefined}
-
-      {endTime ? (
-        <>
-          <div className="font-xl text-center text-neutral-200 py-4">
-            Take a break in action, your eyes will thank you!&nbsp;
-            <img
-              className="inline-block"
-              src={imgData}
-              alt="eyes"
-              width={20}
-              height={20}
-            />
-          </div>
-          {isSessionActive && (
+      <div className="text-base font-medium text-neutral-200 pb-16">
+        <img
+          className="inline-block align-bottom"
+          src={imgData}
+          alt="eyes"
+          width={24}
+          height={24}
+        />
+        &nbsp; Take a Break
+      </div>
+      <div className="text-center">
+        {!endTime ? (
+          <>
             <div className="text-2xl font-bold text-white text-center">
-              Next break begins in&nbsp;
-              <span className="font-mono">{displayTime}</span>
+              Wave goodbye to eye strain!
             </div>
-          )}
-          {paused && (
-            <div className="text-2xl font-bold text-white text-center">
-              Session paused
+            <div className="font-xl text-center text-neutral-200 py-4">
+              Subtle reminders for mindful breaks from screens without
+              disturbing focus
+              <br />
+              Customize breaks for a journey to better eye health
             </div>
-          )}
-          <div className="mt-8">
+          </>
+        ) : undefined}
+        {endTime ? (
+          <>
+            <div className="text-center text-sm font-normal text-neutral-200 py-4">
+              Take a break in action, your eyes will thank you!&nbsp;
+              {/* <img
+                className="inline-block align-text-bottom"
+                src={imgData}
+                alt="eyes"
+                width={20}
+                height={20}
+              /> */}
+            </div>
+            {isSessionActive && (
+              <div className="text-3xl font-normal text-white text-center">
+                Next break begins in&nbsp;
+                <span className="font-mono underline underline-offset-4 decoration-yellow">
+                  {displayTime}
+                </span>
+              </div>
+            )}
             {paused && (
+              <div className="text-2xl font-bold text-white text-center">
+                Session paused
+              </div>
+            )}
+            <div className="mt-8 text-base font-medium">
+              {paused && (
+                <Button
+                  variant="link"
+                  onClick={() => {
+                    setPaused(false);
+                    window.electron.ipcRenderer.sendMessage('start-session');
+                  }}
+                >
+                  <Play width={20} height={20} />
+                  &nbsp;Resume Session
+                </Button>
+              )}
+              {!paused && (
+                <Button
+                  variant="link"
+                  onClick={() => {
+                    window.electron.ipcRenderer.sendMessage('take-break-now');
+                  }}
+                >
+                  <EyeOff width={20} height={20} />
+                  &nbsp;Start this break now
+                </Button>
+              )}
+              {!paused && (
+                <Button
+                  variant="link"
+                  onClick={() => {
+                    window.electron.ipcRenderer.sendMessage('pause-session');
+                  }}
+                >
+                  <CirclePause width={20} height={20} />
+                  &nbsp;Pause Session
+                </Button>
+              )}
               <Button
                 variant="link"
                 onClick={() => {
-                  setPaused(false);
-                  window.electron.ipcRenderer.sendMessage('start-session');
+                  window.electron.ipcRenderer.sendMessage('end-session');
                 }}
               >
-                <Play width={20} height={20} />
-                &nbsp;Resume Session
+                <CircleStop width={20} height={20} />
+                &nbsp;End session
               </Button>
-            )}
-            {!paused && (
-              <Button
-                variant="link"
-                onClick={() => {
-                  window.electron.ipcRenderer.sendMessage('take-break-now');
-                }}
-              >
-                <EyeOff width={20} height={20} />
-                &nbsp;Start this break now
-              </Button>
-            )}
-            {!paused && (
-              <Button
-                variant="link"
-                onClick={() => {
-                  window.electron.ipcRenderer.sendMessage('pause-session');
-                }}
-              >
-                <CirclePause width={20} height={20} />
-                &nbsp;Pause Session
-              </Button>
-            )}
-            <Button
-              variant="link"
-              onClick={() => {
-                window.electron.ipcRenderer.sendMessage('end-session');
-              }}
-            >
-              <CircleStop width={20} height={20} />
-              &nbsp;End session
-            </Button>
-            {!paused && (
-              <Button
-                variant="link"
-                onClick={() => {
-                  toast({
-                    title: 'Upcoming break will be skipped',
-                    description: 'You have got more time for your focused work',
-                  });
-                  window.electron.ipcRenderer.sendMessage('skip-break');
-                }}
-              >
-                <ChevronsRight width={20} height={20} />
-                &nbsp;Skip this break
-              </Button>
-            )}
-          </div>
-        </>
-      ) : undefined}
-
-      {!endTime && (
-        <button
-          type="button"
-          onClick={() => {
-            window.electron.ipcRenderer.sendMessage('start-session');
-          }}
-          className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-        >
-          <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-zinc-900 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-            <Play width={20} height={20} />
-            &nbsp;Start Session
-          </span>
-        </button>
-      )}
-
+              {!paused && (
+                <Button
+                  variant="link"
+                  onClick={() => {
+                    toast({
+                      title: 'Upcoming break will be skipped',
+                      description:
+                        'You have got more time for your focused work',
+                    });
+                    window.electron.ipcRenderer.sendMessage('skip-break');
+                  }}
+                >
+                  <ChevronsRight width={20} height={20} />
+                  &nbsp;Skip this break
+                </Button>
+              )}
+            </div>
+          </>
+        ) : undefined}
+        {!endTime && (
+          <button
+            type="button"
+            onClick={() => {
+              window.electron.ipcRenderer.sendMessage('start-session');
+            }}
+            className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+          >
+            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-zinc-900 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+              <Play width={20} height={20} />
+              &nbsp;Start Session
+            </span>
+          </button>
+        )}
+      </div>
       <div className="font-xl text-center text-neutral-200 py-4 flex items-baseline mt-32">
         After every
         <Select
