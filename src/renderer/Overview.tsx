@@ -228,7 +228,7 @@ function Overview({
         )}
       </div>
       <div className="font-xl text-center text-neutral-200 py-4 flex items-baseline mt-32">
-        After every
+        After every&nbsp;
         <Select
           value={sessionDuration}
           onValueChange={(val: number) => {
@@ -236,7 +236,7 @@ function Overview({
             window.electron.store.set('session_duration', val);
           }}
         >
-          <SelectTrigger className="w-[100px] border-none">
+          <SelectTrigger className="w-[70px] px-0">
             <SelectValue placeholder="Duration" />
           </SelectTrigger>
           <SelectContent>
@@ -268,7 +268,7 @@ function Overview({
             </SelectGroup>
           </SelectContent>
         </Select>
-        remind me to take breaks of
+        &nbsp;remind me to take breaks of&nbsp;
         <Select
           value={breakDuration}
           onValueChange={(val: number) => {
@@ -276,7 +276,7 @@ function Overview({
             window.electron.store.set('break_duration', val);
           }}
         >
-          <SelectTrigger className="w-[100px] border-none">
+          <SelectTrigger className="w-[70px] px-0">
             <SelectValue placeholder="Duration" />
           </SelectTrigger>
           <SelectContent>
@@ -310,7 +310,7 @@ function Overview({
         </Select>
         <Button
           variant="link"
-          className="pl-0"
+          className="pl-0 ml-2"
           onClick={() => setShowSettings(true)}
         >
           Settings&nbsp; <Settings width={20} height={20} />
