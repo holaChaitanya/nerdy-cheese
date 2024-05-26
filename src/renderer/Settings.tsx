@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  Soup,
-  Settings as SettingsIcon,
-  Eye,
   Monitor,
   EyeOff,
   Footprints,
   BellRing,
   LogIn,
-  Tag,
   CloudDownload,
   BarChart4,
   ArrowLeft,
+  TimerReset,
 } from 'lucide-react';
 
 import { useState } from 'react';
@@ -142,6 +139,14 @@ function Settings({
                 <BellRing className="self-center" width={20} height={20} />
                 <PreBreakSettings />
               </div>
+              <div className="pt-4" />
+              <Separator className="my-4" />
+              <div className="pt-4" />
+              <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                <TimerReset className="self-center" width={20} height={20} />
+                <IdleTimeSettings />
+              </div>
+
               {/* </CardContent>
               </Card> */}
             </TabsContent>
