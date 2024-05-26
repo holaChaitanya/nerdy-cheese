@@ -126,7 +126,7 @@ const store = new Store({
     pre_break_reminder_enabled: true,
     pre_break_reminder_at: 60,
     reset_timer_enabled: true,
-    toolbar_timer_style: TIMER_STYLE.elapsed,
+    toolbar_timer_style: TIMER_STYLE.remaining,
     long_break_enabled: true,
     long_break_duration: 120,
     long_break_after: 2,
