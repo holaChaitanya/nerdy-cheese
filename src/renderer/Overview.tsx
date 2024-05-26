@@ -98,9 +98,6 @@ function Overview({
       className="flex flex-col h-[100vh] items-center justify-around text-white"
       // style={{ background: '#202020' }}
     >
-      {/* <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
-        Wave goodbye to eye strain!
-      </div> */}
       <Toaster />
       <div className="text-base font-medium text-neutral-200 pb-16">
         <img

@@ -11,17 +11,14 @@ import {
   TimerReset,
 } from 'lucide-react';
 
-import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { Separator } from './components/ui/separator';
 import { StartupSettings } from './startupSettings';
 import { FocusSettings } from './focusSettings';
 import { IdleTimeSettings } from './idleTimeSettings';
-// import { MeetingSetting } from './meetingSettings';
 import { ShortBreakSettings } from './shortBreakSettings';
 import { PreBreakSettings } from './preBreakSettings';
 import { LongBreakSettings } from './longBreakSettings';
-import { imgData } from '../constants';
 import { AnalyticSettings } from './analyticSettings';
 import { UpdateSettings } from './updateSettings';
 
@@ -30,8 +27,6 @@ function Settings({
 }: {
   setShowSettings: (arg0: boolean) => void;
 }) {
-  const [activeMenu, setActiveMenu] = useState();
-
   return (
     <div className="grid min-h-screen w-full">
       {/* <div className="hidden border-r bg-muted/40 md:block">
@@ -103,23 +98,10 @@ function Settings({
               onClick={() => setShowSettings(false)}
             />
             <TabsList className="justify-center">
-              {/* <Button variant="link">Back</Button> */}
-              {/* <ArrowLeft
-                width={20}
-                height={20}
-                className="cursor-pointer"
-                onClick={() => setShowSettings(false)}
-              /> */}
-              {/* <div className="inline-flex h-9 items-center text-muted-foreground justify-start rounded-none border-b bg-transparent p-0">
-                <ArrowLeft width={20} height={20} />
-              </div> */}
-
               <TabsTrigger value="general">General</TabsTrigger>
               <TabsTrigger value="system">System</TabsTrigger>
             </TabsList>
             <TabsContent value="general">
-              {/* <Card className="mt-8">
-                <CardContent className="space-y-2"> */}
               <div className="pt-4" />
               <div className="flex items-start gap-x-8 [&>div]:w-full">
                 <Monitor className="self-center" width={20} height={20} />
@@ -153,25 +135,13 @@ function Settings({
                 <TimerReset className="self-center" width={20} height={20} />
                 <IdleTimeSettings />
               </div>
-
-              {/* </CardContent>
-              </Card> */}
             </TabsContent>
             <TabsContent value="system">
-              {/* <Card className="mt-8">
-                <CardContent className="space-y-2"> */}
               <div className="pt-4" />
               <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
                 <LogIn width={20} height={20} />
                 <StartupSettings />
               </div>
-              {/* <div className="pt-4" />
-                  <Separator className="my-4" />
-                  <div className="pt-4" /> */}
-              {/* <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
-                    <Tag width={20} height={20} />
-                    <TimeLabelSettings />
-                  </div> */}
               <div className="pt-4" />
               <Separator className="my-4" />
               <div className="pt-4" />
@@ -186,8 +156,6 @@ function Settings({
                 <BarChart4 width={20} height={20} />
                 <AnalyticSettings />
               </div>
-              {/* </CardContent>
-              </Card> */}
             </TabsContent>
           </Tabs>
         </main>
