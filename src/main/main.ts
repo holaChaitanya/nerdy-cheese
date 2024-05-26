@@ -436,7 +436,7 @@ function startSession({
             ? breakNotificationAt / 60
             : 'less than a'
         } min left`,
-        body: 'Get ready for a break!!',
+        body: 'Get ready to Take a Break 🍺',
       }).show();
     }
 
