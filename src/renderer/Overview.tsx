@@ -16,6 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from './components/ui/select';
+import { useToast } from './components/ui/use-toast';
+import { Toaster } from './components/ui/toaster';
+
 import { imgData } from '../constants';
 
 export function getReadableTime(durationInSeconds: number) {
@@ -62,6 +65,8 @@ function Overview({
   );
   const [displayTime, setDisplayTime] = useState<string>();
 
+  const { toast } = useToast();
+
   const isSessionActive = endTime && !paused;
 
   useEffect(() => {
@@ -92,6 +97,8 @@ function Overview({
       {/* <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
         Wave goodbye to eye strain!
       </div> */}
+      <Toaster />
+
       {!endTime ? (
         <>
           <div className="text-2xl font-bold text-white text-center">
@@ -168,6 +175,10 @@ function Overview({
               <Button
                 variant="link"
                 onClick={() => {
+                  toast({
+                    title: 'Upcoming break will be skipped',
+                    description: 'You have got more time for your focused work',
+                  });
                   window.electron.ipcRenderer.sendMessage('skip-break');
                 }}
               >
