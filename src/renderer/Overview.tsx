@@ -113,19 +113,27 @@ function Overview({
         {!endTime ? (
           <>
             <div className="text-2xl font-bold text-white text-center">
-              Wave goodbye to eye strain!
+              Wave goodbye to eye strain! 👋🏻
             </div>
-            <div className="font-xl text-center text-neutral-200 py-4">
-              Subtle reminders for mindful breaks from screens without
-              disturbing focus
+            <div className="font-xl text-center text-neutral-200 py-4 mb-8">
+              <span className="underline decoration-yellow underline-offset-4">
+                Subtle reminders
+              </span>{' '}
+              for mindful breaks from screens&nbsp;
+              <span className="underline decoration-yellow underline-offset-4">
+                without disturbing focus
+              </span>
               <br />
-              Customize breaks for a journey to better eye health
+              Customize breaks for a journey to&nbsp;
+              <span className="underline decoration-yellow underline-offset-4">
+                better eye health
+              </span>
             </div>
           </>
         ) : undefined}
         {endTime ? (
           <>
-            <div className="text-center text-sm font-normal text-neutral-200 py-4">
+            <div className="text-center text-sm font-normal text-neutral-200 py-4 mb-8">
               Take a break in action, your eyes will thank you!&nbsp;
               {/* <img
                 className="inline-block align-text-bottom"
@@ -217,10 +225,10 @@ function Overview({
             onClick={() => {
               window.electron.ipcRenderer.sendMessage('start-session');
             }}
-            className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+            className="w-[190px] relative inline-flex h-12 overflow-hidden rounded-lg p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
           >
-            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-zinc-900 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#EBD18F_0%,#B9841D_50%,#EBD18F_100%)]" />
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-zinc-900 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
               <Play width={20} height={20} />
               &nbsp;Start Session
             </span>
