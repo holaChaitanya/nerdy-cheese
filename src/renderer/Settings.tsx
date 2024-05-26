@@ -93,7 +93,7 @@ function Settings({
           </div>
         </div>
       </div> */}
-      <div className="flex flex-col">
+      <div className="flex flex-col px-40">
         <main className="flex flex-1 flex-col p-4 lg:p-6">
           <Tabs defaultValue="general">
             <TabsList className="justify-center">
@@ -114,6 +114,7 @@ function Settings({
             <TabsContent value="general">
               {/* <Card className="mt-8">
                 <CardContent className="space-y-2"> */}
+              <div className="pt-4" />
               <div className="flex items-start gap-x-8 [&>div]:w-full">
                 <Monitor className="self-center" width={20} height={20} />
                 <FocusSettings />
@@ -153,6 +154,7 @@ function Settings({
             <TabsContent value="system">
               {/* <Card className="mt-8">
                 <CardContent className="space-y-2"> */}
+              <div className="pt-4" />
               <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
                 <LogIn width={20} height={20} />
                 <StartupSettings />
