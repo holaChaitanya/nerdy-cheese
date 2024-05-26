@@ -6,6 +6,7 @@ import {
   EyeOff,
   CirclePause,
   ChevronsRight,
+  CircleStop,
 } from 'lucide-react';
 import { Button } from './components/ui/button';
 import {
@@ -171,6 +172,15 @@ function Overview({
                 &nbsp;Pause Session
               </Button>
             )}
+            <Button
+              variant="link"
+              onClick={() => {
+                window.electron.ipcRenderer.sendMessage('end-session');
+              }}
+            >
+              <CircleStop width={20} height={20} />
+              &nbsp;End session
+            </Button>
             {!paused && (
               <Button
                 variant="link"

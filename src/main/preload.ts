@@ -8,7 +8,7 @@ export type Channels =
   | 'skip-break'
   | 'take-break-now'
   | 'pause-session'
-  | 'skip-break';
+  | 'end-session';
 
 const electronHandler = {
   ipcRenderer: {

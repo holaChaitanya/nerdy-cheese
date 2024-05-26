@@ -513,6 +513,31 @@ function pauseSession() {
   }
 }
 
+function endSession() {
+  if (sessionTimer) {
+    clearInterval(sessionTimer);
+    sessionTimer = null;
+  }
+  store.set('session', {
+    ...(store.get('session') as Session),
+    remainingTime: undefined,
+    paused: false,
+    pausedAt: undefined,
+    endTime: undefined,
+    startTime: undefined,
+  });
+
+  trayMenu[0].visible = true;
+  trayMenu[2].visible = false;
+  trayMenu[0].label = 'Start session';
+
+  const contextMenu = Menu.buildFromTemplate(trayMenu);
+  if (tray) {
+    tray.setContextMenu(contextMenu);
+    tray.setTitle('');
+  }
+}
+
 function takeBreakNow() {
   trayMenu[0].visible = true;
   trayMenu[2].visible = false;
@@ -710,4 +735,8 @@ ipcMain.on('skip-break', async () => {
     additionalTimeInSeconds:
       (store.get('session_duration') as number) || DEFAULT_INTERVAL_DURATION,
   });
+});
+
+ipcMain.on('end-session', async () => {
+  endSession();
 });
