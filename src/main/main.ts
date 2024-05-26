@@ -196,7 +196,7 @@ const createWindow = async () => {
       frame: false,
       x,
       y,
-      kiosk: true,
+      // kiosk: true,
       // icon: getAssetPath('icon.png'),
       icon: nativeImage.createFromDataURL(imgData),
       webPreferences: {
@@ -245,7 +245,7 @@ interface Session {
   pausedAt: string;
 }
 
-const createSettingsWindow = async () => {
+const createSettingsWindow = async (openDashboard?: boolean) => {
   if (settingsWindow) {
     // If a Settings window is already open, bring it to focus
     settingsWindow.focus();
@@ -275,7 +275,9 @@ const createSettingsWindow = async () => {
     },
   });
 
-  settingsWindow.loadURL(resolveHtmlPath('index.html', 'settings'));
+  settingsWindow.loadURL(
+    resolveHtmlPath('index.html', openDashboard ? 'dashboard' : 'settings'),
+  );
 
   // eslint-disable-next-line promise/catch-or-return
   app.dock.show().then(() => {
@@ -611,6 +613,12 @@ trayMenu = [
     click: () => endSession(),
   },
   { type: 'separator' },
+  {
+    label: 'Dashboard',
+    type: 'normal',
+    click: () => createSettingsWindow(true),
+  },
+  { type: 'separator' },
   { label: 'Settings', type: 'normal', click: () => createSettingsWindow() },
   { type: 'separator' },
   { label: 'Quit', role: 'quit', type: 'normal', click: () => app.quit() },
@@ -656,7 +664,7 @@ app
     if (store.get('start_timer')) {
       startSession({});
     }
-    createSettingsWindow();
+    createSettingsWindow(true);
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

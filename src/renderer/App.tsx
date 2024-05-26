@@ -8,13 +8,15 @@ import './App.css';
 import Overview from './Overview';
 
 function ViewManager() {
-  const [showSettings, setShowSettings] = useState(false);
   const w = window.location;
+  const [showSettings, setShowSettings] = useState(w.search === '?settings');
 
   const isSettings = w.search === '?settings';
+  const isDashboard = w.search === '?dashboard';
   const isLongBreak = w.search === '?long-break';
+  const isBreak = w.search === '?break';
 
-  if (isSettings) {
+  if (isDashboard || isSettings) {
     return showSettings ? (
       <Settings setShowSettings={setShowSettings} />
     ) : (
@@ -22,7 +24,11 @@ function ViewManager() {
     );
   }
 
-  return <Break isLongBreak={isLongBreak} />;
+  if (isBreak || isLongBreak) {
+    return <Break isLongBreak={isLongBreak} />;
+  }
+
+  return null;
 }
 
 export default function App() {
