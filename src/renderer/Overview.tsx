@@ -94,7 +94,10 @@ function Overview({
   }, []);
 
   return (
-    <div className="flex flex-col h-[100vh] items-center justify-around bg-zinc-900 text-white">
+    <div
+      className="flex flex-col h-[100vh] items-center justify-around text-white"
+      // style={{ background: '#202020' }}
+    >
       {/* <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
         Wave goodbye to eye strain!
       </div> */}

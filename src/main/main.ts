@@ -596,12 +596,19 @@ trayMenu = [
       {
         label: 'Skip this break',
         type: 'normal',
-        click: () =>
+        click: () => {
+          new Notification({
+            icon: nativeImage.createFromDataURL(imgData),
+            title: 'Upcoming break will be skipped!',
+            body: 'You have got more time for your focused work 🤓',
+          }).show();
+
           startSession({
             additionalTimeInSeconds:
               (store.get('session_duration') as number) ||
               DEFAULT_INTERVAL_DURATION,
-          }),
+          });
+        },
       },
     ]),
   },
