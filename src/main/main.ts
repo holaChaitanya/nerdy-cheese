@@ -387,7 +387,8 @@ function startSession({
   }
 
   trayMenu[0].visible = false;
-  trayMenu[2].visible = true;
+  trayMenu[1].visible = true;
+  trayMenu[3].visible = true;
 
   if (sessionTimer) {
     clearInterval(sessionTimer);
@@ -409,9 +410,9 @@ function startSession({
     const remainingInSecs = Math.floor(remaining / 1000);
 
     if (remainingInMins <= 0) {
-      trayMenu[2].label = 'Break in less than a minute';
+      trayMenu[1].label = 'Break in less than a minute';
     } else {
-      trayMenu[2].label = `Your break begins in ${remainingInMins} min`;
+      trayMenu[1].label = `Your break begins in ${remainingInMins} min`;
     }
 
     const preBreakReminderEnabled = store.get('pre_break_reminder_enabled');
@@ -439,7 +440,8 @@ function startSession({
 
     if (remaining <= 0) {
       trayMenu[0].visible = true;
-      trayMenu[2].visible = false;
+      trayMenu[1].visible = false;
+      trayMenu[3].visible = false;
       clearInterval(sessionTimer!);
       sessionTimer = null;
 
@@ -496,9 +498,9 @@ function pauseSession() {
     pausedAt: new Date(Date.now()).toISOString(),
   });
 
-  trayMenu[2].visible = false;
+  trayMenu[1].visible = false;
   trayMenu[0].visible = true;
-  trayMenu[0].label = 'Resume the session';
+  trayMenu[0].label = 'Resume session';
 
   const contextMenu = Menu.buildFromTemplate(trayMenu);
   if (tray) {
@@ -528,7 +530,8 @@ function endSession() {
   });
 
   trayMenu[0].visible = true;
-  trayMenu[2].visible = false;
+  trayMenu[1].visible = false;
+  trayMenu[3].visible = false;
   trayMenu[0].label = 'Start session';
 
   const contextMenu = Menu.buildFromTemplate(trayMenu);
@@ -540,7 +543,7 @@ function endSession() {
 
 function takeBreakNow() {
   trayMenu[0].visible = true;
-  trayMenu[2].visible = false;
+  trayMenu[1].visible = false;
   clearInterval(sessionTimer!);
   sessionTimer = null;
 
@@ -556,6 +559,8 @@ function takeBreakNow() {
   createWindow();
 }
 
+console.log({ sessionTimer });
+
 trayMenu = [
   {
     label: 'Start session',
@@ -563,7 +568,6 @@ trayMenu = [
     click: () => startSession({}),
     visible: sessionTimer === null,
   },
-  { label: 'Resume session', type: 'normal', visible: false },
   {
     label: `Your break begins in ...`,
     visible: sessionTimer !== null,
@@ -598,6 +602,13 @@ trayMenu = [
           }),
       },
     ]),
+  },
+  { type: 'separator' },
+  {
+    label: 'End session',
+    type: 'normal',
+    visible: false,
+    click: () => endSession(),
   },
   { type: 'separator' },
   { label: 'Settings', type: 'normal', click: () => createSettingsWindow() },
