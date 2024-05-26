@@ -168,13 +168,13 @@ function Settings({
                     <LogIn width={20} height={20} />
                     <StartupSettings />
                   </div>
-                  <div className="pt-4" />
+                  {/* <div className="pt-4" />
                   <Separator className="my-4" />
-                  <div className="pt-4" />
-                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                  <div className="pt-4" /> */}
+                  {/* <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
                     <Tag width={20} height={20} />
                     <TimeLabelSettings />
-                  </div>
+                  </div> */}
                   <div className="pt-4" />
                   <Separator className="my-4" />
                   <div className="pt-4" />
