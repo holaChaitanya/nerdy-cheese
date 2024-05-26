@@ -96,14 +96,20 @@ function Settings({
       <div className="flex flex-col px-40">
         <main className="flex flex-1 flex-col p-4 lg:p-6">
           <Tabs defaultValue="general">
+            <ArrowLeft
+              width={20}
+              height={20}
+              className="cursor-pointer fixed mt-2"
+              onClick={() => setShowSettings(false)}
+            />
             <TabsList className="justify-center">
               {/* <Button variant="link">Back</Button> */}
-              <ArrowLeft
+              {/* <ArrowLeft
                 width={20}
                 height={20}
                 className="cursor-pointer"
                 onClick={() => setShowSettings(false)}
-              />
+              /> */}
               {/* <div className="inline-flex h-9 items-center text-muted-foreground justify-start rounded-none border-b bg-transparent p-0">
                 <ArrowLeft width={20} height={20} />
               </div> */}
