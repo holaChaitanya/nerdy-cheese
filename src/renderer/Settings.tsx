@@ -14,23 +14,11 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { Button } from './components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from './components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { Separator } from './components/ui/separator';
 import { StartupSettings } from './startupSettings';
-// import { UpdateSettings } from './updateSettings';
-// import { AnalyticSettings } from './analyticSettings';
 import { FocusSettings } from './focusSettings';
-import { TimeLabelSettings } from './timeLabelSettings';
 import { IdleTimeSettings } from './idleTimeSettings';
 // import { MeetingSetting } from './meetingSettings';
 import { ShortBreakSettings } from './shortBreakSettings';
@@ -127,114 +115,68 @@ function Settings({
               <TabsTrigger value="system">System</TabsTrigger>
             </TabsList>
             <TabsContent value="general">
-              <Card className="mt-8">
-                <CardContent className="space-y-2">
-                  <div className="flex items-start gap-x-8 [&>div]:w-full">
-                    <Monitor className="self-center" width={20} height={20} />
-                    <FocusSettings />
-                  </div>
-                  <div className="pt-4" />
-                  <Separator className="my-4" />
-                  <div className="pt-4" />
-                  <div className="flex items-center gap-x-8 [&>div]:w-full">
-                    <EyeOff className="self-center" width={20} height={20} />
-                    <ShortBreakSettings />
-                  </div>
-                  <div className="pt-4" />
-                  <Separator className="my-4" />
-                  <div className="pt-4" />
-                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
-                    <Footprints
-                      className="self-center"
-                      width={20}
-                      height={20}
-                    />
-                    <LongBreakSettings />
-                  </div>
-                  <div className="pt-4" />
-                  <Separator className="my-24" />
-                  <div className="pt-4" />
-                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
-                    <BellRing className="self-center" width={20} height={20} />
-                    <PreBreakSettings />
-                  </div>
-                </CardContent>
-              </Card>
+              {/* <Card className="mt-8">
+                <CardContent className="space-y-2"> */}
+              <div className="flex items-start gap-x-8 [&>div]:w-full">
+                <Monitor className="self-center" width={20} height={20} />
+                <FocusSettings />
+              </div>
+              <div className="pt-4" />
+              <Separator className="my-4" />
+              <div className="pt-4" />
+              <div className="flex items-center gap-x-8 [&>div]:w-full">
+                <EyeOff className="self-center" width={20} height={20} />
+                <ShortBreakSettings />
+              </div>
+              <div className="pt-4" />
+              <Separator className="my-4" />
+              <div className="pt-4" />
+              <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                <Footprints className="self-center" width={20} height={20} />
+                <LongBreakSettings />
+              </div>
+              <div className="pt-4" />
+              <Separator className="my-4" />
+              <div className="pt-4" />
+              <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                <BellRing className="self-center" width={20} height={20} />
+                <PreBreakSettings />
+              </div>
+              {/* </CardContent>
+              </Card> */}
             </TabsContent>
             <TabsContent value="system">
-              <Card className="mt-8">
-                <CardContent className="space-y-2">
-                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
-                    <LogIn width={20} height={20} />
-                    <StartupSettings />
-                  </div>
-                  {/* <div className="pt-4" />
+              {/* <Card className="mt-8">
+                <CardContent className="space-y-2"> */}
+              <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                <LogIn width={20} height={20} />
+                <StartupSettings />
+              </div>
+              {/* <div className="pt-4" />
                   <Separator className="my-4" />
                   <div className="pt-4" /> */}
-                  {/* <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+              {/* <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
                     <Tag width={20} height={20} />
                     <TimeLabelSettings />
                   </div> */}
-                  <div className="pt-4" />
-                  <Separator className="my-4" />
-                  <div className="pt-4" />
-                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
-                    <CloudDownload width={20} height={20} />
-                    <UpdateSettings />
-                  </div>
-                  <div className="pt-4" />
-                  <Separator className="my-4" />
-                  <div className="pt-4" />
-                  <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
-                    <BarChart4 width={20} height={20} />
-                    <AnalyticSettings />
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="pt-4" />
+              <Separator className="my-4" />
+              <div className="pt-4" />
+              <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                <CloudDownload width={20} height={20} />
+                <UpdateSettings />
+              </div>
+              <div className="pt-4" />
+              <Separator className="my-4" />
+              <div className="pt-4" />
+              <div className="flex items-center justify-center gap-x-8 [&>div]:w-full">
+                <BarChart4 width={20} height={20} />
+                <AnalyticSettings />
+              </div>
+              {/* </CardContent>
+              </Card> */}
             </TabsContent>
           </Tabs>
-          {activeMenu === 'general' && (
-            <>
-              {/* <div className="flex items-center justify-center [&>div]:w-full">
-                <StartupSettings />
-              </div> */}
-              {/* <div className="flex items-center justify-center [&>div]:w-full">
-                <UpdateSettings />
-              </div> */}
-              {/* <div className="flex items-center justify-center [&>div]:w-full">
-                <AnalyticSettings />
-              </div> */}
-            </>
-          )}
-          {activeMenu === 'focus' && (
-            <>
-              {/* <div className="flex items-center justify-center [&>div]:w-full">
-                <FocusSettings />
-              </div> */}
-              {/* <div className="flex items-center justify-center [&>div]:w-full">
-                <TimeLabelSettings />
-              </div> */}
-              {/* <div className="flex items-center justify-center [&>div]:w-full">
-                <IdleTimeSettings />
-              </div> */}
-              {/* <div className="flex items-center justify-center [&>div]:w-full">
-                <MeetingSetting />
-              </div> */}
-            </>
-          )}
-          {activeMenu === 'rest' && (
-            <>
-              {/* <div className="flex items-center justify-center [&>div]:w-full">
-                <ShortBreakSettings />
-              </div> */}
-              {/* <div className="flex items-center justify-center [&>div]:w-full">
-                <LongBreakSettings />
-              </div> */}
-              {/* <div className="flex items-center justify-center [&>div]:w-full">
-                <PreBreakSettings />
-              </div> */}
-            </>
-          )}
         </main>
       </div>
     </div>
