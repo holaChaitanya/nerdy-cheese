@@ -8,6 +8,7 @@ import {
   ChevronsRight,
   CircleStop,
 } from 'lucide-react';
+import mixpanel from 'mixpanel-browser';
 import { Button } from './components/ui/button';
 import {
   Select,
@@ -163,6 +164,7 @@ function Overview({
                   onClick={() => {
                     setPaused(false);
                     window.electron.ipcRenderer.sendMessage('start-session');
+                    mixpanel.track('resume_session');
                   }}
                 >
                   <Play width={20} height={20} />
@@ -173,6 +175,7 @@ function Overview({
                 <Button
                   variant="link"
                   onClick={() => {
+                    mixpanel.track('take-break-now');
                     window.electron.ipcRenderer.sendMessage('take-break-now');
                   }}
                 >
@@ -184,6 +187,7 @@ function Overview({
                 <Button
                   variant="link"
                   onClick={() => {
+                    mixpanel.track('pause-session');
                     window.electron.ipcRenderer.sendMessage('pause-session');
                   }}
                 >
@@ -194,6 +198,7 @@ function Overview({
               <Button
                 variant="link"
                 onClick={() => {
+                  mixpanel.track('end-session');
                   window.electron.ipcRenderer.sendMessage('end-session');
                 }}
               >
@@ -209,6 +214,7 @@ function Overview({
                       description:
                         'You have got more time for your focused work',
                     });
+                    mixpanel.track('skip-break');
                     window.electron.ipcRenderer.sendMessage('skip-break');
                   }}
                 >
@@ -223,6 +229,7 @@ function Overview({
           <button
             type="button"
             onClick={() => {
+              mixpanel.track('start-session');
               window.electron.ipcRenderer.sendMessage('start-session');
             }}
             style={{ borderRadius: 8 }}
@@ -247,6 +254,7 @@ function Overview({
         <Select
           value={sessionDuration}
           onValueChange={(val: number) => {
+            mixpanel.track('session-duration-changed');
             setSessionDuration(val);
             window.electron.store.set('session_duration', val);
           }}
@@ -287,6 +295,7 @@ function Overview({
         <Select
           value={breakDuration}
           onValueChange={(val: number) => {
+            mixpanel.track('break-duration-changed');
             setBreakDuration(val);
             window.electron.store.set('break_duration', val);
           }}
@@ -326,7 +335,10 @@ function Overview({
         <Button
           variant="link"
           className="pl-0 ml-2"
-          onClick={() => setShowSettings(true)}
+          onClick={() => {
+            mixpanel.track('show-settings-clicked');
+            setShowSettings(true);
+          }}
         >
           Settings&nbsp; <Settings width={20} height={20} />
         </Button>
