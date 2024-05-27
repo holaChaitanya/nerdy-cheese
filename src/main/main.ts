@@ -436,7 +436,7 @@ function startSession({
             ? breakNotificationAt / 60
             : 'less than a'
         } min left`,
-        body: 'Get ready to Take a Break 🍺',
+        body: 'Get ready to Get a Break 🍺',
       }).show();
     }
 
@@ -635,7 +635,7 @@ const createTray = () => {
   const icon = nativeImage.createFromDataURL(imgData);
   tray = new Tray(icon.resize({ width: 16, height: 16 }));
   const contextMenu = Menu.buildFromTemplate(trayMenu);
-  tray.setToolTip('Take a Break');
+  tray.setToolTip('Get a Break');
   tray.setContextMenu(contextMenu);
 };
 

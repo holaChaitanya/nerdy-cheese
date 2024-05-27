@@ -32,7 +32,7 @@ export const COPIES = [
   { title: 'Soothing Sight', subtitle: 'Ease the strain, enhance the view.' },
   { title: 'Optical Oasis', subtitle: 'Escape the screen, embrace the calm.' },
   { title: 'Sight Savvy', subtitle: 'Nourish your eyes, nurture your focus.' },
-  { title: 'Vision Vacation', subtitle: 'Take a break, see the world anew.' },
+  { title: 'Vision Vacation', subtitle: 'Get a break, see the world anew.' },
   { title: 'Gaze Break', subtitle: 'Rest, reset, and return refreshed.' },
   {
     title: 'Clearer Perspective',

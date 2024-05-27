@@ -178,8 +178,8 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "Take a break",
-    "appId": "takeABreak",
+    "productName": "Get a Break",
+    "appId": "getABreak",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [

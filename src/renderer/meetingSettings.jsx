@@ -15,7 +15,7 @@ export function MeetingSetting() {
           <Label htmlFor="necessary" className="flex flex-col space-y-1">
             <span>Pause during meetings or calls</span>
             <span className="font-normal leading-snug text-muted-foreground">
-              Take a Break will pause whenever your microphone or camera is in
+              Get a Break will pause whenever your microphone or camera is in
               use
             </span>
           </Label>

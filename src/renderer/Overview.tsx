@@ -108,7 +108,7 @@ function Overview({
           width={24}
           height={24}
         />
-        &nbsp; Take a Break
+        &nbsp; Get a Break
       </div>
       <div className="text-center">
         {!endTime ? (
@@ -135,7 +135,7 @@ function Overview({
         {endTime ? (
           <>
             <div className="text-center text-sm font-normal text-neutral-200 py-4 mb-8">
-              Take a break in action, your eyes will thank you!&nbsp;
+              Get a break in action, your eyes will thank you!&nbsp;
               {/* <img
                 className="inline-block align-text-bottom"
                 src={imgData}
