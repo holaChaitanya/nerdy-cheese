@@ -242,7 +242,7 @@ function Overview({
           </button>
         )}
       </div>
-      <div className="font-xl text-center text-neutral-200 py-4 flex items-baseline mt-32">
+      <div className="font-xl text-center text-neutral-200 py-4 flex items-baseline mt-20">
         After every&nbsp;
         <Select
           value={sessionDuration}
