@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import mixpanel from 'mixpanel-browser';
 import { DEFAULT_BREAK_DURATION } from '../main/constants';
 import { AuroraBackground } from './components/ui/aurora-background';
 import { COPIES } from './constants';
@@ -129,6 +130,7 @@ function Break({ isLongBreak }: { isLongBreak: boolean }) {
           type="button"
           className="bg-white rounded-full w-fit text-black px-4 py-2"
           onClick={() => {
+            mixpanel.track('break_skipped');
             window.electron.ipcRenderer.sendMessage('start-session');
             window.close();
             window.electron.ipcRenderer.sendMessage('skip-break');
@@ -140,6 +142,7 @@ function Break({ isLongBreak }: { isLongBreak: boolean }) {
           type="button"
           className=" bg-white rounded-full w-fit text-black px-4 py-2"
           onClick={() => {
+            mixpanel.track('break_snoozed');
             window.electron.ipcRenderer.sendMessage('start-session', {
               snoozedForInSecs: 5 * 60,
             });
