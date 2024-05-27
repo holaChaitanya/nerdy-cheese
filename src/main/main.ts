@@ -196,11 +196,11 @@ const createWindow = async () => {
       frame: false,
       x,
       y,
-      // kiosk: true,
+      kiosk: true,
       // icon: getAssetPath('icon.png'),
       icon: nativeImage.createFromDataURL(imgData),
       webPreferences: {
-        devTools: true,
+        devTools: false,
         preload: app.isPackaged
           ? path.join(__dirname, 'preload.js')
           : path.join(__dirname, '../../.erb/dll/preload.js'),
@@ -268,7 +268,7 @@ const createSettingsWindow = async (openDashboard?: boolean) => {
     resizable: false,
     icon: nativeImage.createFromDataURL(imgData),
     webPreferences: {
-      devTools: true,
+      devTools: false,
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
