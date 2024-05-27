@@ -143,11 +143,11 @@ function Break({ isLongBreak }: { isLongBreak: boolean }) {
           className=" bg-white rounded-full w-fit text-black px-4 py-2"
           onClick={() => {
             mixpanel.track('break_snoozed');
+            window.electron.ipcRenderer.sendMessage('skip-break');
+            window.close();
             window.electron.ipcRenderer.sendMessage('start-session', {
               snoozedForInSecs: 5 * 60,
             });
-            window.close();
-            window.electron.ipcRenderer.sendMessage('skip-break');
           }}
         >
           Snooze for 5 minutes
