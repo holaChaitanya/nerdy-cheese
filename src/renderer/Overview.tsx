@@ -225,10 +225,17 @@ function Overview({
             onClick={() => {
               window.electron.ipcRenderer.sendMessage('start-session');
             }}
+            style={{ borderRadius: 8 }}
             className="w-[190px] relative inline-flex h-12 overflow-hidden rounded-lg p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
           >
-            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#EBD18F_0%,#B9841D_50%,#EBD18F_100%)]" />
-            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-zinc-900 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+            <span
+              style={{ borderRadius: 8 }}
+              className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#EBD18F_0%,#B9841D_50%,#EBD18F_100%)]"
+            />
+            <span
+              style={{ borderRadius: 8 }}
+              className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-zinc-900 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl"
+            >
               <Play width={20} height={20} />
               &nbsp;Start Session
             </span>
