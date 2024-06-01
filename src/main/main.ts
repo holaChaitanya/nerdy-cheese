@@ -119,7 +119,7 @@ const store = new Store({
   schema,
   defaults: {
     session: {},
-    launch_at_login: false,
+    launch_at_login: true,
     start_timer: false,
     session_duration: 1500,
     break_duration: 30,
