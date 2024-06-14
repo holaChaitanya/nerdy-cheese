@@ -41,6 +41,21 @@ const playAudio = () => {
   });
 };
 
+// "mac": {
+//   "target": {
+//     "target": "default",
+//     "arch": [
+//       "universal"
+//     ]
+//   },
+//   "type": "distribution",
+//   "hardenedRuntime": true,
+//   "entitlements": "assets/entitlements.mac.plist",
+//   "entitlementsInherit": "assets/entitlements.mac.plist",
+//   "gatekeeperAssess": false,
+//   "provisioningProfile": "profiles/take_a_break__distribution_profile.provisionprofile"
+// },
+
 type Schema = {
   session: {
     type: 'object';

@@ -189,8 +189,9 @@
     ],
     "afterSign": ".erb/scripts/notarize.js",
     "mac": {
+      "icon": "assets/icons.icns",
       "target": {
-        "target": "default",
+        "target": "mas",
         "arch": [
           "universal"
         ]
