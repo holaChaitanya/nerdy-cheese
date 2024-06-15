@@ -26,7 +26,8 @@
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
-    "test": "jest"
+    "test": "jest",
+    "dist": "electron-builder"
   },
   "browserslist": [],
   "prettier": {
@@ -133,7 +134,7 @@
     "daisyui": "^4.11.1",
     "detect-port": "^1.5.1",
     "electron": "^26.2.1",
-    "electron-builder": "^24.6.4",
+    "electron-builder": "^23.6.0",
     "electron-devtools-installer": "^3.2.0",
     "electronmon": "^2.0.2",
     "eslint": "^8.49.0",
@@ -191,17 +192,17 @@
     "mac": {
       "icon": "assets/icons.icns",
       "target": {
-        "target": "mas",
+        "target": "mas-dev",
         "arch": [
           "universal"
         ]
       },
-      "type": "distribution",
-      "hardenedRuntime": true,
-      "entitlements": "assets/entitlements.mac.plist",
-      "entitlementsInherit": "assets/entitlements.mac.plist",
+      "type": "development",
+      "hardenedRuntime": false,
+      "entitlements": "assets/entitlements.mas.plist",
+      "entitlementsInherit": "assets/entitlements.mas.plist",
       "gatekeeperAssess": false,
-      "provisioningProfile": "profiles/take_a_break__distribution_profile.provisionprofile"
+      "provisioningProfile": "profiles/take_a_break__pofile.provisionprofile"
     },
     "dmg": {
       "contents": [

@@ -56,6 +56,11 @@ const playAudio = () => {
 //   "provisioningProfile": "profiles/take_a_break__distribution_profile.provisionprofile"
 // },
 
+// "mas": {
+//   "entitlements": "assets/entitlements.mas.plist",
+//   "entitlementsInherit": "assets/entitlements.mas.plist"
+// },
+
 type Schema = {
   session: {
     type: 'object';
