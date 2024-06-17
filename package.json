@@ -192,17 +192,17 @@
     "mac": {
       "icon": "assets/icons.icns",
       "target": {
-        "target": "mas-dev",
+        "target": "mas",
         "arch": [
           "universal"
         ]
       },
-      "type": "development",
+      "type": "distribution",
       "hardenedRuntime": false,
       "entitlements": "assets/entitlements.mas.plist",
       "entitlementsInherit": "assets/entitlements.mas.plist",
       "gatekeeperAssess": false,
-      "provisioningProfile": "profiles/take_a_break__pofile.provisionprofile"
+      "provisioningProfile": "profiles/take_a_break__distribution_profile.provisionprofile"
     },
     "dmg": {
       "contents": [
