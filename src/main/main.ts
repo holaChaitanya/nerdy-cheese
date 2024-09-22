@@ -24,6 +24,7 @@ import {
 } from 'electron';
 import Store from 'electron-store';
 import playSound from 'play-sound';
+import * as Sentry from '@sentry/electron/main';
 import { resolveHtmlPath, getReadableTime } from './util';
 import {
   BREAK_NOTIFICATION_AT,
@@ -31,6 +32,10 @@ import {
   TIMER_STYLE,
 } from './constants';
 import { imgData } from '../constants';
+
+Sentry.init({
+  dsn: 'https://0f53a898bc7b63e026490300147e4be0@o4507448541577216.ingest.us.sentry.io/4507448544591872',
+});
 
 const audioPlayer = playSound({});
 

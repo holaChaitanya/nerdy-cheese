@@ -29,3 +29,6 @@ npm-debug.log.*
 *.scss.d.ts
 
 .env
+
+# Sentry Config File
+.env.sentry-build-plugin
